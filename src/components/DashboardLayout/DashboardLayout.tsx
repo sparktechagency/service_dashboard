@@ -23,7 +23,7 @@ const Layout = () => {
         <Header>
           <button 
             onClick={toggleSidebar}
-            className="md:hidden p-2 mr-2 rounded-md text-slate-200 hover:bg-slate-700 transition-colors"
+            className="md:hidden p-2 mr-2 rounded-md text-primary hover:bg-slate-200 transition-colors"
           >
             <Menu size={20} />
           </button>

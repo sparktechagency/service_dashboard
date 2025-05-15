@@ -97,7 +97,7 @@ const RecentEmployerList = () =>{
   ]
 
   return (
-    <div className="w-full mx-auto bg-white p-4">
+    <div className="w-full mx-auto bg-white p-4 rounded-md">
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-xl font-semibold">Recent Employer List</h1>
         <button onClick={()=>navigate('/employers')} className="text-sm text-blue-600 hover:underline">View All</button>
@@ -109,6 +109,7 @@ const RecentEmployerList = () =>{
         pagination={false}
         //rowClassName={(record, index) => (index % 2 === 0 ? "bg-amber-50" : "bg-white hover:bg-blue-50")}
         className="employer-table"
+        scroll={{ x: "max-content" }}
       />
     </div>
   )

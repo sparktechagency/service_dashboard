@@ -18,10 +18,10 @@ const SidebarLink: React.FC<SidebarLinkProps> = ({ icon, label, href }) => {
       className={`flex items-center px-4 py-2.5 text-sm rounded-md transition-colors group ${
         active 
           ? 'bg-slate-700 text-white' 
-          : 'text-slate-300 hover:bg-slate-700 hover:text-white'
+          : 'text-black hover:bg-slate-700 hover:text-white'
       }`}
     >
-      <span className={`mr-3 ${active ? 'text-emerald-400' : 'text-slate-400 group-hover:text-white'}`}>
+      <span className={`mr-3 ${active ? 'text-emerald-400' : 'text-black group-hover:text-white'}`}>
         {icon}
       </span>
       {label}

@@ -1,12 +1,9 @@
 import React, { useEffect } from 'react';
 import { 
-  BarChart2, 
   Users, 
   Settings, 
   HelpCircle, 
   X,
-  FileText,
-  MessageSquare,
   LayoutDashboard,
   UserCheck,
   BookA,
@@ -16,6 +13,7 @@ import {
 } from 'lucide-react';
 
 import SidebarLink from './SidebarLink';
+import logo from "../../assets/images/logo.png";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -61,23 +59,24 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, closeSidebar }) => {
 
       {/* Sidebar */}
       <aside 
-        className={`fixed md:static inset-y-0 left-0 z-30 w-64 bg-slate-800 text-white transform transition-transform duration-300 ease-in-out ${
+        className={`fixed md:static inset-y-0 left-0 z-30 w-64 bg-white text-black transform transition-transform duration-300 ease-in-out ${
           isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
         } flex flex-col`}
       >
         {/* Sidebar Header */}
-        <div className="flex items-center justify-between h-16 px-4 border-b border-slate-700">
-          <div className="flex items-center space-x-2">
-            <BarChart2 className="h-6 w-6 text-emerald-400" />
-            <span className="text-xl font-bold">Dashflow</span>
-          </div>
+    
+        <div className="flex items-center justify-center h-16 px-4 border-slate-700 relative">
+          <div className="flex items-center justify-center space-x-2 bg-white">
+            <img src={logo} alt="logo" className="h-12 w-12"/>
+            </div>
           <button 
             onClick={closeSidebar}
-            className="md:hidden p-1 rounded-md hover:bg-slate-700 text-slate-400 hover:text-white transition-colors"
+            className="md:hidden p-1 rounded-md hover:bg-slate-700 text-slate-400 hover:text-white transition-colors absolute right-4"
           >
             <X size={20} />
           </button>
-        </div>
+        </div> 
+
 
         {/* Sidebar Links */}
         <nav className="flex-1 px-2 py-4 space-y-1 overflow-y-auto">
