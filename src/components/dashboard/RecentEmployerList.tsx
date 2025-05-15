@@ -1,8 +1,8 @@
-"use client"
 
 import { useState } from "react"
-import { Table, Tag } from "antd"
+import { Table} from "antd"
 import type { ColumnsType } from "antd/es/table"
+import { useNavigate } from "react-router-dom"
 
 interface EmployerData {
   key: string
@@ -14,6 +14,7 @@ interface EmployerData {
 }
 
 const RecentEmployerList = () =>{
+  const navigate = useNavigate();
   const [data] = useState<EmployerData[]>([
     {
       key: "1",
@@ -75,14 +76,9 @@ const RecentEmployerList = () =>{
       dataIndex: "companyName",
       key: "companyName",
       width: "30%",
-      render: (text, record) => (
+      render: (text) => (
         <div className="flex items-center">
           <span>{text}</span>
-          {record.dayTag && (
-            <Tag color="blue" className="ml-2 text-xs">
-              {record.dayTag}
-            </Tag>
-          )}
         </div>
       ),
     },
@@ -104,7 +100,7 @@ const RecentEmployerList = () =>{
     <div className="w-full mx-auto bg-white p-4">
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-xl font-semibold">Recent Employer List</h1>
-        <button className="text-sm text-blue-600 hover:underline">View All</button>
+        <button onClick={()=>navigate('/employers')} className="text-sm text-blue-600 hover:underline">View All</button>
       </div>
 
       <Table
@@ -114,25 +110,6 @@ const RecentEmployerList = () =>{
         //rowClassName={(record, index) => (index % 2 === 0 ? "bg-amber-50" : "bg-white hover:bg-blue-50")}
         className="employer-table"
       />
-
-      {/* Custom styles for responsive design */}
-      <style jsx global>{`
-        .employer-table .ant-table-thead > tr > th {
-          background-color: #fef3c7;
-          color: #000;
-          font-weight: 500;
-        }
-        
-        @media (max-width: 640px) {
-          .employer-table .ant-table {
-            font-size: 0.875rem;
-          }
-          .employer-table .ant-table-thead > tr > th,
-          .employer-table .ant-table-tbody > tr > td {
-            padding: 8px 4px;
-          }
-        }
-      `}</style>
     </div>
   )
 }
