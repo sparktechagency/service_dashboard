@@ -2,8 +2,8 @@ import React from 'react';
 import { Table, ConfigProvider } from 'antd';
 import type { ColumnsType, TablePaginationConfig } from 'antd/es/table';
 import { Eye } from 'lucide-react';
-import StatusBadge from './StatusBadge';
 import type { IEmployer } from '../../types/employer.type';
+import StatusBadge from '../ui/StatusBadge';
 
 interface EmployerTableProps {
   data: IEmployer[];
@@ -53,7 +53,7 @@ const EmployerTable: React.FC<EmployerTableProps> = ({ data }) => {
       width: '15%',
       className: 'bg-amber-50',
       render: () => (
-        <div className="flex justify-center">
+        <div className="flex">
           <button className="text-gray-600 hover:text-gray-900">
             <Eye size={20} />
           </button>

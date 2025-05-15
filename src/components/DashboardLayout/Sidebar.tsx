@@ -1,19 +1,9 @@
 import React, { useEffect } from 'react';
-import { 
-  Users, 
-  Settings, 
-  HelpCircle, 
-  X,
-  LayoutDashboard,
-  UserCheck,
-  BookA,
-  ChartBarStacked,
-  Mail,
-  Rss
-} from 'lucide-react';
 
 import SidebarLink from './SidebarLink';
 import logo from "../../assets/images/logo.png";
+import { menuItems } from '../../data/sidebar.data';
+import { X } from 'lucide-react';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -65,9 +55,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, closeSidebar }) => {
       >
         {/* Sidebar Header */}
     
-        <div className="flex items-center justify-center h-16 px-4 border-slate-700 relative">
+        <div className="flex items-center justify-center h-24 px-4 border-slate-700 relative">
           <div className="flex items-center justify-center space-x-2 bg-white">
-            <img src={logo} alt="logo" className="h-12 w-12"/>
+            <img src={logo} alt="logo" className="h-16 w-16"/>
             </div>
           <button 
             onClick={closeSidebar}
@@ -80,18 +70,23 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, closeSidebar }) => {
 
         {/* Sidebar Links */}
         <nav className="flex-1 px-2 py-4 space-y-1 overflow-y-auto">
-          <SidebarLink icon={<LayoutDashboard size={18} />} href="/" label="Dashboard" active />
+          {/* <SidebarLink icon={<LayoutDashboard size={18} />} href="/" label="Dashboard" active />
           <SidebarLink icon={<UserCheck size={18} />} href="/employers" label="Employers" />
           <SidebarLink icon={<BookA size={18} />} href="/candidates" label="Candidates" />
           <SidebarLink icon={<ChartBarStacked size={18} />} href="/category" label="Category" />
           <SidebarLink icon={<Mail size={18} />} href="/contacts" label="Contact" />
           <SidebarLink icon={<Rss size={18} />} href="/blogs" label="Blog" />
-          <SidebarLink icon={<Users size={18} />} href="#" label="Team" />
+          <SidebarLink icon={<Users size={18} />} href="#" label="Team" /> */}
+          {
+            menuItems?.map((item, index)=> (
+              <SidebarLink menuItem={item} key={index}/>
+            ))
+          }
 
-          <div className="pt-4 mt-4 border-t border-slate-700">
+          {/* <div className="pt-4 mt-4 border-t border-slate-700">
             <SidebarLink icon={<Settings size={18} />} href="#" label="Settings" />
             <SidebarLink icon={<HelpCircle size={18} />} href="#" label="Help" />
-          </div>
+          </div> */}
         </nav>
 
         {/* User Profile Area */}

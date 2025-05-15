@@ -1,8 +1,23 @@
+import EmployerTable from "../../components/employer/EmployerTable"
+import { employerData } from "../../data/employer.data"
 
 const CandidatesPage = () => {
   return (
     <>
-      <h1>This is Candidates Page</h1>
+      <div>
+        <div className="bg-white rounded-lg shadow h-full overflow-hidden">
+          <div className="w-full h-full flex flex-col">
+            <div className="p-4">
+              <h1 className="text-xl font-medium text-gray-800">
+                Total Employer List
+              </h1>
+            </div>
+            <div className="flex-1 overflow-hidden">
+              <EmployerTable data={employerData} />
+            </div>
+          </div>{" "}
+        </div>
+      </div>
     </>
   )
 }
