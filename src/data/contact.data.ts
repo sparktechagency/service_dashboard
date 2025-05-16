@@ -60,7 +60,7 @@ export const contactData = [
     serialNo: "09",
     name: "David Anderson",
     email: "david.anderson@example.com",
-    message: "Please update my email address",
+    message: "Please update my email address, Please update my email address, Please update my email address, Please update my email address, Please update my email address",
   },
   {
     id: "10",
