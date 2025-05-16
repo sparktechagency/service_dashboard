@@ -16,42 +16,42 @@ const EmployerTable: React.FC<EmployerTableProps> = ({ data }) => {
       dataIndex: 'serialNo',
       key: 'serialNo',
       width: '10%',
-      className: 'bg-amber-50',
+      //className: 'bg-amber-50',
     },
     {
       title: 'Company Name',
       dataIndex: 'companyName',
       key: 'companyName',
       width: '22.5%',
-      className: 'bg-amber-50',
+      //className: 'bg-amber-50',
     },
     {
       title: 'Category',
       dataIndex: 'category',
       key: 'category',
       width: '17.5%',
-      className: 'bg-amber-50',
+      //className: 'bg-amber-50',
     },
     {
       title: 'Location',
       dataIndex: 'location',
       key: 'location',
       width: '20%',
-      className: 'bg-amber-50',
+      //className: 'bg-amber-50',
     },
     {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
       width: '15%',
-      className: 'bg-amber-50',
+      //className: 'bg-amber-50',
       render: (status) => <StatusBadge status={status} />,
     },
     {
       title: 'Action',
       key: 'action',
       width: '15%',
-      className: 'bg-amber-50',
+      //className: 'bg-amber-50',
       render: () => (
         <div className="flex">
           <button className="text-gray-600 hover:text-gray-900">
