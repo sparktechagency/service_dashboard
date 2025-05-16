@@ -18,6 +18,7 @@ import AboutUsPage from "../pages/settings/AboutUsPage";
 import PrivacyPolicyPage from "../pages/settings/PrivacyPolicyPage";
 import TermsConditionPage from "../pages/settings/TermsConditionPage";
 import JobDetailsPage from "../pages/dashboard/JobDetailsPage";
+import JobPostsPage from "../pages/dashboard/JobPostsPage";
 
 const router = createBrowserRouter([
   {
@@ -71,6 +72,10 @@ const router = createBrowserRouter([
       {
         path: "job-details",
         element: <JobDetailsPage />,
+      },
+       {
+        path: "job-posts",
+        element: <JobPostsPage />,
       }
     ],
   },

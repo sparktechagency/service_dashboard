@@ -17,8 +17,9 @@ export const menuItems = [
     ],
   },
   { path: "/category", label: "Category", icon: BookA },
+  { path: "/job-posts", label: "Job Posts", icon: BookA },
   { path: "/contacts", label: "Contact", icon: BookA },
-   { path: "/blogs", label: "Blog", icon: BookA },
+  { path: "/blogs", label: "Blog", icon: BookA },
   {
     icon: SettingOutlined,
     label: "Settings",

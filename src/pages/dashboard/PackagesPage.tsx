@@ -3,11 +3,9 @@ import { Check } from "lucide-react"
 
 const PackagesPage = () =>{
   return (
-    <div className="page-container h-screen flex flex-col">
-      {/* <Header title="totals subscription" /> */}
-
-      <div className="p-4 flex-1 overflow-auto">
-        <div className="max-w-6xl mx-auto">
+    <>
+      <div className="flex-1 overflow-auto bg-white h-full p-4">
+        <div className="w-full mx-auto">
           {/* Pricing Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
             {/* Basic Package */}
@@ -113,14 +111,14 @@ const PackagesPage = () =>{
           </div>
 
           <div className="flex justify-end mt-6 gap-2">
-            <button className="bg-white">
-              Delete
+            <button className="bg-primary px-3 py-1.5 w-[150px] text-white rounded-md">
+              Edit
             </button>
-            <button>Edit</button>
+            <button className="px-3 py-1.5 w-[150px] text-secondary border border-secondary rounded-md">Delete</button>
           </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 
