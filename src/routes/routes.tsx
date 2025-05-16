@@ -19,6 +19,7 @@ import PrivacyPolicyPage from "../pages/settings/PrivacyPolicyPage";
 import TermsConditionPage from "../pages/settings/TermsConditionPage";
 import JobDetailsPage from "../pages/dashboard/JobDetailsPage";
 import JobPostsPage from "../pages/dashboard/JobPostsPage";
+import SubscriberDetailsPage from "../pages/dashboard/SubscriberDetailsPage";
 
 const router = createBrowserRouter([
   {
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
        {
         path: "subscribers",
         element: <SubscribersPage />,
+      },
+       {
+        path: "subscribers/details/:id",
+        element: <SubscriberDetailsPage />,
       },
        {
         path: "packages",

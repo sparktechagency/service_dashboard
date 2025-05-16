@@ -1,11 +1,10 @@
 import { Table, ConfigProvider } from 'antd';
-import type { TablePaginationConfig } from 'antd/es/table';
 import { Eye } from 'lucide-react';
 import { jobPostsData } from '../../data/jobPosts.data';
 
 
 
-const JobPostTable = () => {
+const SubscriberJobPostsTable = () => {
  
   const columns = [
     {
@@ -68,13 +67,6 @@ const JobPostTable = () => {
        },
   ]
 
-  const paginationConfig: TablePaginationConfig = {
-    position: ['bottomCenter'],
-    showSizeChanger: false,
-    defaultPageSize: 15,
-    total: 150,
-    showTotal: (total, range) => `Showing ${range[0]}-${range[1]} out of ${total}`,
-  };
 
   return (
     <ConfigProvider
@@ -92,8 +84,8 @@ const JobPostTable = () => {
       <div className="w-full overflow-auto">
         <Table
           columns={columns}
-          dataSource={jobPostsData}
-          pagination={paginationConfig}
+          dataSource={jobPostsData?.slice(0,3)}
+          pagination={false}
           rowKey="id"
           sticky
           scroll={{ y: 'calc(100vh - 265px)' }}
@@ -104,4 +96,4 @@ const JobPostTable = () => {
   );
 };
 
-export default JobPostTable;
+export default SubscriberJobPostsTable;

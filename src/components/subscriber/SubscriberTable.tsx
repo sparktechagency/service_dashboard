@@ -1,8 +1,12 @@
 import { EyeOutlined } from "@ant-design/icons"
 import { ConfigProvider, Table, type TablePaginationConfig } from "antd"
 import { subscriberData } from "../../data/subscriber.data"
+import { useNavigate } from "react-router-dom"
 
- const columns = [
+
+const SubscriberTable = () => {
+  const navigate = useNavigate();
+   const columns = [
     {
       title: "Serial No",
       dataIndex: "serialNo",
@@ -53,13 +57,12 @@ import { subscriberData } from "../../data/subscriber.data"
       key: "action",
       width: 100,
       render: () => (
-        <button className="text-gray-500 hover:text-gray-700">
+        <button onClick={()=>navigate(`/subscribers/details/${Math.random()}`)} className="text-gray-500 hover:text-gray-700">
           <EyeOutlined />
         </button>
       ),
     },
   ]
-const SubscriberTable = () => {
 
     
       const paginationConfig: TablePaginationConfig = {
