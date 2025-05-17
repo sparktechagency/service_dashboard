@@ -1,17 +1,15 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Modal } from "antd";
 import { useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import ImageUpload from "../../form/ImageUpload";
 
-interface Props {
-  onSubmit: (data: { title: string; image: File | null }) => void;
-}
 
-const CreateCategoryModal = ({ onSubmit }:Props) => {
+const CreateCategoryModal = () => {
   const [modalOpen, setModalOpen] = useState(false);
 
-   const [title, setTitle] = useState('');
-  const [image, setImage] = useState<File | null>(null);
+  const [title, setTitle] = useState('');
+  const [, setImage] = useState<File | null>(null);
   const [titleError, setTitleError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -35,7 +33,6 @@ const CreateCategoryModal = ({ onSubmit }:Props) => {
     
     // Simulate form submission
     setTimeout(() => {
-      onSubmit({ title, image });
       setIsSubmitting(false);
       // Optional: Reset form after submission
       // setTitle('');
@@ -87,8 +84,8 @@ const CreateCategoryModal = ({ onSubmit }:Props) => {
 
             <div className="mb-6">
               <ImageUpload 
-                image={image} 
                 onChange={setImage} 
+                title="Category Icon"
               />
             </div>
 

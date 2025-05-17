@@ -10,7 +10,7 @@ interface EmployerTableProps {
   data: IEmployer[];
 }
 
-const EmployerTable: React.FC<EmployerTableProps> = ({ data }) => {
+const CandidateTable: React.FC<EmployerTableProps> = ({ data }) => {
   const columns: ColumnsType<IEmployer> = [
     {
       title: 'Serial No',
@@ -34,17 +34,10 @@ const EmployerTable: React.FC<EmployerTableProps> = ({ data }) => {
       //className: 'bg-amber-50',
     },
     {
-      title: 'Company Name',
-      dataIndex: 'companyName',
-      key: 'companyName',
-      width: '22.5%',
-      //className: 'bg-amber-50',
-    },
-    {
-      title: 'Category',
-      dataIndex: 'category',
-      key: 'category',
-      width: '17.5%',
+      title: 'Location',
+      dataIndex: 'location',
+      key: 'location',
+      width: '20%',
       //className: 'bg-amber-50',
     },
     {
@@ -74,34 +67,6 @@ const EmployerTable: React.FC<EmployerTableProps> = ({ data }) => {
               </div>
             );
           }
-    },
-     {
-      title: 'Subscription Status',
-      dataIndex: 'subscription_status',
-      key: 'subscription_status',
-      align: "center",
-      width: '20%',
-      render: (subscription_status) =>{
-        return (
-          <>
-       {subscription_status === 'Active' && (
-    <span className="px-3 py-1 text-xs font-medium rounded-full text-blue-700 bg-blue-100 border border-blue-300">
-      Active
-    </span>
-  )}
-  {subscription_status === 'None' && (
-    <span className="px-3 py-1 text-xs font-medium rounded-full text-gray-600 bg-gray-100 border border-gray-300">
-      None
-    </span>
-  )}
-  {subscription_status === 'Expired' && (
-    <span className="px-3 py-1 text-xs font-medium rounded-full text-yellow-700 bg-yellow-100 border border-yellow-300">
-      Expired
-    </span>
-  )}
-          </>
-        )
-      }
     },
     {
       title: 'Action',
@@ -154,4 +119,4 @@ const EmployerTable: React.FC<EmployerTableProps> = ({ data }) => {
   );
 };
 
-export default EmployerTable;
+export default CandidateTable;

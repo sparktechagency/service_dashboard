@@ -1,5 +1,4 @@
 import type { IEmployer } from "../types/employer.type";
-
 export const employerData: IEmployer[] = [
   {
     id: '1',
@@ -8,6 +7,10 @@ export const employerData: IEmployer[] = [
     category: 'IT',
     location: 'H No/R No/ City',
     status: 'Active',
+    name: 'John Doe',
+    email: 'john.doe@gmail.com',
+    isActive: true,
+    subscription_status: 'Active'
   },
   {
     id: '2',
@@ -16,6 +19,10 @@ export const employerData: IEmployer[] = [
     category: 'Agro',
     location: 'H No/R No/ City',
     status: 'Active',
+    name: 'Samantha Lee',
+    email: 'samantha.lee@mail.com',
+    isActive: false,
+    subscription_status: 'None'
   },
   {
     id: '3',
@@ -24,6 +31,10 @@ export const employerData: IEmployer[] = [
     category: 'IT',
     location: 'H No/R No/ City',
     status: 'Active',
+    name: 'Michael Smith',
+    email: 'm.smith@company.com',
+    isActive: true,
+    subscription_status: 'Expired'
   },
   {
     id: '4',
@@ -32,6 +43,10 @@ export const employerData: IEmployer[] = [
     category: 'IT',
     location: 'H No/R No/ City',
     status: 'Reported',
+    name: 'Alicia Brown',
+    email: 'alicia.brown@example.com',
+    isActive: false,
+    subscription_status: 'None'
   },
   {
     id: '5',
@@ -40,6 +55,10 @@ export const employerData: IEmployer[] = [
     category: 'IT',
     location: 'H No/R No/ City',
     status: 'Block',
+    name: 'David Chen',
+    email: 'david.chen@mail.com',
+    isActive: true,
+    subscription_status: 'Expired'
   },
   {
     id: '6',
@@ -48,6 +67,10 @@ export const employerData: IEmployer[] = [
     category: 'IT',
     location: 'H No/R No/ City',
     status: 'Active',
+    name: 'Isla Ray',
+    email: 'isla.ray@domain.com',
+    isActive: false,
+    subscription_status: 'Active'
   },
   {
     id: '7',
@@ -56,6 +79,10 @@ export const employerData: IEmployer[] = [
     category: 'IT',
     location: 'H No/R No/ City',
     status: 'Active',
+    name: 'Zaid Ahmed',
+    email: 'zaid.ahmed@mail.com',
+    isActive: true,
+    subscription_status: 'None'
   },
   {
     id: '8',
@@ -64,6 +91,10 @@ export const employerData: IEmployer[] = [
     category: 'IT',
     location: 'H No/R No/ City',
     status: 'Active',
+    name: 'Priya Kapoor',
+    email: 'priya.kapoor@gmail.com',
+    isActive: false,
+    subscription_status: 'Expired'
   },
   {
     id: '9',
@@ -72,6 +103,10 @@ export const employerData: IEmployer[] = [
     category: 'IT',
     location: 'H No/R No/ City',
     status: 'Active',
+    name: 'Carlos Mendes',
+    email: 'carlos.mendes@org.com',
+    isActive: true,
+    subscription_status: 'Active'
   },
   {
     id: '10',
@@ -80,6 +115,10 @@ export const employerData: IEmployer[] = [
     category: 'IT',
     location: 'H No/R No/ City',
     status: 'Block',
+    name: 'Linda Jones',
+    email: 'linda.jones@tesla.com',
+    isActive: false,
+    subscription_status: 'None'
   },
   {
     id: '11',
@@ -88,6 +127,10 @@ export const employerData: IEmployer[] = [
     category: 'IT',
     location: 'H No/R No/ City',
     status: 'Active',
+    name: 'Nikhil Das',
+    email: 'nikhil.das@mail.com',
+    isActive: true,
+    subscription_status: 'Expired'
   },
   {
     id: '12',
@@ -96,6 +139,10 @@ export const employerData: IEmployer[] = [
     category: 'IT',
     location: 'H No/R No/ City',
     status: 'Active',
+    name: 'Emily White',
+    email: 'emily.white@sanford.com',
+    isActive: true,
+    subscription_status: 'None'
   },
   {
     id: '13',
@@ -104,6 +151,10 @@ export const employerData: IEmployer[] = [
     category: 'IT',
     location: 'H No/R No/ City',
     status: 'Active',
+    name: 'Ali Hassan',
+    email: 'ali.hassan@vng.org',
+    isActive: false,
+    subscription_status: 'Active'
   },
   {
     id: '14',
@@ -112,5 +163,9 @@ export const employerData: IEmployer[] = [
     category: 'IT',
     location: 'H No/R No/ City',
     status: 'Active',
-  },
+    name: 'Rachel Green',
+    email: 'rachel.green@digitya.com',
+    isActive: true,
+    subscription_status: 'Expired'
+  }
 ];

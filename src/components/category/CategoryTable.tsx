@@ -1,8 +1,8 @@
 import { Table, ConfigProvider } from "antd";
 import type { TablePaginationConfig } from "antd/es/table";
 import { categoryData } from "../../data/category.data";
-import { Edit } from "lucide-react";
 import DeleteCategoryModal from "../modal/category/DeleteCategoryModal";
+import EditCategoryModal from "../modal/category/EditCategoryModal";
 
 const CategoryTable = () => {
   const columns = [
@@ -35,9 +35,7 @@ const CategoryTable = () => {
       width: "15%",
       render: () => (
         <div className="flex items-center gap-2">
-          <button className="bg-green-600 hover:bg-green-700 p-2 text-white rounded-full">
-            <Edit size={18} />
-          </button>
+          <EditCategoryModal/>
           <DeleteCategoryModal />
         </div>
       ),

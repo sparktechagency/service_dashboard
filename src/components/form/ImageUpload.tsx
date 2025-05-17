@@ -1,12 +1,14 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useRef } from 'react';
 import { Upload, Image as ImageIcon } from 'lucide-react';
 
 interface ImageUploadProps {
-  image: File | null;
+  //image: File | null;
   onChange: (file: File | null) => void;
+  title: string;
 }
 
-const ImageUpload: React.FC<ImageUploadProps> = ({ image, onChange }) => {
+const ImageUpload: React.FC<ImageUploadProps> = ({onChange, title }) => {
   const [dragging, setDragging] = useState(false);
   const [preview, setPreview] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -86,7 +88,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ image, onChange }) => {
   return (
     <div className="w-full">
       <label className="block text-sm font-medium text-gray-700 mb-1">
-        Category Image
+        {title}
       </label>
       
       <div

@@ -1,4 +1,4 @@
-import EmployerTable from "../../components/employer/EmployerTable"
+import CandidateTable from "../../components/candidate/CandidateTable"
 import { employerData } from "../../data/employer.data"
 
 const CandidatesPage = () => {
@@ -13,7 +13,7 @@ const CandidatesPage = () => {
               </h1>
             </div>
             <div className="flex-1 overflow-hidden">
-              <EmployerTable data={employerData} />
+              <CandidateTable data={employerData} />
             </div>
           </div>{" "}
         </div>
