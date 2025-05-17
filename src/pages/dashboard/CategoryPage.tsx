@@ -1,4 +1,5 @@
 import CategoryTable from "../../components/category/CategoryTable"
+import CreateCategoryModal from "../../components/modal/category/CreateCategoryModal"
 
 const CategoryPage = () => {
   return (
@@ -10,7 +11,7 @@ const CategoryPage = () => {
               <h1 className="text-xl font-medium text-gray-800">
                 Category List
               </h1>
-              <button className="bg-primary px-3 py-1.5 text-white cursor-pointer rounded-md hover:bg-[#2b4773] duration-200"> Add New</button>
+              <CreateCategoryModal/>
             </div>
             <div className="flex-1 overflow-hidden">
               <CategoryTable />
