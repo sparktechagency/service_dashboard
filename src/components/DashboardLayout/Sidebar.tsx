@@ -57,7 +57,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, closeSidebar }) => {
     
         <div className="flex items-center justify-center h-24 px-4 border-slate-700 relative">
           <div className="flex items-center justify-center space-x-2 bg-white">
-            <img src={logo} alt="logo" className="h-16 w-16"/>
+            <img src={logo} alt="logo" className="h-18 w-32"/>
             </div>
           <button 
             onClick={closeSidebar}
