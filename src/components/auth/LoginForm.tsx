@@ -45,7 +45,7 @@ const LoginForm = () => {
             me
           </label>
           <Link
-            to="/forgot-password"
+            to="/auth/forgot-password"
             className="text-sm text-[#3AB0FF] hover:underline"
           >
             Forgot password?

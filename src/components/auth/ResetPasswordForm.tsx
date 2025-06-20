@@ -1,63 +1,78 @@
 "use client";
 
-import { useState } from "react";
-import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
+import { useForgotPasswordResetMutation } from "../../redux/features/auth/authApi";
+import { useForm, type SubmitHandler } from "react-hook-form";
+import { resetPasswordSchema } from "../../schemas/auth.schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect } from "react";
+import { SetResetPasswordError } from "../../redux/features/auth/authSlice";
+import type { z } from "zod";
+import Error from "../validation/Error";
+import CustomInput from "../form/CustomInput";
+import PasswordStrength from "../validation/PasswordStrength";
+import { CgSpinnerTwo } from "react-icons/cg";
 
+type TFormValues = z.infer<typeof resetPasswordSchema>;
 
 const ResetPasswordForm = () => {
-  const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
+  const { ResetPasswordError } = useAppSelector((state) => state.auth);
+  const [forgotPasswordReset, { isLoading }] = useForgotPasswordResetMutation();
+  const { handleSubmit, control, watch, trigger } = useForm({
+    resolver: zodResolver(resetPasswordSchema),
+  });
+
+  const newPassword = watch("newPassword");
+
+  useEffect(() => {
+    if (newPassword) {
+      const confirmPassword = watch("confirmPassword");
+      if (confirmPassword === newPassword) {
+        trigger("confirmPassword");
+      }
+    }
+  }, [newPassword, watch, trigger]);
+
+  const onSubmit: SubmitHandler<TFormValues> = (data) => {
+    dispatch(SetResetPasswordError(""));
+    forgotPasswordReset(data);
+  };
 
 
   return (
     <>
-      <form className="space-y-4">
-        <div>
-          <label
-            htmlFor="password"
-            className="block text-sm font-medium text-gray-700"
-          >
-           New Password
-          </label>
-          <div className="relative">
-            <input
-              type={showPassword ? "text" : "password"}
-              id="password"
-              className="mt-1 block w-full border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 focus:ring-blue-500 px-4 py-2 pr-10"
-              placeholder="********"
-            />
-            <span
-              className="absolute inset-y-0 right-3 flex items-center text-xl text-gray-500 cursor-pointer"
-              onClick={()=> setShowPassword((prev) => !prev)}
-            >
-              {showPassword ? <AiFillEyeInvisible /> : <AiFillEye />}
-            </span>
-          </div>
-        </div>
-        <div>
-          <label
-            htmlFor="confirmPass"
-            className="block text-sm font-medium text-gray-700"
-          >
-           Confirm New Password
-          </label>
-          <div className="relative">
-            <input
-              type={showConfirmPassword ? "text" : "password"}
-              id="confirmPass"
-              className="mt-1 block w-full border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 focus:ring-blue-500 px-4 py-2 pr-10"
-              placeholder="********"
-            />
-            <span
-              className="absolute inset-y-0 right-3 flex items-center text-xl text-gray-500 cursor-pointer"
-              onClick={()=> setShowConfirmPassword((prev) => !prev)}
-            >
-              {showConfirmPassword ? <AiFillEyeInvisible /> : <AiFillEye />}
-            </span>
-          </div>
-        </div>
-        <button className="w-full bg-primary hover:bg-[#2b4773] cursor-pointer text-white py-2 rounded-md font-semibold transition-colors duration-100">
-          Set Password
+      {ResetPasswordError && <Error message={ResetPasswordError} />}
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <CustomInput
+          label="New Password"
+          name="newPassword"
+          type="password"
+          control={control}
+          placeholder="Enter new password"
+        />
+        {newPassword && <PasswordStrength password={newPassword} />}
+        <CustomInput
+          label="Confirm New Password"
+          name="confirmPassword"
+          type="password"
+          control={control}
+          placeholder="Enter new password"
+        />
+
+        <button
+          type="submit"
+          disabled={isLoading}
+          className="w-full flex items-center cursor-pointer justify-center gap-2 bg-primary text-white py-2 rounded-md hover:bg-dis transition disabled:bg-gray-800 disabled:cursor-not-allowed"
+        >
+          {isLoading ? (
+            <>
+              <CgSpinnerTwo className="animate-spin" fontSize={16} />
+              Processing...
+            </>
+          ) : (
+            "Reset Password"
+          )}
         </button>
       </form>
     </>

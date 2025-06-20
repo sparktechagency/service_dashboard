@@ -1,14 +1,38 @@
 "use client"
 import { useEffect, useRef, useState } from "react";
-import { SuccessToast } from "../../helper/ValidationHelper";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
+import { useForgotPasswordResendOtpMutation, useForgotPasswordVerifyOtpMutation } from "../../redux/features/auth/authApi";
+import Error from "../validation/Error";
+import { SetVerifyOtpError } from "../../redux/features/auth/authSlice";
+import { getEmail } from "../../helper/SessionHelper";
+import { useNavigate } from "react-router-dom";
 
 const VerifyotpForm = () => {
-  const [code, setCode] = useState<string[]>(new Array(4).fill(""));
-  const [seconds, setSeconds] = useState(120);
+  const navigate = useNavigate();
+  const [code, setCode] = useState<string[]>(new Array(6).fill(""));
+  const [seconds, setSeconds] = useState(60);
   const [canResend, setCanResend] = useState(false);
   const inputRefs = useRef<Array<HTMLInputElement | null>>([]);
-  const isLoading = false;
   const isDisabled = code.find((cv) => cv == "") == ""; //check if any code is empty string
+  
+  const dispatch = useAppDispatch();
+  const { VerifyOtpError } = useAppSelector((state) => state.auth);
+  const [forgotPasswordVerifyOtp, { isLoading, isSuccess: verifySuccess }] =
+    useForgotPasswordVerifyOtpMutation();
+  const [
+    forgotPasswordResendOtp,
+    { isLoading: resendLoading, isSuccess: resendSuccess },
+  ] = useForgotPasswordResendOtpMutation();
+
+
+  //if verify success
+  useEffect(() => {
+    if (verifySuccess) {
+      navigate("/auth/reset-password");
+    }
+  }, [verifySuccess, navigate]);
+ 
+
 
   const handleChange = (element: HTMLInputElement, index: number) => {
     const value = element.value.replace(/[^0-9]/g, "");
@@ -18,11 +42,13 @@ const VerifyotpForm = () => {
       newCode[index] = value;
       setCode(newCode);
 
-      if (index < 4 && inputRefs.current[index + 1]) {
+      if (index < 6 && inputRefs.current[index + 1]) {
         inputRefs.current[index + 1]?.focus();
       }
     }
   };
+
+
 
   // Timer countdown
   useEffect(() => {
@@ -34,12 +60,33 @@ const VerifyotpForm = () => {
     }
   }, [seconds]);
 
+
+  //if code is resent successfully
+  useEffect(() => {
+    if (!resendLoading && resendSuccess) {
+      setSeconds(60);
+      // Restart countdown
+      const timer = setInterval(() => {
+        setSeconds((prev) => {
+          if (prev <= 1) {
+            clearInterval(timer);
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    }
+  }, [resendLoading, resendSuccess]);
+
+
   const handleResend = () => {
     if (!canResend) return;
     // trigger resend OTP logic here
     setSeconds(60);
     setCanResend(false);
   };
+
+
 
   const handleKeyDown = (
     e: React.KeyboardEvent<HTMLInputElement>,
@@ -61,13 +108,22 @@ const VerifyotpForm = () => {
     }
   };
 
-  const handleVerify = () => {
-    console.log(code);
-    SuccessToast("Verify Success");
+
+
+   const handleVerify = () => {
+    const otp = code.join("");
+    dispatch(SetVerifyOtpError(""))
+    forgotPasswordVerifyOtp({
+      email: getEmail(),
+      code: otp,
+    });
   };
+
+
   return (
     <>
-      <form className="space-y-4">
+    {VerifyOtpError && <Error message={VerifyOtpError} />}
+      <div className="space-y-4">
         {/* Code Inputs */}
         <div className="flex justify-center gap-3 mb-6">
           {code.map((digit, idx) => (
@@ -81,7 +137,7 @@ const VerifyotpForm = () => {
               ref={(el) => {
                 inputRefs.current[idx] = el;
               }}
-              className="w-12 h-12 border border-gray-300 rounded-md text-center text-xl focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-10 h-10 sm:w-12 sm:h-12 border border-gray-300 rounded-md text-center text-xl focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
           ))}
         </div>
@@ -113,7 +169,7 @@ const VerifyotpForm = () => {
             </span>
           )}
         </div>
-      </form>
+      </div>
     </>
   );
 };

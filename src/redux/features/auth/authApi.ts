@@ -101,6 +101,28 @@ export const authApi = apiSlice.injectEndpoints({
         }
       },
     }),
+    forgotPasswordResendOtp: builder.mutation({
+      query: (data) => ({
+        url: "/auth/forgot-resend",
+        method: "POST",
+        body: data,
+      }),
+      async onQueryStarted({ email }, { queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          setEmail(email);
+          SuccessToast("OTP is sent successfully");
+        } catch (err: any) {
+          const message = err?.error?.data?.message;
+          if(message === "Cannot read properties of null (reading 'email')"){
+            ErrorToast("Couldn't find this email address");
+          }
+          else{
+            ErrorToast(message);
+          }
+        }
+      },
+    }),
     forgotPasswordReset: builder.mutation({
       query: (data) => ({
         url: `/auth/reset-password?email=${getEmail()}`,
@@ -182,6 +204,7 @@ export const authApi = apiSlice.injectEndpoints({
 export const {
   useLoginMutation,
   useForgotPasswordSendOtpMutation,
+  useForgotPasswordResendOtpMutation,
   useForgotPasswordVerifyOtpMutation,
   useForgotPasswordResetMutation,
   useChangeStatusMutation,
