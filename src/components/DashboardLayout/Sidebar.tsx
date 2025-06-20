@@ -4,6 +4,8 @@ import SidebarLink from './SidebarLink';
 import logo from "../../assets/images/logo.png";
 import { menuItems } from '../../data/sidebar.data';
 import { X } from 'lucide-react';
+import { MdLogout } from 'react-icons/md';
+import { logout } from '../../helper/SessionHelper';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -70,35 +72,18 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, closeSidebar }) => {
 
         {/* Sidebar Links */}
         <nav className="flex-1 px-2 py-4 space-y-1 overflow-y-auto">
-          {/* <SidebarLink icon={<LayoutDashboard size={18} />} href="/" label="Dashboard" active />
-          <SidebarLink icon={<UserCheck size={18} />} href="/employers" label="Employers" />
-          <SidebarLink icon={<BookA size={18} />} href="/candidates" label="Candidates" />
-          <SidebarLink icon={<ChartBarStacked size={18} />} href="/category" label="Category" />
-          <SidebarLink icon={<Mail size={18} />} href="/contacts" label="Contact" />
-          <SidebarLink icon={<Rss size={18} />} href="/blogs" label="Blog" />
-          <SidebarLink icon={<Users size={18} />} href="#" label="Team" /> */}
           {
             menuItems?.map((item, index)=> (
               <SidebarLink menuItem={item} key={index}/>
             ))
           }
-
-          {/* <div className="pt-4 mt-4 border-t border-slate-700">
-            <SidebarLink icon={<Settings size={18} />} href="#" label="Settings" />
-            <SidebarLink icon={<HelpCircle size={18} />} href="#" label="Help" />
-          </div> */}
         </nav>
 
         {/* User Profile Area */}
         <div className="p-4 border-t border-slate-700">
-          <div className="flex items-center space-x-3">
-            <div className="h-9 w-9 rounded-full bg-slate-600 flex items-center justify-center text-white font-medium">
-              JD
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-white truncate">John Doe</p>
-              <p className="text-xs text-slate-400 truncate">admin@dashflow.com</p>
-            </div>
+          <div onClick={()=>logout()} className="flex items-center space-x-2 cursor-pointer hover:bg-slate-700 hover:text-white p-2 rounded-md duration-200">
+            <MdLogout/>
+            <span className="text-semibold">Logout</span>
           </div>
         </div>
       </aside>
