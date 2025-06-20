@@ -4,11 +4,12 @@ import TagTypes from "../../../constant/tagType.constant.ts";
 import { getToken } from "../../../helper/SessionHelper.ts";
 import { ErrorToast } from "../../../helper/ValidationHelper.ts";
 
-export const baseUrl = "https://backend.laeatery.com";
+export const baseUrl = "http://10.0.60.118:5004"
+
 
 const baseQuery = fetchBaseQuery({
   //baseUrl: "http://10.0.60.118:5003",
-  baseUrl: "https://backend.laeatery.com",
+  baseUrl: baseUrl,
   prepareHeaders: async (headers) => {
     if (getToken()) {
       headers.set("Authorization", `Bearer ${getToken() as string}`);

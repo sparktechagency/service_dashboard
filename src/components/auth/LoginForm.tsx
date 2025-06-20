@@ -1,58 +1,44 @@
 
-import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
-import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useForm, type SubmitHandler } from "react-hook-form";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
+import { useLoginMutation } from "../../redux/features/auth/authApi";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { loginSchema } from "../../schemas/auth.schema";
+import { SetLoginError } from "../../redux/features/auth/authSlice";
+import type { z } from "zod";
+import CustomInput from "../form/CustomInput";
+import Error from "../validation/Error";
 
+type TFormValues = z.infer<typeof loginSchema>
 
 const LoginForm = () => {
-  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const { LoginError } = useAppSelector((state) => state.auth);
+  const [login, { isLoading }] = useLoginMutation();
+  const {handleSubmit, control } = useForm({
+        resolver: zodResolver(loginSchema),
+        // defaultValues:{
+        //   email: "tayebrayhan10@gmail.com",
+        //   password: "12345678"
+        // }
+  })
 
-  const togglePassword = () => {
-    setShowPassword((prev) => !prev);
-  };
+
+
+    const onSubmit: SubmitHandler<TFormValues> = (data) => {
+      dispatch(SetLoginError(""))
+      login(data)
+    };
+ 
 
   return (
     <>
-      <div className="space-y-4">
-        <div>
-          <label
-            htmlFor="email"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Email
-          </label>
-          <input
-            type="email"
-            id="email"
-            className="mt-1 block w-full border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 focus:ring-blue-500 px-4 py-2"
-            placeholder="enter your email here"
-          />
-        </div>
-
-        <div>
-          <label
-            htmlFor="password"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Password
-          </label>
-          <div className="relative">
-            <input
-              type={showPassword ? "text" : "password"}
-              id="password"
-              className="mt-1 block w-full border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 focus:ring-blue-500 px-4 py-2 pr-10"
-              placeholder="********"
-            />
-            <span
-              className="absolute inset-y-0 right-3 flex items-center text-xl text-gray-500 cursor-pointer"
-              onClick={togglePassword}
-            >
-              {showPassword ? <AiFillEyeInvisible /> : <AiFillEye />}
-            </span>
-          </div>
-        </div>
-
+     {LoginError && <Error message={LoginError} />}
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <CustomInput label="Email" name="email" type="text" control={control} placeholder="Enter email address"/>
+        <CustomInput label="Password" name="password" type="password" control={control} placeholder="Enter your password"/>
         <div className="flex justify-between items-center">
           <label className="flex items-center text-sm">
             <input type="checkbox" className="mr-2 cursor-pointer" /> Remember
@@ -66,10 +52,10 @@ const LoginForm = () => {
           </Link>
         </div>
 
-        <button onClick={()=>navigate('/')} className="w-full bg-primary hover:bg-[#2b4773] cursor-pointer text-white py-2 rounded-md font-semibold transition-colors duration-100">
+        <button type="submit" className="w-full bg-primary hover:bg-[#2b4773] cursor-pointer text-white py-2 rounded-md font-semibold transition-colors duration-100">
           Sign in
         </button>
-      </div>
+      </form>
     </>
   );
 };
