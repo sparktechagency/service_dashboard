@@ -1,14 +1,14 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useRef } from 'react';
 import { Upload, Image as ImageIcon } from 'lucide-react';
 
 interface ImageUploadProps {
-  //image: File | null;
-  onChange: (file: File | null) => void;
+  image: File | null;
+  setImage: (file: File | null) => void;
   title: string;
+  setIconError: () => void;
 }
 
-const ImageUpload: React.FC<ImageUploadProps> = ({onChange, title }) => {
+const ImageUpload: React.FC<ImageUploadProps> = ({setImage, title, setIconError}) => {
   const [dragging, setDragging] = useState(false);
   const [preview, setPreview] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -61,7 +61,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({onChange, title }) => {
       return;
     }
 
-    onChange(file);
+    setImage(file);
     
     // Create preview
     const reader = new FileReader();
@@ -71,12 +71,15 @@ const ImageUpload: React.FC<ImageUploadProps> = ({onChange, title }) => {
     reader.readAsDataURL(file);
   };
 
+  
   const handleRemove = () => {
-    onChange(null);
+    setImage(null);
+    setIconError();
     setPreview(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
+    
   };
 
   const handleClick = () => {
@@ -164,7 +167,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({onChange, title }) => {
       {!preview && (
         <p className="text-xs text-gray-500 mt-2 flex items-center">
           <ImageIcon className="w-3 h-3 mr-1" />
-          Add an image to help users identify this category
+          Add an icon to help users identify this category
         </p>
       )}
     </div>

@@ -1,37 +1,66 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Table, ConfigProvider } from "antd";
-import type { TablePaginationConfig } from "antd/es/table";
-import { categoryData } from "../../data/category.data";
 import DeleteCategoryModal from "../modal/category/DeleteCategoryModal";
 import EditCategoryModal from "../modal/category/EditCategoryModal";
+import type { ICategory } from "../../types/category.type";
+import icon_placeholder from "../../assets/images/icon_placeholder.jpg";
+import { baseUrl } from "../../redux/features/api/apiSlice";
 
 
-type Props = {
-  categories: 
+
+type TProps = {
+  categories: ICategory[]
+}
+
+type TDataSource = {
+  key: number;
+  serial: number;
+  _id: string;
+  categoryName: string;
+  image: string;
 }
 
 
-const CategoryTable = ( { categories}) => {
+const CategoryTable = ( { categories }: TProps) => {
+
+  const dataSource: TDataSource[] = categories?.map((category, index)=> ({
+        key: index,
+        serial: Number(index+1),
+        _id: category?._id,
+        categoryName: category?.category,
+        image: baseUrl+category?.image
+  }))
+
   const columns = [
     {
       title: "Serial No",
-      dataIndex: "serialNo",
-      key: "serialNo",
+      dataIndex: "serial",
+      key: "serial",
       width: "10%",
     },
     {
       title: "Title",
-      dataIndex: "title",
-      key: "title",
+      dataIndex: "categoryName",
+      key: "categoryName",
       width: "22.5%",
     },
     {
       title: "Icon",
-      dataIndex: "icon",
-      key: "icon",
+      dataIndex: "image",
+      key: "image",
       width: "17.5%",
       render: (val: string) => (
         <>
-          <img src={val} alt="icon" className="w-12 h-12 rounded-md" />
+          {/* <img src={val} alt="icon" className="w-12 h-12 rounded-md" /> */}
+           <img
+            src={val || icon_placeholder}
+            alt="profile"
+            className="w-[45px] h-[45px] rounded-lg"
+            onError={(e) => {
+              e.currentTarget.onerror = null;
+              e.currentTarget.src = icon_placeholder;
+            }}
+          />
         </>
       ),
     },
@@ -39,25 +68,17 @@ const CategoryTable = ( { categories}) => {
       title: "Action",
       key: "action",
       width: "15%",
-      render: () => (
+      render: (_val: any, record: TDataSource) => (
         <div className="flex items-center gap-2">
           <EditCategoryModal/>
-          <DeleteCategoryModal />
+          <DeleteCategoryModal categoryId={record?._id}/>
         </div>
       ),
     },
   ];
 
-  const paginationConfig: TablePaginationConfig = {
-    position: ["bottomCenter"],
-    showSizeChanger: false,
-    defaultPageSize: 15,
-    total: 150,
-    showTotal: (total, range) =>
-      `Showing ${range[0]}-${range[1]} out of ${total}`,
-  };
 
-  
+
 
   return (
     <ConfigProvider
@@ -75,8 +96,8 @@ const CategoryTable = ( { categories}) => {
       <div className="w-full overflow-auto">
         <Table
           columns={columns}
-          dataSource={categoryData}
-          pagination={paginationConfig}
+          dataSource={dataSource}
+          pagination={false}
           rowKey="id"
           sticky
           scroll={{ y: "calc(100vh - 265px)" }}

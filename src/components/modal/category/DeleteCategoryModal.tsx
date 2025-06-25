@@ -1,14 +1,37 @@
 "use client";
 import { Modal } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Trash2 } from "lucide-react";
+import { useDeleteCategoryMutation } from "../../../redux/features/category/categoryApi";
+import { CgSpinnerTwo } from "react-icons/cg";
 
-const DeleteCategoryModal = () => {
+type TProps = {
+  categoryId: string;
+};
+
+const DeleteCategoryModal = ({ categoryId }: TProps) => {
   const [modalOpen, setModalOpen] = useState(false);
+
+  const [deleteCategory, { isLoading, isSuccess }] =
+    useDeleteCategoryMutation();
+
+  useEffect(() => {
+    if (!isLoading && isSuccess) {
+      setModalOpen(false);
+    }
+  }, [isLoading, isSuccess]);
+
+
+  const handleDelete = () => {
+    deleteCategory(categoryId);
+  };
 
   return (
     <>
-      <button onClick={()=>setModalOpen(true)} className="bg-red-600 hover:bg-red-700 p-2 text-white rounded-full">
+      <button
+        onClick={() => setModalOpen(true)}
+        className="bg-red-600 hover:bg-red-700 p-2 text-white rounded-full"
+      >
         <Trash2 size={18} />
       </button>
 
@@ -17,7 +40,6 @@ const DeleteCategoryModal = () => {
         onCancel={() => setModalOpen(false)}
         maskClosable={false}
         footer={false}
-        centered
         closable={false}
       >
         <div className="rounded-md">
@@ -37,10 +59,16 @@ const DeleteCategoryModal = () => {
                 No
               </button>
               <button
-                onClick={() => setModalOpen(false)}
+                onClick={handleDelete}
                 className="px-4 cursor-pointer py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none"
               >
-                Yes
+                {isLoading? (
+                  <>
+                    <CgSpinnerTwo className="animate-spin" fontSize={16} />
+                  </>
+                ) : (
+                  "Yes"
+                )}
               </button>
             </div>
           </div>

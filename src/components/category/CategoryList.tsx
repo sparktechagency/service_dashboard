@@ -5,14 +5,14 @@ import CategoryTable from "./CategoryTable";
 
 const CategoryList = () => {
   const { data, isLoading, isError } = useGetCategoriesQuery(undefined);
-  console.log(data?.data);
+  const categories = data?.data || [];
 
   if (isLoading) {
     return <ListLoading />;
   }
 
   if (!isLoading && !isError) {
-    return <CategoryTable />;
+    return <CategoryTable categories={categories}/>;
   }
 
   if (!isLoading && isError) {
