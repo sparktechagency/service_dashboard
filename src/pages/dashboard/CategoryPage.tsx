@@ -1,4 +1,4 @@
-import CategoryTable from "../../components/category/CategoryTable"
+import CategoryList from "../../components/category/CategoryList"
 import CreateCategoryModal from "../../components/modal/category/CreateCategoryModal"
 
 const CategoryPage = () => {
@@ -14,7 +14,7 @@ const CategoryPage = () => {
               <CreateCategoryModal/>
             </div>
             <div className="flex-1 overflow-hidden">
-              <CategoryTable />
+              <CategoryList />
             </div>
           </div>{" "}
         </div>

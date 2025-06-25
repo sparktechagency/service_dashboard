@@ -1,5 +1,5 @@
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
 import { useLoginMutation } from "../../redux/features/auth/authApi";
@@ -9,20 +9,20 @@ import { SetLoginError } from "../../redux/features/auth/authSlice";
 import type { z } from "zod";
 import CustomInput from "../form/CustomInput";
 import Error from "../validation/Error";
+import { CgSpinnerTwo } from "react-icons/cg";
 
 type TFormValues = z.infer<typeof loginSchema>
 
 const LoginForm = () => {
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { LoginError } = useAppSelector((state) => state.auth);
   const [login, { isLoading }] = useLoginMutation();
   const {handleSubmit, control } = useForm({
         resolver: zodResolver(loginSchema),
-        // defaultValues:{
-        //   email: "tayebrayhan10@gmail.com",
-        //   password: "12345678"
-        // }
+        defaultValues:{
+          email: "admin@admin.com",
+          password: "12345678"
+        }
   })
 
 
@@ -52,8 +52,15 @@ const LoginForm = () => {
           </Link>
         </div>
 
-        <button type="submit" className="w-full bg-primary hover:bg-[#2b4773] cursor-pointer text-white py-2 rounded-md font-semibold transition-colors duration-100">
-          Sign in
+        <button type="submit" className="w-full flex justify-center items-center gap-x-2 bg-primary hover:bg-[#2b4773] cursor-pointer text-white py-2 rounded-md font-semibold transition-colors duration-100">
+          {isLoading ? (
+            <>
+              <CgSpinnerTwo className="animate-spin" fontSize={16} />
+              Processing...
+            </>
+          ) : (
+            "Sign In"
+          )}
         </button>
       </form>
     </>

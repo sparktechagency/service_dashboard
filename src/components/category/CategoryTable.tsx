@@ -4,7 +4,13 @@ import { categoryData } from "../../data/category.data";
 import DeleteCategoryModal from "../modal/category/DeleteCategoryModal";
 import EditCategoryModal from "../modal/category/EditCategoryModal";
 
-const CategoryTable = () => {
+
+type Props = {
+  categories: 
+}
+
+
+const CategoryTable = ( { categories}) => {
   const columns = [
     {
       title: "Serial No",
@@ -50,6 +56,8 @@ const CategoryTable = () => {
     showTotal: (total, range) =>
       `Showing ${range[0]}-${range[1]} out of ${total}`,
   };
+
+  
 
   return (
     <ConfigProvider
