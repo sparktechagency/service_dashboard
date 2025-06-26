@@ -19,12 +19,13 @@ const CreateCategoryModal = () => {
   const dispatch = useAppDispatch();
   const [modalOpen, setModalOpen] = useState(false);
   const { CategoryCreateError } = useAppSelector((state) => state.category);
-  const [createCategory, { isLoading }] = useCreateCategoryMutation();
+  const [createCategory, { isLoading, isSuccess, reset }] = useCreateCategoryMutation();
   const { handleSubmit, control, setValue, clearErrors, setError, formState: { errors } } = useForm<TFormValues>({
     resolver: zodResolver(categorySchema),
   });
 
   const [image, setImage] = useState<File | null>(null);
+  const [preview, setPreview] = useState<string | null>(null);
   
 
   useEffect(() => {
@@ -45,6 +46,17 @@ const CreateCategoryModal = () => {
   };
 
 
+  //if success
+   useEffect(() => {
+    if (!isLoading && isSuccess) {
+      setValue("category", "");
+      setPreview(null)
+      setImage(null)
+      setModalOpen(false);
+    }
+  }, [isLoading, isSuccess, reset, setValue]);
+
+
   const onSubmit: SubmitHandler<TFormValues> = (data) => {
     dispatch(SetCategoryCreateError(""));
     const formData = new FormData();
@@ -57,7 +69,6 @@ const CreateCategoryModal = () => {
     <>
       <button
         onClick={() => setModalOpen(true)}
-        //className="flex items-center gap-2 bg-black text-white px-4 py-2 rounded-lg hover:bg-primary transition"
         className="flex items-center gap-2 bg-primary px-3 py-1.5 text-white cursor-pointer rounded-md hover:bg-[#2b4773] duration-200"
       >
         <FaPlus />
@@ -65,7 +76,12 @@ const CreateCategoryModal = () => {
       </button>
       <Modal
         open={modalOpen}
-        onCancel={() => setModalOpen(false)}
+        onCancel={() => {
+          setModalOpen(false);
+          setValue("category", "");
+          setImage(null)
+          setPreview(null)
+        }}
         maskClosable={false}
         footer={false}
       >
@@ -85,7 +101,7 @@ const CreateCategoryModal = () => {
                   placeholder="Enter title"
                 />
                 <div className="mb-6 mt-2">
-                  <ImageUpload image={image} setImage={setImage} title="Category Icon" setIconError={setIconError}/>
+                  <ImageUpload preview={preview} setPreview={setPreview} image={image} setImage={setImage} title="Category Icon" setIconError={setIconError}/>
                   {
                     errors?.icon && (
                       <p className="mt-1 text-sm text-red-500">{errors?.icon?.message}</p>

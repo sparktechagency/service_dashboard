@@ -4,13 +4,14 @@ import { Upload, Image as ImageIcon } from 'lucide-react';
 interface ImageUploadProps {
   image: File | null;
   setImage: (file: File | null) => void;
+  preview: string | null;
+  setPreview: React.Dispatch<React.SetStateAction<string | null>>
   title: string;
   setIconError: () => void;
 }
 
-const ImageUpload: React.FC<ImageUploadProps> = ({setImage, title, setIconError}) => {
+const ImageUpload: React.FC<ImageUploadProps> = ({preview, setPreview, setImage, title, setIconError}) => {
   const [dragging, setDragging] = useState(false);
-  const [preview, setPreview] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleDragEnter = (e: React.DragEvent<HTMLDivElement>) => {

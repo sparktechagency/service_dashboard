@@ -16,7 +16,7 @@ type TDataSource = {
   key: number;
   serial: number;
   _id: string;
-  categoryName: string;
+  category: string;
   image: string;
 }
 
@@ -27,7 +27,7 @@ const CategoryTable = ( { categories }: TProps) => {
         key: index,
         serial: Number(index+1),
         _id: category?._id,
-        categoryName: category?.category,
+        category: category?.category,
         image: baseUrl+category?.image
   }))
 
@@ -40,8 +40,8 @@ const CategoryTable = ( { categories }: TProps) => {
     },
     {
       title: "Title",
-      dataIndex: "categoryName",
-      key: "categoryName",
+      dataIndex: "category",
+      key: "category",
       width: "22.5%",
     },
     {
@@ -68,9 +68,9 @@ const CategoryTable = ( { categories }: TProps) => {
       title: "Action",
       key: "action",
       width: "15%",
-      render: (_val: any, record: TDataSource) => (
+      render: (_val: any, record: ICategory) => (
         <div className="flex items-center gap-2">
-          <EditCategoryModal/>
+          <EditCategoryModal category={record}/>
           <DeleteCategoryModal categoryId={record?._id}/>
         </div>
       ),

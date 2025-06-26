@@ -2,29 +2,42 @@ import { Modal } from "antd";
 import { useEffect, useState } from "react";
 import ImageUpload from "../../form/ImageUpload";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks/hooks";
-import { useCreateCategoryMutation } from "../../../redux/features/category/categoryApi";
+import { useUpdateCategoryMutation } from "../../../redux/features/category/categoryApi";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { categorySchema } from "../../../schemas/category.schema";
 import type { z } from "zod";
 import CustomInput from "../../form/CustomInput";
 import { CgSpinnerTwo } from "react-icons/cg";
-import { SetCategoryCreateError } from "../../../redux/features/category/categorySlice";
+import { SetCategoryUpdateError } from "../../../redux/features/category/categorySlice";
 import Error from "../../validation/Error";
 import { Edit } from "lucide-react";
+import type { ICategory } from "../../../types/category.type";
+import icon_placeholder from "../../../assets/images/icon_placeholder.jpg";
+
 
 type TFormValues = z.infer<typeof categorySchema>;
 
-const EditCategoryModal = () => {
+type TProps = {
+  category: ICategory
+}
+
+const EditCategoryModal = ({ category }: TProps) => {
   const dispatch = useAppDispatch();
   const [modalOpen, setModalOpen] = useState(false);
-  const { CategoryCreateError } = useAppSelector((state) => state.category);
-  const [createCategory, { isLoading }] = useCreateCategoryMutation();
+  const { CategoryUpdateError } = useAppSelector((state) => state.category);
+  const [ updateCategory, { isLoading, isSuccess }] = useUpdateCategoryMutation();
   const { handleSubmit, control, setValue, clearErrors, setError, formState: { errors } } = useForm<TFormValues>({
     resolver: zodResolver(categorySchema),
+    defaultValues: {
+      category: category?.category,
+      icon: category?.image
+    }
   });
 
   const [image, setImage] = useState<File | null>(null);
+  const [preview, setPreview] = useState<string | null>(category?.image || icon_placeholder);
+
   
 
   useEffect(() => {
@@ -45,12 +58,28 @@ const EditCategoryModal = () => {
   };
 
 
+    //if success
+   useEffect(() => {
+    if (!isLoading && isSuccess) {
+      // setValue("category", "");
+      // setPreview(null)
+      // setImage(null)
+      setModalOpen(false);
+    }
+  }, [isLoading, isSuccess]);
+
+
   const onSubmit: SubmitHandler<TFormValues> = (data) => {
-    dispatch(SetCategoryCreateError(""));
+    dispatch(SetCategoryUpdateError(""));
     const formData = new FormData();
     formData.append("category", data.category);
-    formData.append("image", image as File);
-    createCategory(formData);
+    if(image){
+      formData.append("image", image as File);
+    }
+    updateCategory({
+      id: category?._id,
+      data: formData
+    });
   };
 
   return (
@@ -64,7 +93,11 @@ const EditCategoryModal = () => {
 
       <Modal
         open={modalOpen}
-        onCancel={() => setModalOpen(false)}
+        onCancel={() => {
+          setValue("category", category?.category);
+          setPreview(category?.image || icon_placeholder);
+          setModalOpen(false)
+        }}
         maskClosable={false}
         footer={false}
       >
@@ -74,7 +107,7 @@ const EditCategoryModal = () => {
               <h2 className="text-2xl font-semibold text-gray-800 mb-4">
                 Update Category
               </h2>
-               {CategoryCreateError && <Error message={CategoryCreateError} />}
+               {CategoryUpdateError && <Error message={CategoryUpdateError} />}
               <form onSubmit={handleSubmit(onSubmit)}>
                 <CustomInput
                   label="Category Title"
@@ -84,7 +117,7 @@ const EditCategoryModal = () => {
                   placeholder="Enter title"
                 />
                 <div className="mb-6 mt-2">
-                  <ImageUpload image={image} setImage={setImage} title="Category Icon" setIconError={setIconError}/>
+                   <ImageUpload preview={preview} setPreview={setPreview} image={image} setImage={setImage} title="Category Icon" setIconError={setIconError}/>
                   {
                     errors?.icon && (
                       <p className="mt-1 text-sm text-red-500">{errors?.icon?.message}</p>

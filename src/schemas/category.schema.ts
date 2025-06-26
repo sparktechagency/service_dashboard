@@ -1,5 +1,8 @@
 import { z } from "zod";
-export const fullNameRegex = /^[A-Za-z\s'.-]+$/; //only contain letters, spaces, apostrophes, hyphens, and dots
+export const letterRegex = /^[A-Za-z]+$/;
+export const nonLetterRegex = /^[\s'.\-&,()]+$/;
+
+export const categoryRegex = /^[A-Za-z\s'.\-&,()]+$/; //only contain letters, spaces, apostrophes, hyphens, and dots, and(&) and comma(,)
 
 
 export const categorySchema = z.object({
@@ -10,8 +13,8 @@ export const categorySchema = z.object({
     })
     .min(1, "Title is required")
     .regex(
-      fullNameRegex,
-      "Title must contain only letters and spaces"
+      categoryRegex,
+      "Title only contain letters and valid symbols (' . - & , ( )) are allowed."
     )
     .trim(),
   icon: z
@@ -22,3 +25,6 @@ export const categorySchema = z.object({
     .min(1, "Icon is required")
     .trim(),
 });
+
+
+

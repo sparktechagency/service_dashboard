@@ -44,6 +44,28 @@ export const categoryApi = apiSlice.injectEndpoints({
         }
       },
     }),
+    updateCategory: builder.mutation({
+      query: ({id, data }) => ({
+        url: `/dashboard/edit-category/${id}`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: (result) => {
+        if (result?.success) {
+          return [TagTypes.categories];
+        }
+        return [];
+      },
+      async onQueryStarted(_arg, { queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          SuccessToast("Category is updated successfully");
+        } catch (err: any) {
+          const message = err?.error?.data?.message;
+          ErrorToast(message);
+        }
+      },
+    }),
     deleteCategory: builder.mutation({
       query: (id) => ({
         url: `/dashboard/delete-category/${id}`,
@@ -68,4 +90,4 @@ export const categoryApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetCategoriesQuery, useCreateCategoryMutation, useDeleteCategoryMutation } = categoryApi;
+export const { useGetCategoriesQuery, useCreateCategoryMutation, useDeleteCategoryMutation, useUpdateCategoryMutation } = categoryApi;
