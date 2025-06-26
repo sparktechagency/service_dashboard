@@ -9,7 +9,7 @@ const PackagesPage = () => {
           <div className="w-full h-full flex flex-col">
             <div className="p-4 flex justify-between">
               <h1 className="text-xl font-medium text-gray-800">
-                Category List
+                Subscription List
               </h1>
               <CreateCategoryModal/>
             </div>
