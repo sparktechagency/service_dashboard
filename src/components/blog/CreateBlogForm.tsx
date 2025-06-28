@@ -9,8 +9,11 @@ import { blogSchema } from "../../schemas/blog.schema";
 import type { z } from "zod";
 import CustomSelect from "../form/CustomSelect";
 import { categoryOptions } from "../../data/category.data";
+import CustomQuilEditor from "../form/CustomQuilEditor";
+import Error from "../validation/Error";
 
 type TFormValues = z.infer<typeof blogSchema>;
+
 
 const CreateBlogForm = () => {
   const dispatch = useAppDispatch();
@@ -22,11 +25,13 @@ const CreateBlogForm = () => {
 
   const onSubmit: SubmitHandler<TFormValues> = (data) => {
     dispatch(SetBlogCreateError(""));
-    createBlog(data);
+    console.log(data);
+    //createBlog(data);
   };
 
   return (
     <>
+       {BlogCreateError && <Error message={BlogCreateError} />}
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <CustomInput
           label="Title"
@@ -41,6 +46,7 @@ const CreateBlogForm = () => {
           control={control}
           options={categoryOptions}
         />
+        <CustomQuilEditor label="Description" name="descriptions" control={control} height={400}/>
 
         <button
           type="submit"

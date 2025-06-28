@@ -12,4 +12,11 @@ export const blogSchema = z.object({
     })
     .trim()
     .min(1, "Select a category"),
+  descriptions: z
+    .string({
+      invalid_type_error: "Description must be string",
+      required_error: "Description is required",
+    })
+    .trim()
+    .min(1, "Description is required"),
 });
