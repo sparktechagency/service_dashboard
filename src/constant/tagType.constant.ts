@@ -10,7 +10,9 @@ const TagTypes = {
     help: "Help",
     total: "Total",
     userGrowth: "UserGrowth",
-    packges: "Packages"
+    packges: "Packages",
+    blogs: "Blogs",
+    blog: "Blog"
 }
 
 export default TagTypes;

@@ -1,3 +1,4 @@
+import CreateBlogForm from "../../components/blog/CreateBlogForm"
 
 const CreateBlogPage = () => {
   return (
@@ -11,7 +12,7 @@ const CreateBlogPage = () => {
               </h1>
             </div>
             <div className="flex-1 overflow-hidden p-4">
-              erfger
+              <CreateBlogForm/>
             </div>
           </div>
         </div>

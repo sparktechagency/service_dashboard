@@ -5,23 +5,23 @@ const initialState = {
   BlogUpdateError: ""
 };
 
-const categorySlice = createSlice({
-  name: "category",
+const blogSlice = createSlice({
+  name: "blog",
   initialState,
   reducers: {
-    SetCategoryCreateError: (state, action) => {
-      state.CategoryCreateError = action.payload;
+    SetBlogCreateError: (state, action) => {
+      state.BlogCreateError = action.payload;
     },
-    SetCategoryUpdateError: (state, action) => {
-      state.CategoryUpdateError = action.payload;
+    SetBlogUpdateError: (state, action) => {
+      state.BlogUpdateError = action.payload;
     }
   },
 });
 
 export const {
-  SetCategoryCreateError,
-  SetCategoryUpdateError
-} = categorySlice.actions;
+  SetBlogCreateError,
+  SetBlogUpdateError
+} = blogSlice.actions;
 
-const categorySliceReducer = categorySlice.reducer;
-export default categorySliceReducer;
+const blogSliceReducer = blogSlice.reducer;
+export default blogSliceReducer;

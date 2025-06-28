@@ -9,11 +9,11 @@ export const blogApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getBlogs: builder.query({
       query: () => ({
-        url: "/dashboard/all-category",
+        url: "/dashboard/get_all_blogs",
         method: "GET",
       }),
       keepUnusedDataFor: 600,
-      providesTags: [TagTypes.categories],
+      providesTags: [TagTypes.blogs],
       async onQueryStarted(_arg, { queryFulfilled }) {
         try {
           await queryFulfilled;
@@ -22,58 +22,73 @@ export const blogApi = apiSlice.injectEndpoints({
         }
       },
     }),
-    createCategory: builder.mutation({
+    createBlog: builder.mutation({
       query: (data) => ({
-        url: "/dashboard/create-category",
+        url: "/dashboard/blog_create",
         method: "POST",
         body: data,
       }),
       invalidatesTags: (result) => {
         if (result?.success) {
-          return [TagTypes.categories];
+          return [TagTypes.blogs];
         }
         return [];
       },
       async onQueryStarted(_arg, { queryFulfilled }) {
         try {
           await queryFulfilled;
-          SuccessToast("Category is created successfully");
+          SuccessToast("Blog is created successfully");
         } catch (err: any) {
           const message = err?.error?.data?.message;
           ErrorToast(message);
         }
       },
     }),
-    updateCategory: builder.mutation({
+    getSingleBlog: builder.query({
+      query: (id) => ({
+        url: `/dashboard/get_blog_details${id}`,
+        method: "GET",
+      }),
+      keepUnusedDataFor: 600,
+      providesTags: (_result, _error, arg) => [{ type: TagTypes.blog, id: arg }],
+      async onQueryStarted(_arg, { queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (err: any) {
+          ErrorToast("Server error is occured");
+        }
+      },
+    }),
+    updateBlog: builder.mutation({
       query: ({id, data }) => ({
-        url: `/dashboard/edit-category/${id}`,
+        url: `/dashboard/update_blog/${id}`,
         method: "PATCH",
         body: data,
       }),
-      invalidatesTags: (result) => {
+      invalidatesTags: (result, _success, arg) => {
         if (result?.success) {
-          return [TagTypes.categories];
+          return [TagTypes.blogs, { type: TagTypes.blog, id: arg.id }];
         }
         return [];
       },
       async onQueryStarted(_arg, { queryFulfilled }) {
         try {
           await queryFulfilled;
-          SuccessToast("Category is updated successfully");
+          SuccessToast("Blog is updated successfully");
         } catch (err: any) {
           const message = err?.error?.data?.message;
           ErrorToast(message);
         }
       },
     }),
-    deleteCategory: builder.mutation({
+    deleteBlog: builder.mutation({
       query: (id) => ({
-        url: `/dashboard/delete-category/${id}`,
+        url: `/dashboard/delete_blog/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: (result) => {
         if (result?.success) {
-          return [TagTypes.categories];
+          return [TagTypes.blogs];
         }
         return [];
       },
@@ -90,4 +105,4 @@ export const blogApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetCategoriesQuery, useCreateCategoryMutation, useDeleteCategoryMutation, useUpdateCategoryMutation } = blogApi;
+export const { useGetBlogsQuery, useGetSingleBlogQuery, useCreateBlogMutation, useDeleteBlogMutation, useUpdateBlogMutation } = blogApi;
