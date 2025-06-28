@@ -5,27 +5,22 @@ import TagTypes from "../../../constant/tagType.constant";
 import { ErrorToast, SuccessToast } from "../../../helper/ValidationHelper";
 import { apiSlice } from "../api/apiSlice";
 
-export const categoryApi = apiSlice.injectEndpoints({
+export const blogApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getBlogs: builder.query({
-      query: (args) => {
-        const params = new URLSearchParams();
-
-        if (args !== undefined && args.length > 0) {
-          args.forEach((item: IParam) => {
-            if (item.value) {
-              params.append(item.name, item.value);
-            }
-          });
-        }
-        return {
-          url: "/dashboard/get_all_user",
-          method: "GET",
-          params: params,
-        };
-      },
+      query: () => ({
+        url: "/dashboard/all-category",
+        method: "GET",
+      }),
       keepUnusedDataFor: 600,
-      providesTags: [TagTypes.users],
+      providesTags: [TagTypes.categories],
+      async onQueryStarted(_arg, { queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (err: any) {
+          ErrorToast("Server error is occured");
+        }
+      },
     }),
     createCategory: builder.mutation({
       query: (data) => ({
@@ -95,4 +90,4 @@ export const categoryApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetCategoriesQuery, useCreateCategoryMutation, useDeleteCategoryMutation, useUpdateCategoryMutation } = categoryApi;
+export const { useGetCategoriesQuery, useCreateCategoryMutation, useDeleteCategoryMutation, useUpdateCategoryMutation } = blogApi;

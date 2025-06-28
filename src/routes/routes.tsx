@@ -20,6 +20,7 @@ import TermsConditionPage from "../pages/settings/TermsConditionPage";
 import JobDetailsPage from "../pages/dashboard/JobDetailsPage";
 import JobPostsPage from "../pages/dashboard/JobPostsPage";
 import SubscriberDetailsPage from "../pages/dashboard/SubscriberDetailsPage";
+import CreateBlogPage from "../pages/dashboard/CreateBlogPage";
 
 const router = createBrowserRouter([
   {
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
        {
         path: "blogs",
         element: <BlogsPage />,
+      },
+      {
+        path: "create-blog",
+        element: <CreateBlogPage />,
       },
       {
         path: "about-us",

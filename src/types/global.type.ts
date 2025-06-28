@@ -6,4 +6,17 @@ export type IAuthUser = {
   email: string;
   role: "USER" | "EMPLOYER" | "ADMIN" | "SUPER_ADMIN";
 };
+
+export interface IParam {
+  name: string;
+  value: string;
+}
+
+export interface IMeta {
+  page: number;
+  limit: number;
+  total: number;
+  totalPage: number;
+}
+
   

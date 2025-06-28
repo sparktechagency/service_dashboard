@@ -1,5 +1,5 @@
-import CategoryList from "../../components/category/CategoryList"
-import CreateCategoryModal from "../../components/modal/category/CreateCategoryModal"
+import CreateSubscriptionModal from "../../components/modal/subscription/CreateSubscriptionModal";
+import PackageList from "../../components/subscription/PackageList";
 
 const PackagesPage = () => {
   return (
@@ -11,10 +11,10 @@ const PackagesPage = () => {
               <h1 className="text-xl font-medium text-gray-800">
                 Subscription List
               </h1>
-              <CreateCategoryModal/>
+              <CreateSubscriptionModal/>
             </div>
             <div className="flex-1 overflow-hidden">
-              <CategoryList />
+              <PackageList />
             </div>
           </div>{" "}
         </div>

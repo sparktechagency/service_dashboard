@@ -1,6 +1,8 @@
+import { useNavigate } from "react-router-dom"
 import BlogTable from "../../components/blog/BlogTable"
 
 const BlogsPage = () => {
+  const navigate = useNavigate();
   return (
     <>
       <div>
@@ -10,7 +12,7 @@ const BlogsPage = () => {
               <h1 className="text-xl font-medium text-gray-800">
                 Blog List
               </h1>
-              <button className="bg-primary px-3 py-1.5 text-white cursor-pointer rounded-md hover:bg-[#2b4773] duration-200"> Add New</button>
+              <button onClick={()=>navigate("/create-blog")} className="bg-primary px-3 py-1.5 text-white cursor-pointer rounded-md hover:bg-[#2b4773] duration-200"> Add New</button>
             </div>
             <div className="flex-1 overflow-hidden">
               <BlogTable />
