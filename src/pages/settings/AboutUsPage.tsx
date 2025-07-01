@@ -1,67 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client"
 
-import { useState, useRef } from "react"
-import JoditEditor from "jodit-react"
-import { Save, FileText, Upload } from "lucide-react"
+import { FileText } from "lucide-react"
+import CreateAboutForm from "../../components/AboutUs/CreateAboutForm"
 
 const AboutUsPage = () =>{
-  const editor = useRef(null)
-  const [content, setContent] = useState<string>("")
-  const [title, setTitle] = useState<string>("Privacy Policy")
-  const [isSaving, setIsSaving] = useState<boolean>(false)
-  const [isPublished, setIsPublished] = useState<boolean>(false)
-
-  const config = {
-    readonly: false,
-    height: 500,
-    placeholder: "Start writing your privacy policy...",
-    buttons: [
-      "source",
-      "|",
-      "bold",
-      "italic",
-      "underline",
-      "strikethrough",
-      "|",
-      "ul",
-      "ol",
-      "|",
-      "font",
-      "fontsize",
-      "paragraph",
-      "|",
-      "table",
-      "link",
-      "|",
-      "undo",
-      "redo",
-      "|",
-      "hr",
-      "eraser",
-      "fullsize",
-    ],
-    toolbarAdaptive: false,
-  }
-
-  const handleSave = () => {
-    setIsSaving(true)
-    // Simulate API call
-    setTimeout(() => {
-      setIsSaving(false)
-      alert("Privacy policy saved successfully!")
-    }, 1000)
-  }
-
-  const handlePublish = () => {
-    setIsSaving(true)
-    // Simulate API call
-    setTimeout(() => {
-      setIsSaving(false)
-      setIsPublished(true)
-      alert("Privacy policy published successfully!")
-    }, 1000)
-  }
 
   const privacyPolicyTemplate = `
 <h2>1. Introduction</h2>
@@ -92,9 +35,9 @@ const AboutUsPage = () =>{
 </ul>
 `
 
-  const loadTemplate = () => {
-    setContent(privacyPolicyTemplate)
-  }
+  // const loadTemplate = () => {
+  //   setContent(privacyPolicyTemplate)
+  // }
 
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
@@ -108,7 +51,7 @@ const AboutUsPage = () =>{
             </h1>
             <div className="flex space-x-2">
               <button
-                onClick={loadTemplate}
+                // onClick={loadTemplate}
                 className="px-4 py-2 bg-white bg-opacity-20 rounded-md text-white text-sm font-medium hover:bg-opacity-30 transition-all flex items-center"
               >
                 <FileText className="mr-1" size={16} /> Load Template
@@ -117,61 +60,13 @@ const AboutUsPage = () =>{
           </div>
         </div>
 
-        {/* Content */}
         <div className="p-6">
-          <div className="mb-6">
-            <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">
-              Policy Title
-            </label>
-            <input
-              type="text"
-              id="title"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-              placeholder="Enter policy title"
-            />
-          </div>
-
-          <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-700 mb-1">Policy Content</label>
-            <JoditEditor
-              ref={editor}
-              value={content}
-              config={config}
-              onBlur={(newContent) => setContent(newContent)}
-              onChange={(_newContent) => {}}
-            />
-          </div>
-
-          <div className="flex justify-between items-center mt-6">
-            <div className="text-sm text-gray-500">
-              {isPublished ? <span className="text-green-600 font-medium">Published</span> : <span>Draft</span>}
-            </div>
-            <div className="flex space-x-3">
-              <button
-                onClick={handleSave}
-                disabled={isSaving}
-                className="px-4 py-2 bg-gray-100 border border-gray-300 rounded-md text-gray-700 text-sm font-medium hover:bg-gray-200 transition-all flex items-center"
-              >
-                <Save className="mr-1" size={16} />
-                {isSaving ? "Saving..." : "Save Draft"}
-              </button>
-              <button
-                onClick={handlePublish}
-                disabled={isSaving}
-                className="px-4 py-2 bg-indigo-600 rounded-md text-white text-sm font-medium hover:bg-indigo-700 transition-all flex items-center"
-              >
-                <Upload className="mr-1" size={16} />
-                {isSaving ? "Publishing..." : "Publish Policy"}
-              </button>
-            </div>
-          </div>
+          <CreateAboutForm/>
         </div>
       </div>
 
       {/* Preview Section */}
-      {content && (
+      {/* {content && (
         <div className="w-full mx-auto mt-8 bg-white rounded-xl shadow-md overflow-hidden">
           <div className="bg-gray-100 px-6 py-4 border-b">
             <h2 className="text-lg font-medium text-gray-900">Preview</h2>
@@ -181,7 +76,7 @@ const AboutUsPage = () =>{
             <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: content }}></div>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   )
 }

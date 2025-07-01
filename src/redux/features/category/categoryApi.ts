@@ -3,11 +3,12 @@
 
 import TagTypes from "../../../constant/tagType.constant";
 import { ErrorToast, SuccessToast } from "../../../helper/ValidationHelper";
+import type { IParam } from "../../../types/global.type";
 import { apiSlice } from "../api/apiSlice";
 
 export const categoryApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getBlogs: builder.query({
+    getCategories: builder.query({
       query: (args) => {
         const params = new URLSearchParams();
 
@@ -19,7 +20,7 @@ export const categoryApi = apiSlice.injectEndpoints({
           });
         }
         return {
-          url: "/dashboard/get_all_user",
+          url: "/dashboard/all-category",
           method: "GET",
           params: params,
         };

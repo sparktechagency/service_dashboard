@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom"
-import BlogTable from "../../components/blog/BlogTable"
+import BlogList from "../../components/blog/BlogList";
 
 const BlogsPage = () => {
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ const BlogsPage = () => {
               <button onClick={()=>navigate("/create-blog")} className="bg-primary px-3 py-1.5 text-white cursor-pointer rounded-md hover:bg-[#2b4773] duration-200"> Add New</button>
             </div>
             <div className="flex-1 overflow-hidden">
-              <BlogTable />
+              <BlogList />
             </div>
           </div>{" "}
         </div>

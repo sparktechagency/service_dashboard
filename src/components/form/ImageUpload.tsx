@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Upload, Image as ImageIcon } from 'lucide-react';
+import { Upload } from 'lucide-react';
 
 interface ImageUploadProps {
   image: File | null;
@@ -157,20 +157,14 @@ const ImageUpload: React.FC<ImageUploadProps> = ({preview, setPreview, setImage,
                   Drop image here or click to upload
                 </p>
                 <p className="text-xs text-gray-500 mt-1">
-                  PNG, JPG, GIF up to 5MB
+                  PNG, JPG, GIF
+                   {/* up to 5MB */}
                 </p>
               </div>
             </div>
           </>
         )}
       </div>
-      
-      {!preview && (
-        <p className="text-xs text-gray-500 mt-2 flex items-center">
-          <ImageIcon className="w-3 h-3 mr-1" />
-          Add an icon to help users identify this category
-        </p>
-      )}
     </div>
   );
 };

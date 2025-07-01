@@ -7,13 +7,14 @@ type TProps = {
   name: string;
   height?: number;
   control: any;
+  placeholder?: string;
 };
 
-const CustomQuilEditor = ({ label, name, control, height = 200 }: TProps) => {
+const CustomQuilEditor = ({ label, name, control, height = 200, placeholder= "Write here..", }: TProps) => {
   const config = {
     readonly: false,
     height: height,
-    placeholder: "Start writing your privacy policy...",
+    placeholder: placeholder,
     buttons: [
       "source",
       "|",
@@ -45,7 +46,7 @@ const CustomQuilEditor = ({ label, name, control, height = 200 }: TProps) => {
   return (
     <>
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
+        <label htmlFor={name} className="block text-sm font-medium text-gray-700 mb-1">
           {label}
         </label>
 

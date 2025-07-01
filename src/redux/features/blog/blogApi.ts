@@ -3,24 +3,30 @@
 
 import TagTypes from "../../../constant/tagType.constant";
 import { ErrorToast, SuccessToast } from "../../../helper/ValidationHelper";
+import type { IParam } from "../../../types/global.type";
 import { apiSlice } from "../api/apiSlice";
 
 export const blogApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getBlogs: builder.query({
-      query: () => ({
-        url: "/dashboard/get_all_blogs",
-        method: "GET",
-      }),
+      query: (args) => {
+        const params = new URLSearchParams();
+
+        if (args !== undefined && args.length > 0) {
+          args.forEach((item: IParam) => {
+            if (item.value) {
+              params.append(item.name, item.value);
+            }
+          });
+        }
+        return {
+          url: "/dashboard/get_all_blogs",
+          method: "GET",
+          params: params,
+        };
+      },
       keepUnusedDataFor: 600,
       providesTags: [TagTypes.blogs],
-      async onQueryStarted(_arg, { queryFulfilled }) {
-        try {
-          await queryFulfilled;
-        } catch (err: any) {
-          ErrorToast("Server error is occured");
-        }
-      },
     }),
     createBlog: builder.mutation({
       query: (data) => ({
@@ -50,7 +56,9 @@ export const blogApi = apiSlice.injectEndpoints({
         method: "GET",
       }),
       keepUnusedDataFor: 600,
-      providesTags: (_result, _error, arg) => [{ type: TagTypes.blog, id: arg }],
+      providesTags: (_result, _error, arg) => [
+        { type: TagTypes.blog, id: arg },
+      ],
       async onQueryStarted(_arg, { queryFulfilled }) {
         try {
           await queryFulfilled;
@@ -60,7 +68,7 @@ export const blogApi = apiSlice.injectEndpoints({
       },
     }),
     updateBlog: builder.mutation({
-      query: ({id, data }) => ({
+      query: ({ id, data }) => ({
         url: `/dashboard/update_blog/${id}`,
         method: "PATCH",
         body: data,

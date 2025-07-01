@@ -98,7 +98,7 @@ const CategoryTable = ( { categories }: TProps) => {
           columns={columns}
           dataSource={dataSource}
           pagination={false}
-          rowKey="id"
+          rowKey="_id"
           sticky
           scroll={{ y: "calc(100vh - 265px)" }}
           className="employer-table"
