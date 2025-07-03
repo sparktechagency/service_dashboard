@@ -4,11 +4,11 @@ import TagTypes from "../../../constant/tagType.constant.ts";
 import { getToken } from "../../../helper/SessionHelper.ts";
 import { ErrorToast } from "../../../helper/ValidationHelper.ts";
 
-export const baseUrl = "http://10.0.60.118:5004"
+export const baseUrl = "https://backend.machmakers.co.uk";
+//export const baseUrl = "http://10.0.60.118:5004"
 
 
 const baseQuery = fetchBaseQuery({
-  //baseUrl: "http://10.0.60.118:5003",
   baseUrl: baseUrl,
   prepareHeaders: async (headers) => {
     if (getToken()) {
