@@ -8,4 +8,7 @@ export default defineConfig({
     //host: '13.53.182.102',  
     host: '0.0.0.0'    
   },
+  preview: { 
+    allowedHosts: ['dashboard.machmakers.co.uk'],  
+  },
 })
