@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client"
 
 import { FileText } from "lucide-react"
@@ -6,34 +5,7 @@ import CreateAboutForm from "../../components/AboutUs/CreateAboutForm"
 
 const AboutUsPage = () =>{
 
-  const privacyPolicyTemplate = `
-<h2>1. Introduction</h2>
-<p>This Privacy Policy explains how we collect, use, and disclose your information when you use our services.</p>
 
-<h2>2. Information We Collect</h2>
-<p>We may collect the following types of information:</p>
-<ul>
-  <li>Personal information such as name, email address, and contact details</li>
-  <li>Usage data and analytics</li>
-  <li>Device information</li>
-</ul>
-
-<h2>3. How We Use Your Information</h2>
-<p>We use your information to:</p>
-<ul>
-  <li>Provide and maintain our services</li>
-  <li>Improve and personalize your experience</li>
-  <li>Communicate with you</li>
-</ul>
-
-<h2>4. Data Sharing and Disclosure</h2>
-<p>We may share your information with:</p>
-<ul>
-  <li>Service providers</li>
-  <li>Business partners</li>
-  <li>Legal authorities when required by law</li>
-</ul>
-`
 
   // const loadTemplate = () => {
   //   setContent(privacyPolicyTemplate)

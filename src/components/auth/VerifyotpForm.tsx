@@ -84,6 +84,7 @@ const VerifyotpForm = () => {
     // trigger resend OTP logic here
     setSeconds(60);
     setCanResend(false);
+    forgotPasswordResendOtp("")
   };
 
 

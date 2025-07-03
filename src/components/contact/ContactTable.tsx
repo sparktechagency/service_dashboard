@@ -1,7 +1,7 @@
 import { Table, ConfigProvider } from "antd";
 import type { TablePaginationConfig } from "antd/es/table";
 import { Eye, Reply } from "lucide-react";
-import DeleteCategoryModal from "../modal/category/DeleteCategoryModal";
+//import DeleteCategoryModal from "../modal/category/DeleteCategoryModal";
 import { contactData } from "../../data/contact.data";
 
 const ContactTable = () => {
@@ -56,7 +56,7 @@ const ContactTable = () => {
           <button className="bg-blue-600 hover:bg-blue-700 p-2 text-white rounded-full">
             <Reply  size={18} />
           </button>
-          <DeleteCategoryModal />
+          {/* <DeleteCategoryModal /> */}
         </div>
       ),
     },
