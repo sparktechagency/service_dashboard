@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {
   BarChart,
   Bar,
@@ -9,8 +9,6 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import type { TJobYear } from '../../types/year.type';
-import { useGetJobGrowthQuery } from '../../redux/features/dashboard/dashboardApi';
-import calculateChartMetrics from '../../utils/calculateChartMetrics';
 
 
 
@@ -73,31 +71,9 @@ const barDataByYear: Record<string, TJobYear[]> = {
   ],
 };
 
-const JobOverviewChart = () => {
-  const date = new Date();
-  const currentYear = date.getFullYear().toString();
-  const [selectedYear, setSelectedYear] = useState(currentYear);
-  const [barData, setBarData] = useState([])
-  const {data, isLoading} = useGetJobGrowthQuery(selectedYear);
-  const [domain, setDomain] = useState<number[]>([]);
-  const [ticks, setTicks] = useState<number[]>([]);
-
-  useEffect(() => {
-    if (!isLoading && data) {
-      const result = data?.data?.data;
-      const formatted = result?.map((item:any) => ({
-        month: item.month,
-        jobs: item.count,
-      }));
-      setBarData(formatted);
-      const metrics = calculateChartMetrics(formatted);
-      setDomain(metrics?.domain as number[]);
-      setTicks(metrics?.ticks as number[])
-    }
-  }, [data, isLoading]);
-
-  
-
+const JobOverviewChartPast = () => {
+  const [selectedYear, setSelectedYear] = useState('2025');
+  const barData = barDataByYear[selectedYear];
 
 
   return (
@@ -126,8 +102,8 @@ const JobOverviewChart = () => {
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="month" tick={{ fontSize: 12 }} />
             <YAxis
-              domain={domain}
-              ticks={ticks}
+              domain={[0, 1000]}
+              ticks={[0, 200, 400, 600, 800, 1000]}
               tickFormatter={(value) =>
                 new Intl.NumberFormat('en').format(value)
               }
@@ -147,4 +123,4 @@ const JobOverviewChart = () => {
   );
 };
 
-export default JobOverviewChart;
+export default JobOverviewChartPast;

@@ -1,6 +1,6 @@
 export default function StatsLoading () {
   return (
-    <div className="w-full max-w-6xl mx-auto p-4">
+    <div className="w-full mx-auto">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
         {/* Card 1 Skeleton */}
         <div className="bg-white rounded-lg shadow-sm border p-6 animate-pulse">
