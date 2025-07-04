@@ -109,10 +109,10 @@ const CandidateTable: React.FC<CandidateTableProps> = ({
     {
       title: "Action",
       key: "action",
-      width: "15%",
+      width: "5%",
       //className: 'bg-amber-50',
       render: () => (
-        <div className="flex">
+        <div className="flex justify-center">
           <button className="text-gray-600 hover:text-gray-900">
             <Eye size={20} />
           </button>

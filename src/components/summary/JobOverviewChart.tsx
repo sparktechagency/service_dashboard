@@ -8,84 +8,30 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from 'recharts';
-import type { TJobYear } from '../../types/year.type';
+import type { TJobGrowth } from '../../types/year.type';
 import { useGetJobGrowthQuery } from '../../redux/features/dashboard/dashboardApi';
 import calculateChartMetrics from '../../utils/calculateChartMetrics';
+import JobOverviewLoading from '../loader/JobOverviewLoading';
+import { yearOptions } from '../../data/options.data';
 
 
 
-const barDataByYear: Record<string, TJobYear[]> = {
-  "2025": [
-    { month: 'Jan', jobs: 300 },
-    { month: 'Feb', jobs: 250 },
-    { month: 'Mar', jobs: 400 },
-    { month: 'Apr', jobs: 350 },
-    { month: 'May', jobs: 500 },
-    { month: 'Jun', jobs: 480 },
-    { month: 'Jul', jobs: 520 },
-    { month: 'Aug', jobs: 600 },
-    { month: 'Sep', jobs: 450 },
-    { month: 'Oct', jobs: 700 },
-    { month: 'Nov', jobs: 620 },
-    { month: 'Dec', jobs: 750 },
-  ],
-  "2026": [
-    { month: 'Jan', jobs: 400 },
-    { month: 'Feb', jobs: 380 },
-    { month: 'Mar', jobs: 420 },
-    { month: 'Apr', jobs: 460 },
-    { month: 'May', jobs: 500 },
-    { month: 'Jun', jobs: 600 },
-    { month: 'Jul', jobs: 650 },
-    { month: 'Aug', jobs: 680 },
-    { month: 'Sep', jobs: 700 },
-    { month: 'Oct', jobs: 740 },
-    { month: 'Nov', jobs: 800 },
-    { month: 'Dec', jobs: 850 },
-  ],
-  "2027": [
-    { month: 'Jan', jobs: 450 },
-    { month: 'Feb', jobs: 480 },
-    { month: 'Mar', jobs: 500 },
-    { month: 'Apr', jobs: 900 },
-    { month: 'May', jobs: 650 },
-    { month: 'Jun', jobs: 700 },
-    { month: 'Jul', jobs: 350 },
-    { month: 'Aug', jobs: 800 },
-    { month: 'Sep', jobs: 420 },
-    { month: 'Oct', jobs: 670 },
-    { month: 'Nov', jobs: 900 },
-    { month: 'Dec', jobs: 950 },
-  ],
-  "2028": [
-    { month: 'Jan', jobs: 300 },
-    { month: 'Feb', jobs: 250 },
-    { month: 'Mar', jobs: 400 },
-    { month: 'Apr', jobs: 350 },
-    { month: 'May', jobs: 500 },
-    { month: 'Jun', jobs: 480 },
-    { month: 'Jul', jobs: 520 },
-    { month: 'Aug', jobs: 600 },
-    { month: 'Sep', jobs: 450 },
-    { month: 'Oct', jobs: 700 },
-    { month: 'Nov', jobs: 620 },
-    { month: 'Dec', jobs: 750 },
-  ],
-};
 
 const JobOverviewChart = () => {
   const date = new Date();
   const currentYear = date.getFullYear().toString();
   const [selectedYear, setSelectedYear] = useState(currentYear);
   const [barData, setBarData] = useState([])
-  const {data, isLoading} = useGetJobGrowthQuery(selectedYear);
+  const {data, isLoading, isError} = useGetJobGrowthQuery(selectedYear);
   const [domain, setDomain] = useState<number[]>([]);
   const [ticks, setTicks] = useState<number[]>([]);
+
+
 
   useEffect(() => {
     if (!isLoading && data) {
       const result = data?.data?.data;
-      const formatted = result?.map((item:any) => ({
+      const formatted = result?.map((item:TJobGrowth) => ({
         month: item.month,
         jobs: item.count,
       }));
@@ -96,7 +42,15 @@ const JobOverviewChart = () => {
     }
   }, [data, isLoading]);
 
-  
+
+
+  if(isLoading){
+    return <JobOverviewLoading/>
+  }
+
+  if (!isLoading && isError) {
+    return <h1 className="text-lg text-red-500">Server Error Occured</h1>;
+  }
 
 
 
@@ -109,7 +63,7 @@ const JobOverviewChart = () => {
           value={selectedYear}
           onChange={(e) => setSelectedYear(e.target.value)}
         >
-          {Object.keys(barDataByYear).map((year) => (
+         {yearOptions.map((year) => (
             <option key={year} value={year}>
               {year}
             </option>

@@ -23,7 +23,17 @@ export const dashboardApi = apiSlice.injectEndpoints({
       keepUnusedDataFor: 600,
       providesTags: [TagTypes.jobGrowth],
     }),
+    getIncomeGrowth: builder.query({
+      query: (year) => {
+        return {
+          url: `/dashboard/get_subscription_growth?year=${year}`,
+          method: "GET",
+        };
+      },
+      keepUnusedDataFor: 600,
+      providesTags: [TagTypes.jobGrowth],
+    }),
   }),
 });
 
-export const { useGetStatsQuery, useGetJobGrowthQuery } = dashboardApi;
+export const { useGetStatsQuery, useGetJobGrowthQuery, useGetIncomeGrowthQuery } = dashboardApi;

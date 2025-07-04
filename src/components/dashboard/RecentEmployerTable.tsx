@@ -1,8 +1,7 @@
 import React from "react";
-import { Table, ConfigProvider, Pagination } from "antd";
+import { Table, ConfigProvider } from "antd";
 import { Eye } from "lucide-react";
 import ChangeStatusModal from "../modal/auth/ChangeStatusModal";
-import type { IMeta } from "../../types/global.type";
 import profile_placeholder from "../../assets/images/profile_placeholder.png";
 import { baseUrl } from "../../redux/features/api/apiSlice";
 import type { TEmployer } from "../../types/employer.type";
@@ -10,11 +9,6 @@ import type { TEmployer } from "../../types/employer.type";
 
 interface EmployerTableProps {
   employers: TEmployer[];
-  meta: IMeta;
-  currentPage: number;
-  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
-  pageSize: number;
-  setPageSize: React.Dispatch<React.SetStateAction<number>>;
 }
 
 type TDataSource = TEmployer & {
@@ -22,18 +16,13 @@ type TDataSource = TEmployer & {
   serial: number;
 }
 
-const EmployerTable : React.FC<EmployerTableProps> = ({
-  employers,
-  meta,
-  currentPage,
-  setCurrentPage,
-  pageSize,
-  setPageSize,
+const RecentEmployerTable : React.FC<EmployerTableProps> = ({
+  employers
 }) => {
 
   const dataSource: TDataSource[] = employers?.map((employer, index) => ({
     key: index,
-    serial: Number(index + 1) + (currentPage - 1) * pageSize,
+    serial: Number(index + 1),
     _id: employer?._id,
     name: employer?.name,
     email: employer?.email,
@@ -155,10 +144,6 @@ const EmployerTable : React.FC<EmployerTableProps> = ({
     },
   ];
 
-  const handlePagination = (page: number, PageSize: number) => {
-    setCurrentPage(page);
-    setPageSize(PageSize);
-  };
 
   return (
     <ConfigProvider
@@ -184,18 +169,8 @@ const EmployerTable : React.FC<EmployerTableProps> = ({
           className="employer-table"
         />
       </div>
-      {meta?.total > 0 && (
-        <div className="p-8 bg-white shadow-md flex justify-center">
-          <Pagination
-            onChange={handlePagination}
-            current={currentPage}
-            pageSize={pageSize}
-            total={meta?.total}
-          />
-        </div>
-      )}
     </ConfigProvider>
   );
 };
 
-export default EmployerTable;
+export default RecentEmployerTable;

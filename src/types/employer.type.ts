@@ -26,4 +26,13 @@ export type TEmployer = {
   //status: "active" | "inactive" | string;
   // createdAt: string;
   // updatedAt: string;
+  company?: {
+    // _id: string;
+    // company_logo: string;
+    name: string;
+    // employer_position: string;
+    // locations: string;
+    // details: string;
+    // website_link: string | null;
+  };
 };

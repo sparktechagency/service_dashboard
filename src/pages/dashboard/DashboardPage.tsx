@@ -2,7 +2,6 @@ import RecentEmployerList from "../../components/dashboard/RecentEmployerList";
 import StatsSection from "../../components/dashboard/StatsSection";
 import IncomeOverviewChart from "../../components/summary/IncomeOverviewChart";
 import JobOverviewChart from "../../components/summary/JobOverviewChart";
-import JobOverviewChartPast from "../../components/summary/JobOverviewChartPast";
 
 
 const DashboardPage = () => {
@@ -11,7 +10,7 @@ const DashboardPage = () => {
       <div>
         <StatsSection/>
         <div className="grid grid-cols-1 md:grid-cols-2 mt-4 gap-4">
-          <JobOverviewChartPast/>
+          <JobOverviewChart/>
           <IncomeOverviewChart/>
         </div>
          <div className="mt-4">
