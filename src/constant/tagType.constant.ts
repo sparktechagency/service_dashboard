@@ -12,7 +12,8 @@ const TagTypes = {
     userGrowth: "UserGrowth",
     packges: "Packages",
     blogs: "Blogs",
-    blog: "Blog"
+    blog: "Blog",
+    candidates: "Candidates"
 }
 
 export default TagTypes;
