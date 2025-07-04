@@ -57,7 +57,7 @@ export default function IncomeOverviewLoading () {
 
         {/* X-axis labels */}
         <div className="absolute bottom-0 left-12 right-4 flex justify-between items-end pb-2">
-          {["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"].map((month, index) => (
+          {["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"].map((_month, index) => (
             <div key={index} className="h-4 w-6 bg-gray-200 rounded animate-pulse"></div>
           ))}
         </div>

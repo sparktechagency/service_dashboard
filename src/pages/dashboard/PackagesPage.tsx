@@ -13,7 +13,7 @@ const PackagesPage = () => {
               </h1>
               <CreateSubscriptionModal/>
             </div>
-            <div className="flex-1 overflow-hidden">
+            <div className="flex-1 overflow-hidden p-4">
               <PackageList />
             </div>
           </div>{" "}

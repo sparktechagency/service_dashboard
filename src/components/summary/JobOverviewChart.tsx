@@ -8,11 +8,11 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from 'recharts';
-import type { TJobGrowth } from '../../types/year.type';
 import { useGetJobGrowthQuery } from '../../redux/features/dashboard/dashboardApi';
 import calculateChartMetrics from '../../utils/calculateChartMetrics';
 import JobOverviewLoading from '../loader/JobOverviewLoading';
 import { yearOptions } from '../../data/options.data';
+import type { TGrowth } from '../../types/year.type';
 
 
 
@@ -31,7 +31,7 @@ const JobOverviewChart = () => {
   useEffect(() => {
     if (!isLoading && data) {
       const result = data?.data?.data;
-      const formatted = result?.map((item:TJobGrowth) => ({
+      const formatted = result?.map((item:TGrowth) => ({
         month: item.month,
         jobs: item.count,
       }));
