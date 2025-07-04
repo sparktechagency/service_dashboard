@@ -1,7 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import TagTypes from "../../../constant/tagType.constant";
-import { ErrorToast, SuccessToast } from "../../../helper/ValidationHelper";
 import type { IParam } from "../../../types/global.type";
 import { apiSlice } from "../api/apiSlice";
 

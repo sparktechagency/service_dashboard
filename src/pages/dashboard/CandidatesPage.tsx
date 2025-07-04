@@ -4,7 +4,7 @@ const CandidatesPage = () => {
   return (
     <>
       <div>
-        <div className="bg-white rounded-lg shadow h-full overflow-hidden">
+        <div className="bg-white shadow rounded-lg h-full overflow-hidden">
           <div className="w-full h-full flex flex-col">
             <CandidateList/>
           </div>

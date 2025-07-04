@@ -1,112 +1,115 @@
-import React from 'react';
-import { Table, ConfigProvider } from 'antd';
-import type { ColumnsType, TablePaginationConfig } from 'antd/es/table';
-import { Eye } from 'lucide-react';
-import type { IEmployer } from '../../types/employer.type';
-//import StatusBadge from '../ui/StatusBadge';
-import ChangeStatusModal from '../modal/auth/ChangeStatusModal';
+import React from "react";
+import { Table, ConfigProvider, Pagination } from "antd";
+import { Eye } from "lucide-react";
+import ChangeStatusModal from "../modal/auth/ChangeStatusModal";
+import type { TCandidate } from "../../types/candidate.type";
+import type { IMeta } from "../../types/global.type";
+import profile_placeholder from "../../assets/images/profile_placeholder.png";
+import { baseUrl } from "../../redux/features/api/apiSlice";
 
-interface EmployerTableProps {
-  data: IEmployer[];
+
+interface CandidateTableProps {
+  candidates: TCandidate[];
+  meta: IMeta;
+  currentPage: number;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+  pageSize: number;
+  setPageSize: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const EmployerTable: React.FC<EmployerTableProps> = ({ data }) => {
-  const columns: ColumnsType<IEmployer> = [
+type TDataSource = TCandidate & {
+  key: number;
+  serial: number;
+}
+
+const EmployerTable : React.FC<CandidateTableProps> = ({
+  candidates,
+  meta,
+  currentPage,
+  setCurrentPage,
+  pageSize,
+  setPageSize,
+}) => {
+
+  const dataSource: TDataSource[] = candidates?.map((candidate, index) => ({
+    key: index,
+    serial: Number(index + 1) + (currentPage - 1) * pageSize,
+    _id: candidate?._id,
+    name: candidate?.name,
+    email: candidate?.email,
+    profile_image: candidate?.profile_image,
+  }));
+
+  const columns = [
     {
-      title: 'Serial No',
-      dataIndex: 'serialNo',
-      key: 'serialNo',
-      width: '10%',
-      //className: 'bg-amber-50',
+      title: "Serial",
+      dataIndex: "serial",
+      key: "serial",
+      width: "10%",
     },
     {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
-      width: '22.5%',
-      //className: 'bg-amber-50',
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+      width: "22.5%",
     },
     {
-      title: 'Email',
-      dataIndex: 'email',
-      key: 'email',
-      width: '22.5%',
-      //className: 'bg-amber-50',
+      title: "Image",
+      dataIndex: "profile_image",
+      key: "profile_image",
+      render: (val?:string) => {
+        const imgPath = val ? baseUrl+val : "/images/profile_placeholder.png";
+        return (
+           <div className="flex items-center gap-2">
+          <img
+            src={imgPath || profile_placeholder}
+            alt="profile"
+            className="w-[45px] h-[45px] rounded-lg"
+            onError={(e) => {
+              e.currentTarget.onerror = null;
+              e.currentTarget.src = profile_placeholder;
+            }}
+            />
+        </div>
+        )
+      } 
     },
     {
-      title: 'Company Name',
-      dataIndex: 'companyName',
-      key: 'companyName',
-      width: '22.5%',
-      //className: 'bg-amber-50',
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+      width: "22.5%",
     },
     {
-      title: 'Category',
-      dataIndex: 'category',
-      key: 'category',
-      width: '17.5%',
-      //className: 'bg-amber-50',
-    },
-    {
-      title: 'Status',
-      dataIndex: 'isActive',
-      key: 'isActive',
-      width: '15%',
+      title: "Status",
+      dataIndex: "isActive",
+      key: "isActive",
+      width: "15%",
       //className: 'bg-amber-50',
       //render: (status) => <StatusBadge status={status} />,
-      render: (val, record) => {
-            const statusStyles = {
-              blocked: "bg-red-100 text-red-700 border border-red-300",
-              active: "bg-green-100 text-green-700 border border-green-300",
-            };
-            const bgColor =
-              val ? statusStyles.active : statusStyles.blocked;
-        
-            return (
-              <div className="flex items-center gap-2">
-                <button
-                  className={`${bgColor} w-20 cursor-default px-3 py-0.5 text-sm font-medium rounded-full`}
-                >
-                  {val ? "Active" : "Blocked"}
-                </button>
-                <ChangeStatusModal userId={record.id} isActive={val}/> 
+      render: (val: boolean, record: { _id: string; }) => {
+        const statusStyles = {
+          blocked: "bg-red-100 text-red-700 border border-red-300",
+          active: "bg-green-100 text-green-700 border border-green-300",
+        };
+        const bgColor = val ? statusStyles.active : statusStyles.blocked;
 
-              </div>
-            );
-          }
-    },
-     {
-      title: 'Subscription Status',
-      dataIndex: 'subscription_status',
-      key: 'subscription_status',
-      align: "center",
-      width: '20%',
-      render: (subscription_status) =>{
         return (
-          <>
-       {subscription_status === 'Active' && (
-    <span className="px-3 py-1 text-xs font-medium rounded-full text-blue-700 bg-blue-100 border border-blue-300">
-      Active
-    </span>
-  )}
-  {subscription_status === 'None' && (
-    <span className="px-3 py-1 text-xs font-medium rounded-full text-gray-600 bg-gray-100 border border-gray-300">
-      None
-    </span>
-  )}
-  {subscription_status === 'Expired' && (
-    <span className="px-3 py-1 text-xs font-medium rounded-full text-yellow-700 bg-yellow-100 border border-yellow-300">
-      Expired
-    </span>
-  )}
-          </>
-        )
-      }
+          <div className="flex items-center gap-2">
+            <button
+              className={`${bgColor} w-20 cursor-default px-3 py-0.5 text-sm font-medium rounded-full`}
+            >
+              {val ? "Active" : "Blocked"}
+            </button>
+            <ChangeStatusModal userId={record._id} isActive={val} />
+          </div>
+        );
+      },
     },
     {
-      title: 'Action',
-      key: 'action',
-      width: '15%',
+      title: "Action",
+      key: "action",
+      width: "15%",
       //className: 'bg-amber-50',
       render: () => (
         <div className="flex">
@@ -118,12 +121,9 @@ const EmployerTable: React.FC<EmployerTableProps> = ({ data }) => {
     },
   ];
 
-  const paginationConfig: TablePaginationConfig = {
-    position: ['bottomCenter'],
-    showSizeChanger: false,
-    defaultPageSize: 15,
-    total: 150,
-    showTotal: (total, range) => `Showing ${range[0]}-${range[1]} out of ${total}`,
+  const handlePagination = (page: number, PageSize: number) => {
+    setCurrentPage(page);
+    setPageSize(PageSize);
   };
 
   return (
@@ -131,25 +131,35 @@ const EmployerTable: React.FC<EmployerTableProps> = ({ data }) => {
       theme={{
         components: {
           Table: {
-            headerBg: '#FEF3C7', // Amber-50 color
-            headerColor: '#000000',
-            rowHoverBg: '#F3F4F6', // Gray-100 color
-            borderColor: '#E5E7EB', // Gray-200 color
+            headerBg: "#FEF3C7",
+            headerColor: "#000000",
+            rowHoverBg: "#F3F4F6",
+            borderColor: "#E5E7EB",
           },
         },
       }}
     >
-      <div className="w-full overflow-auto">
+      <div className="w-full overflow-auto px-4">
         <Table
           columns={columns}
-          dataSource={data}
-          pagination={paginationConfig}
-          rowKey="id"
+          dataSource={dataSource}
+          pagination={false}
+          rowKey="_id"
           sticky
-          scroll={{ y: 'calc(100vh - 265px)' }}
+          scroll={{ y: "calc(100vh - 324px)" }}
           className="employer-table"
         />
       </div>
+      {meta?.total > 0 && (
+        <div className="p-8 bg-white shadow-md flex justify-center">
+          <Pagination
+            onChange={handlePagination}
+            current={currentPage}
+            pageSize={pageSize}
+            total={meta?.total}
+          />
+        </div>
+      )}
     </ConfigProvider>
   );
 };

@@ -3,10 +3,10 @@ import React, { useEffect, useState } from "react";
 import ServerErrorCard from "../card/ServerErrorCard";
 import ListLoading from "../loader/ListLoading";
 import { FaSearch } from "react-icons/fa";
-import CandidateTable from "./CandidateTable";
 import { useGetCandidatesQuery } from "../../redux/features/candidate/candidateApi";
+import EmployeerTable from "./EmployerTable";
 
-const CandidateList = () => {
+const EmployerList = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -38,7 +38,7 @@ const CandidateList = () => {
   if (!isLoading && !isError) {
     content = (
       <div className="flex-1 overflow-hidden">
-        <CandidateTable
+        <EmployeerTable
           candidates={candidates}
           meta={meta}
           currentPage={currentPage}
@@ -58,7 +58,7 @@ const CandidateList = () => {
     <>
       <div className="p-4 flex justify-between">
         <h1 className="text-xl font-medium text-gray-800">
-          Total Candidate List
+          Total Employer List
         </h1>
         <div className="flex items-center gap-12">
           <h1 className="text-lg">
@@ -83,4 +83,4 @@ const CandidateList = () => {
   );
 };
 
-export default CandidateList;
+export default EmployerList;

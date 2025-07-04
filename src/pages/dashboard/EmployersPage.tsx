@@ -1,5 +1,4 @@
-import EmployerTable from "../../components/employer/EmployerTable";
-import { employerData } from "../../data/employer.data";
+import EmployerList from "../../components/employer/EmployerList";
 
 const EmployersPage = () => {
   return (
@@ -7,15 +6,8 @@ const EmployersPage = () => {
       <div>
         <div className="bg-white rounded-lg shadow h-full overflow-hidden">
           <div className="w-full h-full flex flex-col">
-            <div className="p-4">
-              <h1 className="text-xl font-medium text-gray-800">
-                Total Employer List
-              </h1>
-            </div>
-            <div className="flex-1 overflow-hidden">
-              <EmployerTable data={employerData} />
-            </div>
-          </div>{" "}
+           <EmployerList/>
+          </div>
         </div>
       </div>
     </>
