@@ -12,3 +12,18 @@ export interface IEmployer {
   status: StatusType;
   subscription_status: "Active" | "None" | "Expired";
 }
+
+export type TEmployer = {
+  _id: string;
+  name: string;
+  email: string;
+  profile_image: string | null;
+  // phone_number: string;
+  // years_of_establishment: number | null;
+  // details: string | null;
+  // address: string | null;
+  subscription_status: "None" | "Expired" | "Expired" | string;
+  //status: "active" | "inactive" | string;
+  // createdAt: string;
+  // updatedAt: string;
+};

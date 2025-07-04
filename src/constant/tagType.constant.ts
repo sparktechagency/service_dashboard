@@ -13,7 +13,10 @@ const TagTypes = {
     packges: "Packages",
     blogs: "Blogs",
     blog: "Blog",
-    candidates: "Candidates"
+    candidates: "Candidates",
+    employers: "Employers",
+    stats: "Stats",
+    jobGrowth: "JobGrowth"
 }
 
 export default TagTypes;

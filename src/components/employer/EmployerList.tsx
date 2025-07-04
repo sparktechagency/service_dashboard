@@ -3,15 +3,15 @@ import React, { useEffect, useState } from "react";
 import ServerErrorCard from "../card/ServerErrorCard";
 import ListLoading from "../loader/ListLoading";
 import { FaSearch } from "react-icons/fa";
-import { useGetCandidatesQuery } from "../../redux/features/candidate/candidateApi";
 import EmployeerTable from "./EmployerTable";
+import { useGetEmployersQuery } from "../../redux/features/employer/employerApi";
 
 const EmployerList = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-  const { data, isLoading, isError } = useGetCandidatesQuery([
+  const { data, isLoading, isError } = useGetEmployersQuery([
     { name: "page", value: currentPage },
     { name: "limit", value: pageSize },
     { name: "searchTerm", value: searchTerm },
@@ -26,7 +26,7 @@ const EmployerList = () => {
     }, 600);
   }, [searchQuery]);
 
-  const candidates = data?.data?.result || [];
+  const employers = data?.data?.result || [];
   const meta = data?.data?.meta || {};
 
   let content: React.ReactNode;
@@ -39,7 +39,7 @@ const EmployerList = () => {
     content = (
       <div className="flex-1 overflow-hidden">
         <EmployeerTable
-          candidates={candidates}
+          employers={employers}
           meta={meta}
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}

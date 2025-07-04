@@ -6,6 +6,8 @@ import employer from "../../assets/images/dashboard/employer.png";
 
 
 const StatsSection = () =>{
+  
+
   return (
     <div className="w-full bg-gray-100">
       <div className="w-full mx-auto">
