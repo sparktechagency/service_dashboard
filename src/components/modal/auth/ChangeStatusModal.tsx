@@ -1,49 +1,48 @@
 import { Modal } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CgSpinnerTwo } from "react-icons/cg";
 import { FiEdit } from "react-icons/fi";
+import { useChangeStatusMutation } from "../../../redux/features/auth/authApi";
 
-type Tprops = {
-    userId: string,
-    isActive: boolean
+type TProps ={
+  email:string;
+  status: boolean;
+  role: "USER" | "EMPLOYER"
 }
 
-const ChangeStatusModal = ({ userId, isActive } : Tprops) => {
+const ChangeStatusModal = ({ email, status, role }: TProps) => {
   const [modalOpen, setModalOpen] = useState(false);
-//   const [ changeStatus, { isLoading, isSuccess }] = useChangeStatusMutation();
-const isLoading = false;
+  const [ changeStatus, { isLoading, isSuccess }] = useChangeStatusMutation();
 
 
 
-//   useEffect(() => {
-//     if (isSuccess) {
-//       setModalOpen(false);
-//     }
-//   }, [isSuccess]);
+  useEffect(() => {
+    if (isSuccess) {
+      setModalOpen(false);
+    }
+  }, [isSuccess]);
 
 
  const handleClick = () => {
-    console.log(userId);
-    // changeStatus({
-    //   id: userId,
-    //   data: {
-    //     isActive: isActive ? false : true
-    //   }
-    // })
- }
+   changeStatus({
+     email,
+     role,
+     is_block: status ? false : true
+   });
+ };
 
   return (
     <>
       <button
         className="p-1 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-full"
         onClick={() => {
-            setModalOpen(true);
+          setModalOpen(true);
         }}
       >
         <FiEdit size={14} />
       </button>
       <Modal
-        title={`Are you sure, you want to ${isActive ? "block" : "active"} this account?`}
+        title={`Are you sure, you want to ${status ? "active" : "block"}?`}
         open={modalOpen}
         onCancel={() => setModalOpen(false)}
         maskClosable={false}

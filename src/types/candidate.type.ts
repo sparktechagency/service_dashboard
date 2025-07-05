@@ -1,12 +1,14 @@
 
 export type TCandidate = {
   _id: string;
-  // authId: string;
   name: string;
   profile_image: string | null;
   //job_title: string[];
   // job_seeking: string[];
   email: string;
+  authId: {
+    is_block: boolean
+  }
   // phone_number: string;
   // address: string;
   // availability: ("full_time" | "part_time" | "temporary")[];
@@ -33,3 +35,14 @@ export type TCandidate = {
   //   | string;
   // resume: string;
 };
+
+
+export type TCandidataDataSource = {
+  key: number;
+  serial: number;
+   _id: string;
+  name: string;
+  email: string;
+  profile_image: string | null;
+  is_block: boolean
+}

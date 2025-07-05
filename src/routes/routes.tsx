@@ -22,6 +22,8 @@ import JobPostsPage from "../pages/dashboard/JobPostsPage";
 import SubscriberDetailsPage from "../pages/dashboard/SubscriberDetailsPage";
 import CreateBlogPage from "../pages/dashboard/CreateBlogPage";
 import EditBlogPage from "../pages/dashboard/EditBlogPage";
+import ProfilePage from "../pages/settings/ProfilePage";
+import ChangePasswordPage from "../pages/settings/ChangePasswordPage";
 
 const router = createBrowserRouter([
   {
@@ -71,6 +73,14 @@ const router = createBrowserRouter([
       {
         path: "update-blog/:id",
         element: <EditBlogPage />,
+      },
+      {
+        path: "profile",
+        element: <ProfilePage />,
+      },
+      {
+        path: "change-password",
+        element: <ChangePasswordPage />,
       },
       {
         path: "about-us",

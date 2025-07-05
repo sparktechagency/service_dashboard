@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Table, ConfigProvider, Pagination } from "antd";
 import { Edit, Eye } from "lucide-react";
 import DeleteBlogModal from "../modal/blog/DeleteBlogModal";
@@ -7,6 +6,7 @@ import type { TBlog } from "../../types/blog.type";
 import { Link } from "react-router-dom";
 import getCategory from "../../utils/getCategory";
 import getCategoryColor from "../../utils/getCategoryColor";
+import getColorClassForDate from "../../utils/getColorClassForDate";
 
 type TProps = {
   blogs: TBlog[];
@@ -67,40 +67,69 @@ const BlogTable = ({ blogs, meta, currentPage, setCurrentPage, pageSize, setPage
         </>
       ),
     },
-     {
+    {
       title: "Category",
       dataIndex: "category",
       key: "category",
       width: "15%",
-      render: (category:string)=> (
+      render: (category: string) => (
         <>
-         <span className={`${getCategoryColor(category)} text-xs font-semibold px-3 py-1 rounded-full`}>
-            {getCategory(category)} </span>
+          <span
+            className={`${getCategoryColor(
+              category
+            )} text-xs font-semibold px-3 py-1 rounded-full`}
+          >
+            {getCategory(category)}{" "}
+          </span>
         </>
-      )
+      ),
     },
-     {
-      title: "View",
-      key: "action",
+    {
+      title: "Published Date",
+      dataIndex: "createdAt",
+      key: "createdAt",
       width: "15%",
-      render: (_val: any, record:TBlog) => (
+      render: (val: string) => {
+        const { bg, text, border } = getColorClassForDate(val.split('T')[0]);
+        return (
+          <button
+            className={`text-sm px-2 py-1 rounded ${bg} ${text} ${border} border cursor-default`}
+          >
+            {val.split('T')[0]}
+          </button>
+        );
+      },
+    },
+    {
+      title: "View",
+      dataIndex: "_id",
+      key: "_id",
+      width: "5%",
+      render: (blogId: string) => (
         <div className="flex items-center gap-2">
-          <Link to={`/update-blog/${record?._id}`} className="bg-gray-600 hover:bg-gray-700 p-2 text-white rounded-full">
-            <Eye  size={18} />
+          <Link
+            to={`/update-blog/${blogId}`}
+            className="bg-gray-600 hover:bg-gray-700 p-2 text-white rounded-full"
+          >
+            <Eye size={18} />
           </Link>
         </div>
-      )
+      ),
     },
     {
       title: "Action",
+      dataIndex: "_id",
       key: "action",
       width: "7%",
-      render: (_val: any, record:TBlog) => (
+      render: (blogId: string)  => (
         <div className="flex items-center gap-2">
-          <Link to={`/update-blog/${record?._id}`} className="bg-green-600 hover:bg-green-700 p-2 text-white rounded-full">
+          <Link
+            to={`/update-blog/${blogId}`}
+            className="bg-green-600 hover:bg-green-700 p-2 text-white rounded-full"
+          >
             <Edit size={18} />
           </Link>
-          <DeleteBlogModal blogId={record?._id} />
+          <DeleteBlogModal blogId={blogId} />
         </div>
       ),
     },
@@ -139,14 +168,16 @@ const BlogTable = ({ blogs, meta, currentPage, setCurrentPage, pageSize, setPage
           className="employer-table"
         />
       </div>
-      <div className="p-8 bg-white shadow-md flex justify-center">
-        <Pagination
-          onChange={handlePagination}
-          current={currentPage}
-          pageSize={pageSize}
-          total={meta?.total}
-        />
-      </div>
+      {meta?.total > 0 && (
+        <div className="p-8 bg-white shadow-md flex justify-center">
+          <Pagination
+            onChange={handlePagination}
+            current={currentPage}
+            pageSize={pageSize}
+            total={meta?.total}
+          />
+        </div>
+      )}
     </ConfigProvider>
   );
 };

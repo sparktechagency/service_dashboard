@@ -156,14 +156,14 @@ export const authApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: (result) => {
         if (result?.success) {
-          return [TagTypes.users];
+          return [TagTypes.candidates, TagTypes.employers];
         }
         return [];
       },
-      async onQueryStarted({is_block}, { queryFulfilled }) {
+      async onQueryStarted({is_block, role}, { queryFulfilled }) {
         try {
           await queryFulfilled;
-          SuccessToast(`User is ${is_block ? "blocked" : "activated"} successfully`)
+          SuccessToast(`${role==="USER" ? "Candidate" : "Employer"} is ${is_block ? "blocked" : "activated"} successfully`)
         } catch (err:any) {
           const status = err?.error?.status;
           if (status === 404) {

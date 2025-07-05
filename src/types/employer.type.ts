@@ -18,6 +18,9 @@ export type TEmployer = {
   name: string;
   email: string;
   profile_image: string | null;
+  authId: {
+    is_block: boolean
+  }
   // phone_number: string;
   // years_of_establishment: number | null;
   // details: string | null;
@@ -47,4 +50,5 @@ export type TEmployerDataSource = {
   profile_image: string | null;
   companyName: string;
   subscription_status: "None" | "Expired" | "Expired" | string;
+  is_block: boolean
 }

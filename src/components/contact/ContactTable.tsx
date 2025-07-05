@@ -5,6 +5,7 @@ import type { IMeta } from "../../types/global.type";
 import type { TContact } from "../../types/contact.type";
 import ReplyModal from "../modal/contact/ReplyModal";
 import ViewContactModal from "../modal/contact/ViewContactModal";
+import getColorClassForDate from "../../utils/getColorClassForDate";
 
 
 interface CandidateTableProps {
@@ -38,7 +39,8 @@ const ContactTable : React.FC<CandidateTableProps> = ({
     email: contact?.email,
     message: contact?.message,
     subject: contact?.subject,
-    reply: contact?.reply
+    reply: contact?.reply,
+    createdAt: contact?.createdAt,
   }));
 
   const columns = [
@@ -75,12 +77,28 @@ const ContactTable : React.FC<CandidateTableProps> = ({
       title: "Message",
       dataIndex: "message",
       key: "message",
-      width: "17.5%",
+      width: "20%",
       render: (text: string) => (
         <>
           <p className="truncate">{text}</p>
         </>
       ),
+    },
+    {
+      title: "Date",
+      dataIndex: "createdAt",
+      key: "createdAt",
+      width: "12%",
+      render: (val: string) => {
+        const { bg, text, border } = getColorClassForDate(val.split('T')[0]);
+        return (
+          <button
+            className={`text-sm px-2 py-1 rounded ${bg} ${text} ${border} border cursor-default`}
+          >
+            {val.split('T')[0]}
+          </button>
+        );
+      },
     },
     {
       title: "Action",

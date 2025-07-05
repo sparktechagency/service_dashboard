@@ -1,31 +1,34 @@
-import { BookA, LayoutDashboard, UserCheck} from "lucide-react";
+import { LayoutDashboard, UserCheck} from "lucide-react";
 import {
     SettingOutlined
   } from '@ant-design/icons';
+import { MdCategory, MdContactPhone, MdOutlinePostAdd, MdSubscriptions } from "react-icons/md";
+import { SiBlogger } from "react-icons/si";
+import { PiStudentBold } from "react-icons/pi";
 export const menuItems = [
   { path: "/", label: "Dashboard", icon: LayoutDashboard },
   { path: "/employers", label: "Employers", icon: UserCheck },
-  { path: "/candidates", label: "Candidates", icon: BookA },
+  { path: "/candidates", label: "Candidates", icon: PiStudentBold },
   { 
     path: "",
     label: "Subscriptions",
-    icon: BookA,
+    icon: MdSubscriptions,
     hasArrow: true,
     children: [
       { path: "/subscribers", label: "Subscribers" },
       { path: "/packages", label: "Packages" },
     ],
   },
-  { path: "/category", label: "Category", icon: BookA },
-  { path: "/job-posts", label: "Job Posts", icon: BookA },
-  { path: "/contacts", label: "Contact", icon: BookA },
-  { path: "/blogs", label: "Blog", icon: BookA },
+  { path: "/category", label: "Category", icon: MdCategory },
+  { path: "/job-posts", label: "Job Posts", icon: MdOutlinePostAdd },
+  { path: "/contacts", label: "Contact", icon: MdContactPhone },
+  { path: "/blogs", label: "Blog", icon: SiBlogger },
   {
     icon: SettingOutlined,
     label: "Settings",
     hasArrow: true,
     children: [
-      // { path: "/profile", label: "Profile" },
+      { path: "/profile", label: "Profile" },
       { path: "/about-us", label: "About Us" },
       { path: "/terms-condition", label: "Terms & Conditions" },
       { path: "/privacy-policy", label: "Privacy Policy" },
@@ -33,10 +36,3 @@ export const menuItems = [
   },
 ];
 
-  //  <SidebarLink icon={<LayoutDashboard size={18} />} href="/" label="Dashboard" active />
-  //         <SidebarLink icon={<UserCheck size={18} />} href="/employers" label="Employers" />
-  //         <SidebarLink icon={<BookA size={18} />} href="/candidates" label="Candidates" />
-  //         <SidebarLink icon={<ChartBarStacked size={18} />} href="/category" label="Category" />
-  //         <SidebarLink icon={<Mail size={18} />} href="/contacts" label="Contact" />
-  //         <SidebarLink icon={<Rss size={18} />} href="/blogs" label="Blog" />
-  //         <SidebarLink icon={<Users size={18} />} href="#" label="Team" />

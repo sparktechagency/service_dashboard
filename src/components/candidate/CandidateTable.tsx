@@ -2,7 +2,7 @@ import React from "react";
 import { Table, ConfigProvider, Pagination } from "antd";
 import { Eye } from "lucide-react";
 import ChangeStatusModal from "../modal/auth/ChangeStatusModal";
-import type { TCandidate } from "../../types/candidate.type";
+import type { TCandidataDataSource, TCandidate } from "../../types/candidate.type";
 import type { IMeta } from "../../types/global.type";
 import profile_placeholder from "../../assets/images/profile_placeholder.png";
 import { baseUrl } from "../../redux/features/api/apiSlice";
@@ -17,10 +17,6 @@ interface CandidateTableProps {
   setPageSize: React.Dispatch<React.SetStateAction<number>>;
 }
 
-type TDataSource = TCandidate & {
-  key: number;
-  serial: number;
-}
 
 const CandidateTable: React.FC<CandidateTableProps> = ({
   candidates,
@@ -31,14 +27,16 @@ const CandidateTable: React.FC<CandidateTableProps> = ({
   setPageSize,
 }) => {
 
-  const dataSource: TDataSource[] = candidates?.map((candidate, index) => ({
+  const dataSource: TCandidataDataSource[] = candidates?.map((candidate, index) => ({
     key: index,
     serial: Number(index + 1) + (currentPage - 1) * pageSize,
     _id: candidate?._id,
     name: candidate?.name,
     email: candidate?.email,
     profile_image: candidate?.profile_image,
+    is_block: candidate?.authId?.is_block
   }));
+
 
   const columns = [
     {
@@ -82,26 +80,25 @@ const CandidateTable: React.FC<CandidateTableProps> = ({
     },
     {
       title: "Status",
-      dataIndex: "isActive",
-      key: "isActive",
+      dataIndex: "is_block",
+      key: "is_block",
       width: "15%",
-      //className: 'bg-amber-50',
-      //render: (status) => <StatusBadge status={status} />,
-      render: (val: boolean, record: { _id: string; }) => {
+      render: (val: boolean, record: { email: string; }) => {
         const statusStyles = {
           blocked: "bg-red-100 text-red-700 border border-red-300",
           active: "bg-green-100 text-green-700 border border-green-300",
         };
-        const bgColor = val ? statusStyles.active : statusStyles.blocked;
+
+        const bgColor = val ? statusStyles.blocked : statusStyles.active;
 
         return (
           <div className="flex items-center gap-2">
             <button
               className={`${bgColor} w-20 cursor-default px-3 py-0.5 text-sm font-medium rounded-full`}
             >
-              {val ? "Active" : "Blocked"}
+              {val ?  "Blocked" : "Active"}
             </button>
-            <ChangeStatusModal userId={record._id} isActive={val} />
+            <ChangeStatusModal email={record.email} status={val} role="USER"/>
           </div>
         );
       },

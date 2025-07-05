@@ -6,4 +6,5 @@ export type TContact = {
   subject: string;
   message: string;
   reply: string | null;
+  createdAt: string; 
 };

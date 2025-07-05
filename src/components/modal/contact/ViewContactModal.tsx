@@ -54,9 +54,9 @@ const ViewContactModal = ({ contact }: TProps) => {
                 Reply
               </span>
             </div>
-            <div className="bg-green-50 border-l-4 border-green-400 rounded-lg p-4">
+            <div className={`${contact?.reply ? 'border-green-400 bg-green-50' : 'bg-red-50 border-red-400'} border-l-4  rounded-lg p-4`}>
               <p className="text-gray-800 leading-relaxed">
-                {contact?.reply ? contact?.reply : "There is reply message"}
+                {contact?.reply ? contact?.reply : "There is no reply message"}
               </p>
             </div>
           </div>
