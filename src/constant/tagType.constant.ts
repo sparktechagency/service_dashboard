@@ -18,7 +18,10 @@ const TagTypes = {
     stats: "Stats",
     jobGrowth: "JobGrowth",
     contacts: "Contacts",
-    subscribers: "Subscribers"
+    subscribers: "Subscribers",
+    jobs: "Jobs",
+    job: "Job",
+    admins: "Admins"
 }
 
 export default TagTypes;

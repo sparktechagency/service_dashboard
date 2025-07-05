@@ -1,4 +1,3 @@
-// App.tsx or main.tsx
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import DashboardPage from "../pages/dashboard/DashboardPage";
 import LoginPage from "../pages/auth/LoginPage";
@@ -24,45 +23,56 @@ import CreateBlogPage from "../pages/dashboard/CreateBlogPage";
 import EditBlogPage from "../pages/dashboard/EditBlogPage";
 import ProfilePage from "../pages/settings/ProfilePage";
 import ChangePasswordPage from "../pages/settings/ChangePasswordPage";
+import PrivateRoute from "./PrivateRoute";
+import PublicRoute from "./PublicRoute";
+import AdminsPage from "../pages/dashboard/AdminsPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <DashboardLayout />,
+    element: (
+      <PrivateRoute>
+        <DashboardLayout />
+      </PrivateRoute>
+    ),
     children: [
       {
         index: true,
         element: <DashboardPage />,
       },
-       {
+      {
         path: "employers",
         element: <EmployersPage />,
+      },
+      {
+        path: "admins",
+        element: <AdminsPage />,
       },
       {
         path: "candidates",
         element: <CandidatesPage />,
       },
-       {
+      {
         path: "category",
         element: <CategoryPage />,
       },
-       {
+      {
         path: "subscribers",
         element: <SubscribersPage />,
       },
-       {
+      {
         path: "subscribers/details/:id",
         element: <SubscriberDetailsPage />,
       },
-       {
+      {
         path: "packages",
         element: <PackagesPage />,
       },
-        {
+      {
         path: "contacts",
         element: <ContactPage />,
       },
-       {
+      {
         path: "blogs",
         element: <BlogsPage />,
       },
@@ -98,19 +108,23 @@ const router = createBrowserRouter([
         path: "job-details",
         element: <JobDetailsPage />,
       },
-       {
+      {
         path: "job-posts",
         element: <JobPostsPage />,
-      }
+      },
     ],
   },
   {
     path: "/auth",
-    element: <AuthLayout />,
+    element: (
+      <PublicRoute>
+        <AuthLayout />
+      </PublicRoute>
+    ),
     children: [
-       {
+      {
         index: true,
-        element: <Navigate to="/auth/signin" replace/>,
+        element: <Navigate to="/auth/signin" replace />,
       },
       {
         path: "signin",

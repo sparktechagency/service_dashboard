@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import TagTypes from "../../../constant/tagType.constant";
 import { ErrorToast, SuccessToast } from "../../../helper/ValidationHelper";
@@ -43,7 +44,7 @@ export const contactApi = apiSlice.injectEndpoints({
           await queryFulfilled;
           SuccessToast("Your reply has been sent successfully.");
         } catch (err: any) {
-          const message = err?.error?.data?.message;
+          const message = err?.error?.data?.message || "Something went wrong";
           ErrorToast(message);
         }
       },

@@ -186,7 +186,7 @@ export const authApi = apiSlice.injectEndpoints({
           SuccessToast("Password is updated successfully");
           setTimeout(() => {
             localStorage.clear()
-            window.location.href = "/login";
+            window.location.href = "/auth/signin";
           }, 300);
         } catch (err:any) {
           const message = err?.error?.data?.message;

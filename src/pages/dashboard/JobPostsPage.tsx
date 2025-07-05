@@ -1,4 +1,4 @@
-import JobPostTable from "../../components/jobPosts/JobPostTable";
+import JobList from "../../components/job/JobList";
 
 const JobPostsPage = () => {
   return (
@@ -6,15 +6,8 @@ const JobPostsPage = () => {
       <div>
         <div className="bg-white rounded-lg shadow h-full overflow-hidden">
           <div className="w-full h-full flex flex-col">
-            <div className="p-4">
-              <h1 className="text-xl font-medium text-gray-800">
-                Total Employer List
-              </h1>
-            </div>
-            <div className="flex-1 overflow-hidden">
-              <JobPostTable/>
-            </div>
-          </div>{" "}
+            <JobList />
+          </div>
         </div>
       </div>
     </>

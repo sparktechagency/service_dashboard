@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import TagTypes from "../../../constant/tagType.constant";
@@ -45,7 +44,7 @@ export const categoryApi = apiSlice.injectEndpoints({
           await queryFulfilled;
           SuccessToast("Category is created successfully");
         } catch (err: any) {
-          const message = err?.error?.data?.message;
+          const message = err?.error?.data?.message || "Something went wrong";
           ErrorToast(message);
         }
       },
@@ -67,7 +66,7 @@ export const categoryApi = apiSlice.injectEndpoints({
           await queryFulfilled;
           SuccessToast("Category is updated successfully");
         } catch (err: any) {
-          const message = err?.error?.data?.message;
+          const message = err?.error?.data?.message || "Something went wrong";
           ErrorToast(message);
         }
       },
@@ -88,7 +87,7 @@ export const categoryApi = apiSlice.injectEndpoints({
           await queryFulfilled;
           SuccessToast("Category is deleted successfully");
         } catch (err: any) {
-          const message = err?.error?.data?.message;
+          const message = err?.error?.data?.message || "Something went wrong";
           ErrorToast(message);
         }
       },
