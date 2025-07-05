@@ -3,15 +3,15 @@ import React, { useEffect, useState } from "react";
 import ServerErrorCard from "../card/ServerErrorCard";
 import ListLoading from "../loader/ListLoading";
 import { FaSearch } from "react-icons/fa";
-import { useGetContactListQuery } from "../../redux/features/contact/contactApi";
 import SubscriberTable from "./SubscriberTable";
+import { useGetSubscribersQuery } from "../../redux/features/subscription/subscriptionApi";
 
 const SubscriberList = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-  const { data, isLoading, isError } = useGetContactListQuery([
+  const { data, isLoading, isError } = useGetSubscribersQuery([
     { name: "page", value: currentPage },
     { name: "limit", value: pageSize },
     { name: "searchTerm", value: searchTerm },
@@ -26,7 +26,7 @@ const SubscriberList = () => {
     }, 600);
   }, [searchQuery]);
 
-  const contacts = data?.data?.result || [];
+  const subscribers = data?.data?.result || [];
   const meta = data?.data?.meta || {};
 
   let content: React.ReactNode;
@@ -39,7 +39,7 @@ const SubscriberList = () => {
     content = (
       <div className="flex-1 overflow-hidden">
         <SubscriberTable
-          contacts={contacts}
+          subscribers={subscribers}
           meta={meta}
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
@@ -58,7 +58,7 @@ const SubscriberList = () => {
     <>
       <div className="p-4 flex justify-between">
         <h1 className="text-xl font-medium text-gray-800">
-          Contact List
+          Total Subscribers
         </h1>
         <div className="flex items-center gap-12">
           <h1 className="text-lg">

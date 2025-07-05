@@ -19,7 +19,7 @@ export const subscriptionApi = apiSlice.injectEndpoints({
           });
         }
         return {
-          url: "/dashboard/all_candidate",
+          url: "/dashboard/get_all_subscribers",
           method: "GET",
           params: params,
         };

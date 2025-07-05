@@ -26,7 +26,7 @@ export type TEmployer = {
   //status: "active" | "inactive" | string;
   // createdAt: string;
   // updatedAt: string;
-  company?: {
+  company: {
     // _id: string;
     // company_logo: string;
     name: string;
@@ -36,3 +36,15 @@ export type TEmployer = {
     // website_link: string | null;
   };
 };
+
+
+export type TEmployerDataSource = {
+  key: number;
+  serial: number;
+   _id: string;
+  name: string;
+  email: string;
+  profile_image: string | null;
+  companyName: string;
+  subscription_status: "None" | "Expired" | "Expired" | string;
+}

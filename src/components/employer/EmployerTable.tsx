@@ -5,7 +5,7 @@ import ChangeStatusModal from "../modal/auth/ChangeStatusModal";
 import type { IMeta } from "../../types/global.type";
 import profile_placeholder from "../../assets/images/profile_placeholder.png";
 import { baseUrl } from "../../redux/features/api/apiSlice";
-import type { TEmployer } from "../../types/employer.type";
+import type { TEmployer, TEmployerDataSource } from "../../types/employer.type";
 
 
 interface EmployerTableProps {
@@ -17,10 +17,7 @@ interface EmployerTableProps {
   setPageSize: React.Dispatch<React.SetStateAction<number>>;
 }
 
-type TDataSource = TEmployer & {
-  key: number;
-  serial: number;
-}
+
 
 const EmployerTable : React.FC<EmployerTableProps> = ({
   employers,
@@ -31,7 +28,7 @@ const EmployerTable : React.FC<EmployerTableProps> = ({
   setPageSize,
 }) => {
 
-  const dataSource: TDataSource[] = employers?.map((employer, index) => ({
+  const dataSource: TEmployerDataSource[] = employers?.map((employer, index) => ({
     key: index,
     serial: Number(index + 1) + (currentPage - 1) * pageSize,
     _id: employer?._id,
@@ -81,7 +78,7 @@ const EmployerTable : React.FC<EmployerTableProps> = ({
       key: "email",
       //width: "15%",
     },
-     {
+    {
       title: 'Company Name',
       dataIndex: 'companyName',
       key: 'companyName',
