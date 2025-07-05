@@ -1,15 +1,12 @@
 import React from "react";
 import { Table, ConfigProvider, Pagination } from "antd";
-import { Eye } from "lucide-react";
-import ChangeStatusModal from "../modal/auth/ChangeStatusModal";
-import type { TCandidataDataSource, TCandidate } from "../../types/candidate.type";
 import type { IMeta } from "../../types/global.type";
-import profile_placeholder from "../../assets/images/profile_placeholder.png";
-import { baseUrl } from "../../redux/features/api/apiSlice";
+import type { TAdmin, TAdminDataSource } from "../../types/admin.type";
+import DeleteAdminModal from "../modal/admin/DeleteAdminModal";
 
 
 interface AdminTableProps {
-  candidates: TCandidate[];
+  admins: TAdmin[];
   meta: IMeta;
   currentPage: number;
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
@@ -19,7 +16,7 @@ interface AdminTableProps {
 
 
 const AdminTable: React.FC<AdminTableProps> = ({
-  candidates,
+  admins,
   meta,
   currentPage,
   setCurrentPage,
@@ -27,14 +24,13 @@ const AdminTable: React.FC<AdminTableProps> = ({
   setPageSize,
 }) => {
 
-  const dataSource: TCandidataDataSource[] = candidates?.map((candidate, index) => ({
+  const dataSource: TAdminDataSource[] = admins?.map((admin, index) => ({
     key: index,
-    serial: Number(index + 1) + (currentPage - 1) * pageSize,
-    _id: candidate?._id,
-    name: candidate?.name,
-    email: candidate?.email,
-    profile_image: candidate?.profile_image,
-    is_block: candidate?.authId?.is_block
+    serial: Number(index + 1),
+    _id: admin?._id,
+    name: admin?.name,
+    email: admin?.email,
+    phone_number: admin?.phone_number
   }));
 
 
@@ -52,68 +48,24 @@ const AdminTable: React.FC<AdminTableProps> = ({
       width: "22.5%",
     },
     {
-      title: "Image",
-      dataIndex: "profile_image",
-      key: "profile_image",
-      render: (val?:string) => {
-        const imgPath = val ? baseUrl+val : "/images/profile_placeholder.png";
-        return (
-           <div className="flex items-center gap-2">
-          <img
-            src={imgPath || profile_placeholder}
-            alt="profile"
-            className="w-[45px] h-[45px] rounded-lg"
-            onError={(e) => {
-              e.currentTarget.onerror = null;
-              e.currentTarget.src = profile_placeholder;
-            }}
-            />
-        </div>
-        )
-      } 
-    },
-    {
       title: "Email",
       dataIndex: "email",
       key: "email",
       width: "22.5%",
     },
     {
-      title: "Status",
-      dataIndex: "is_block",
-      key: "is_block",
-      width: "15%",
-      render: (val: boolean, record: { email: string; }) => {
-        const statusStyles = {
-          blocked: "bg-red-100 text-red-700 border border-red-300",
-          active: "bg-green-100 text-green-700 border border-green-300",
-        };
-
-        const bgColor = val ? statusStyles.blocked : statusStyles.active;
-
-        return (
-          <div className="flex items-center gap-2">
-            <button
-              className={`${bgColor} w-20 cursor-default px-3 py-0.5 text-sm font-medium rounded-full`}
-            >
-              {val ?  "Blocked" : "Active"}
-            </button>
-            <ChangeStatusModal email={record.email} status={val} role="USER"/>
-          </div>
-        );
-      },
+      title: "Phone Number",
+      dataIndex: "phone_number",
+      key: "phone_number",
+      width: "22.5%",
     },
     {
       title: "Action",
       key: "action",
+      dataIndex: "email",
       width: "5%",
-      //className: 'bg-amber-50',
-      render: () => (
-        <div className="flex justify-center">
-          <button className="text-gray-600 hover:text-gray-900">
-            <Eye size={20} />
-          </button>
-        </div>
+      render: (email: string) => (
+        <DeleteAdminModal email={email}/>
       ),
     },
   ];
