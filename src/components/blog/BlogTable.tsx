@@ -5,6 +5,8 @@ import DeleteBlogModal from "../modal/blog/DeleteBlogModal";
 import type { IMeta } from "../../types/global.type";
 import type { TBlog } from "../../types/blog.type";
 import { Link } from "react-router-dom";
+import getCategory from "../../utils/getCategory";
+import getCategoryColor from "../../utils/getCategoryColor";
 
 type TProps = {
   blogs: TBlog[];
@@ -47,7 +49,12 @@ const BlogTable = ({ blogs, meta, currentPage, setCurrentPage, pageSize, setPage
       title: "Title",
       dataIndex: "title",
       key: "title",
-      width: "22.5%",
+      width: "20.5%",
+      render: (text: string) => (
+        <>
+          <p className="truncate">{text}</p>
+        </>
+      ),
     },
     {
       title: "Image",
@@ -61,13 +68,14 @@ const BlogTable = ({ blogs, meta, currentPage, setCurrentPage, pageSize, setPage
       ),
     },
      {
-      title: "Description",
-      dataIndex: "description",
-      key: "description",
-      width: "25.5%",
-      render: (text:string)=> (
+      title: "Category",
+      dataIndex: "category",
+      key: "category",
+      width: "15%",
+      render: (category:string)=> (
         <>
-         <p className="truncate">{text}</p>
+         <span className={`${getCategoryColor(category)} text-xs font-semibold px-3 py-1 rounded-full`}>
+            {getCategory(category)} </span>
         </>
       )
     },
@@ -86,7 +94,7 @@ const BlogTable = ({ blogs, meta, currentPage, setCurrentPage, pageSize, setPage
     {
       title: "Action",
       key: "action",
-      width: "15%",
+      width: "7%",
       render: (_val: any, record:TBlog) => (
         <div className="flex items-center gap-2">
           <Link to={`/update-blog/${record?._id}`} className="bg-green-600 hover:bg-green-700 p-2 text-white rounded-full">

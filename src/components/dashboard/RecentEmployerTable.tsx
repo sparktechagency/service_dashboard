@@ -4,23 +4,19 @@ import { Eye } from "lucide-react";
 import ChangeStatusModal from "../modal/auth/ChangeStatusModal";
 import profile_placeholder from "../../assets/images/profile_placeholder.png";
 import { baseUrl } from "../../redux/features/api/apiSlice";
-import type { TEmployer } from "../../types/employer.type";
+import type { TEmployer, TEmployerDataSource } from "../../types/employer.type";
 
 
 interface EmployerTableProps {
   employers: TEmployer[];
 }
 
-type TDataSource = TEmployer & {
-  key: number;
-  serial: number;
-}
 
 const RecentEmployerTable : React.FC<EmployerTableProps> = ({
   employers
 }) => {
 
-  const dataSource: TDataSource[] = employers?.map((employer, index) => ({
+  const dataSource: TEmployerDataSource[] = employers?.map((employer, index) => ({
     key: index,
     serial: Number(index + 1),
     _id: employer?._id,
