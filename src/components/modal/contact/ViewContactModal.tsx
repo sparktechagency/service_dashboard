@@ -1,8 +1,13 @@
 import { Modal } from "antd";
 import { useState } from "react";
 import { Eye } from "lucide-react";
+import type { TContact } from "../../../types/contact.type";
 
-const ViewContactModal = () => {
+type TProps = {
+  contact: TContact
+}
+
+const ViewContactModal = ({ contact }: TProps) => {
   const [modalOpen, setModalOpen] = useState(false);
 
   return (
@@ -25,7 +30,7 @@ const ViewContactModal = () => {
       <div className="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
         {/* Subject */}
         <div className="bg-gradient-to-r from-gray-50 to-gray-100 px-6 py-4 border-b border-gray-200">
-          <h2 className="text-lg font-semibold text-gray-800">Project Update Discussion</h2>
+          <h2 className="text-lg font-semibold text-gray-800">Subject: {contact?.subject}</h2>
         </div>
         {/* Original Message */}
         <div className="p-6 border-b border-gray-100">
@@ -36,8 +41,7 @@ const ViewContactModal = () => {
           </div>
           <div className="bg-blue-50 border-l-4 border-blue-400 rounded-lg p-4">
             <p className="text-gray-800 leading-relaxed">
-              Hey! How's the new project coming along? I'd love to hear about the progress and see if there's anything I
-              can help with.
+             {contact?.message}
             </p>
           </div>
         </div>
@@ -52,8 +56,7 @@ const ViewContactModal = () => {
             </div>
             <div className="bg-green-50 border-l-4 border-green-400 rounded-lg p-4">
               <p className="text-gray-800 leading-relaxed">
-                Thanks for asking! It's going really well. We just finished the initial design phase and are moving into
-                development. Your feedback on the wireframes was super helpful!
+                {contact?.reply ? contact?.reply : "There is reply message"}
               </p>
             </div>
           </div>

@@ -3,10 +3,30 @@
 
 import TagTypes from "../../../constant/tagType.constant";
 import { ErrorToast, SuccessToast } from "../../../helper/ValidationHelper";
+import type { IParam } from "../../../types/global.type";
 import { apiSlice } from "../api/apiSlice";
 
 export const subscriptionApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
+    getSubscribers: builder.query({
+      query: (args) => {
+        const params = new URLSearchParams();
+        if (args !== undefined && args.length > 0) {
+          args.forEach((item: IParam) => {
+            if (item.value) {
+              params.append(item.name, item.value);
+            }
+          });
+        }
+        return {
+          url: "/dashboard/all_candidate",
+          method: "GET",
+          params: params,
+        };
+      },
+      keepUnusedDataFor: 600,
+      providesTags: [TagTypes.subscribers],
+    }),
     getSubscriptions: builder.query({
       query: () => ({
         url: "/dashboard/get_all_subscriptions",
@@ -90,4 +110,4 @@ export const subscriptionApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetSubscriptionsQuery, useCreateSubscriptionMutation, useDeleteSubscriptionMutation, useUpdateSubscriptionMutation } = subscriptionApi;
+export const { useGetSubscriptionsQuery, useGetSubscribersQuery, useCreateSubscriptionMutation, useDeleteSubscriptionMutation, useUpdateSubscriptionMutation } = subscriptionApi;

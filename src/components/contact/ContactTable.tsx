@@ -88,10 +88,10 @@ const ContactTable : React.FC<CandidateTableProps> = ({
       dataIndex: "_id",
       width: "10%",
       align: "center" as const,
-      render: (contactId: string, { reply }: { reply: string | null }) => (
+      render: (contactId: string, contact: TContact) => (
         <div className="flex justify-center gap-2">
-          <ViewContactModal/>
-          {reply ? (
+          <ViewContactModal contact={contact}/>
+          {contact?.reply ? (
             <button className="bg-blue-300 hover:bg-blue-400 p-2 text-white rounded-full cursor-not-allowed">
               <Reply size={18} />
             </button>

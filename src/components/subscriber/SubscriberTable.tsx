@@ -1,106 +1,149 @@
-import { EyeOutlined } from "@ant-design/icons"
-import { ConfigProvider, Table, type TablePaginationConfig } from "antd"
-import { subscriberData } from "../../data/subscriber.data"
-import { useNavigate } from "react-router-dom"
+import React from "react";
+import { Table, ConfigProvider, Pagination } from "antd";
+import { Reply } from "lucide-react";
+import type { IMeta } from "../../types/global.type";
+import type { TContact } from "../../types/contact.type";
+import ReplyModal from "../modal/contact/ReplyModal";
+import ViewContactModal from "../modal/contact/ViewContactModal";
 
 
-const SubscriberTable = () => {
-  const navigate = useNavigate();
-   const columns = [
+interface CandidateTableProps {
+  contacts: TContact[];
+  meta: IMeta;
+  currentPage: number;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+  pageSize: number;
+  setPageSize: React.Dispatch<React.SetStateAction<number>>;
+}
+
+type TDataSource = TContact & {
+  key: number;
+  serial: number;
+}
+
+const SubscriberTable : React.FC<CandidateTableProps> = ({
+  contacts,
+  meta,
+  currentPage,
+  setCurrentPage,
+  pageSize,
+  setPageSize,
+}) => {
+
+  const dataSource: TDataSource[] = contacts?.map((contact, index) => ({
+    key: index,
+    serial: Number(index + 1) + (currentPage - 1) * pageSize,
+    _id: contact?._id,
+    name: contact?.name,
+    email: contact?.email,
+    message: contact?.message,
+    subject: contact?.subject,
+    reply: contact?.reply
+  }));
+
+  const columns = [
     {
-      title: "Serial No",
-      dataIndex: "serialNo",
-      key: "serialNo",
-      width: 100,
+      title: "Serial",
+      dataIndex: "serial",
+      key: "serial",
+      width: "5%",
     },
     {
-      title: "Company Name",
-      dataIndex: "companyName",
-      key: "companyName",
-      width: 150,
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+      width: "15%",
     },
     {
-      title: "Package",
-      dataIndex: "package",
-      key: "package",
-      width: 150,
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+      width: "17%",
     },
     {
-      title: "Package Price",
-      dataIndex: "packagePrice",
-      key: "packagePrice",
-      width: 120,
-    },
-    {
-      title: "Date form",
-      dataIndex: "dateForm",
-      key: "dateForm",
-      width: 150,
-    },
-    {
-      title: "Status",
-      dataIndex: "status",
-      key: "status",
-      width: 100,
-      render: (status: string) => (
-        <span
-          className={`status-badge ${
-            status === "Active" ? "status-active" : status === "Pending" ? "status-pending" : "status-expired"
-          }`}
-        >
-          {status}
-        </span>
+      title: "Subject",
+      dataIndex: "subject",
+      key: "subject",
+      width: "17.5%",
+      render: (text: string) => (
+        <>
+          <p className="truncate">{text}</p>
+        </>
       ),
     },
     {
-      title: "Visit Profile",
-      key: "action",
-      width: 100,
-      render: () => (
-        <button onClick={()=>navigate(`/subscribers/details/${Math.random()}`)} className="text-gray-500 hover:text-gray-700">
-          <EyeOutlined />
-        </button>
+      title: "Message",
+      dataIndex: "message",
+      key: "message",
+      width: "17.5%",
+      render: (text: string) => (
+        <>
+          <p className="truncate">{text}</p>
+        </>
       ),
     },
-  ]
+    {
+      title: "Action",
+      key: "_id",
+      dataIndex: "_id",
+      width: "10%",
+      align: "center" as const,
+      render: (contactId: string, contact: TContact) => (
+        <div className="flex justify-center gap-2">
+          <ViewContactModal contact={contact}/>
+          {contact?.reply ? (
+            <button className="bg-blue-300 hover:bg-blue-400 p-2 text-white rounded-full cursor-not-allowed">
+              <Reply size={18} />
+            </button>
+          ) : (
+            <ReplyModal contactId={contactId} />
+          )}
+        </div>
+      ),
+    },
+  ];
 
-    
-      const paginationConfig: TablePaginationConfig = {
-        position: ['bottomCenter'],
-        showSizeChanger: false,
-        defaultPageSize: 15,
-        total: 150,
-        showTotal: (total, range) => `Showing ${range[0]}-${range[1]} out of ${total}`,
-      };
-      
+  const handlePagination = (page: number, PageSize: number) => {
+    setCurrentPage(page);
+    setPageSize(PageSize);
+  };
+
   return (
-    <>
-      <ConfigProvider
+    <ConfigProvider
       theme={{
         components: {
           Table: {
-            headerBg: '#FEF3C7', // Amber-50 color
-            headerColor: '#000000',
-            rowHoverBg: '#F3F4F6', // Gray-100 color
-            borderColor: '#E5E7EB', // Gray-200 color
+            headerBg: "#FEF3C7",
+            headerColor: "#000000",
+            rowHoverBg: "#F3F4F6",
+            borderColor: "#E5E7EB",
           },
         },
       }}
     >
-      <div className="w-full overflow-auto">
+      <div className="w-full overflow-auto px-4">
         <Table
           columns={columns}
-          dataSource={subscriberData}
-          pagination={paginationConfig}
-          rowKey="id"
+          dataSource={dataSource}
+          pagination={false}
+          rowKey="_id"
           sticky
-          scroll={{ y: 'calc(100vh - 265px)' }}
+          scroll={{ y: "calc(100vh - 324px)" }}
           className="employer-table"
         />
       </div>
+      {meta?.total > 0 && (
+        <div className="p-8 bg-white shadow-md flex justify-center">
+          <Pagination
+            onChange={handlePagination}
+            current={currentPage}
+            pageSize={pageSize}
+            total={meta?.total}
+          />
+        </div>
+      )}
     </ConfigProvider>
-    </>
-  )
-}
+  );
+};
 
-export default SubscriberTable
+export default SubscriberTable;

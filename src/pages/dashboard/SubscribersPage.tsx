@@ -1,4 +1,4 @@
-import SubscriberTable from "../../components/subscriber/SubscriberTable"
+import SubscriberTable from "../../components/subscriber/SubscriberPastTable"
 
 
 const SubscribersPage = () => {
