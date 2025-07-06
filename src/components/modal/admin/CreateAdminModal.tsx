@@ -11,16 +11,17 @@ import Error from "../../validation/Error";
 import { useCreateAdminMutation } from "../../../redux/features/admin/adminApi";
 import { adminSchema } from "../../../schemas/admin.schema";
 import PasswordStrength from "../../validation/PasswordStrength";
+import { SetAdminCreateError } from "../../../redux/features/admin/adminSlice";
 
 type TFormValues = z.infer<typeof adminSchema>;
 
 const CreateAdminModal = () => {
   const dispatch = useAppDispatch();
   const [modalOpen, setModalOpen] = useState(false);
-  const { CategoryCreateError } = useAppSelector((state) => state.category);
-  const [createAdmin, { isLoading, isSuccess, reset }] =
+  const { CreateError } = useAppSelector((state) => state.admin);
+  const [createAdmin, { isLoading, isSuccess }] =
     useCreateAdminMutation();
-  const { handleSubmit, control, setValue, watch, trigger } =
+  const { handleSubmit, control, watch, trigger, reset } =
     useForm<TFormValues>({
       resolver: zodResolver(adminSchema),
     });
@@ -37,16 +38,21 @@ const CreateAdminModal = () => {
     }
   }, [password, watch, trigger]);
 
+
   //if success
   useEffect(() => {
     if (!isLoading && isSuccess) {
-      //setValue("category", "");
+      reset()
       setModalOpen(false);
     }
-  }, [isLoading, isSuccess, reset, setValue]);
+  }, [isLoading, isSuccess, reset]);
 
   const onSubmit: SubmitHandler<TFormValues> = (data) => {
-    
+    dispatch(SetAdminCreateError(""));
+    createAdmin({
+        ...data,
+        role: "ADMIN"
+    })
   };
 
   return (
@@ -62,7 +68,7 @@ const CreateAdminModal = () => {
         open={modalOpen}
         onCancel={() => {
           setModalOpen(false);
-          //setValue("category", "");
+          reset();
         }}
         maskClosable={false}
         footer={false}
@@ -73,7 +79,7 @@ const CreateAdminModal = () => {
               <h2 className="text-2xl font-semibold text-gray-800 mb-4">
                 Create Admin
               </h2>
-              {CategoryCreateError && <Error message={CategoryCreateError} />}
+              {CreateError && <Error message={CreateError} />}
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                 <CustomInput
                   label="Name"
@@ -94,7 +100,7 @@ const CreateAdminModal = () => {
                   name="phone_number"
                   type="text"
                   control={control}
-                  placeholder="Enter phone number"
+                  placeholder="e.g., +44 20 1234 5678 or 020 1234 5678"
                 />
                 <CustomInput
                   label="Password"

@@ -1,10 +1,29 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import TagTypes from "../../../constant/tagType.constant";
 import { ErrorToast, SuccessToast } from "../../../helper/ValidationHelper";
 import type { IParam } from "../../../types/global.type";
 import { apiSlice } from "../api/apiSlice";
+import { SetAdminCreateError } from "./adminSlice";
 
 export const adminApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
+    getMe: builder.query({
+      query: () => ({
+        url: "/auth/profile",
+        method: "GET",
+      }),
+      keepUnusedDataFor: 600,
+      providesTags: [TagTypes.me],
+      async onQueryStarted(_arg, { queryFulfilled, dispatch}) {
+        try {
+          const res = await queryFulfilled;
+          const data = res?.data?.data;
+         // dispatch(SetUser(data))
+        } catch (err:any) {
+         ErrorToast("Server error is occured");
+        }
+      },
+    }),
     getAdmins: builder.query({
       query: (args) => {
         const params = new URLSearchParams();
@@ -27,7 +46,7 @@ export const adminApi = apiSlice.injectEndpoints({
     }),
     createAdmin: builder.mutation({
       query: (data) => ({
-        url: "/dashboard/create-category",
+        url: "/auth/register",
         method: "POST",
         body: data,
       }),
@@ -37,13 +56,13 @@ export const adminApi = apiSlice.injectEndpoints({
         }
         return [];
       },
-      async onQueryStarted(_arg, { queryFulfilled }) {
+      async onQueryStarted(_arg, { queryFulfilled, dispatch }) {
         try {
           await queryFulfilled;
           SuccessToast("Admin is created successfully");
         } catch (err: any) {
           const message = err?.error?.data?.message || "Something went wrong";
-          ErrorToast(message);
+          dispatch(SetAdminCreateError(message));
         }
       },
     }),
@@ -71,7 +90,7 @@ export const adminApi = apiSlice.injectEndpoints({
     }),
     deleteAdmin: builder.mutation({
       query: (id) => ({
-        url: `/dashboard/delete-category/${id}`,
+        url: `/auth/delete-auth-account?email=${id}`,
         method: "DELETE",
       }),
       invalidatesTags: (result) => {
@@ -93,4 +112,4 @@ export const adminApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetAdminsQuery, useCreateAdminMutation, useDeleteAdminMutation } = adminApi;
+export const { useGetAdminsQuery, useCreateAdminMutation, useDeleteAdminMutation, useGetMeQuery } = adminApi;

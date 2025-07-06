@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Table, ConfigProvider } from "antd";
-import DeleteCategoryModal from "../modal/category/DeleteCategoryModal";
 import EditCategoryModal from "../modal/category/EditCategoryModal";
 import type { ICategory } from "../../types/category.type";
 import icon_placeholder from "../../assets/images/icon_placeholder.jpg";
@@ -71,7 +70,6 @@ const CategoryTable = ( { categories }: TProps) => {
       render: (_val: any, record: ICategory) => (
         <div className="flex items-center gap-2">
           <EditCategoryModal category={record}/>
-          <DeleteCategoryModal categoryId={record?._id}/>
         </div>
       ),
     },

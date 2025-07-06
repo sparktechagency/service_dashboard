@@ -13,3 +13,13 @@ export type TAdminDataSource = {
   email: string;
   phone_number: string;
 };
+
+
+export type TAuthAdmin = {
+  _id: string;
+  name: string;
+  email: string;
+  profile_image: string;
+  phone_number: string;
+  contact: string;
+};
