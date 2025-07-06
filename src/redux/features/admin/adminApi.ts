@@ -3,7 +3,7 @@ import TagTypes from "../../../constant/tagType.constant";
 import { ErrorToast, SuccessToast } from "../../../helper/ValidationHelper";
 import type { IParam } from "../../../types/global.type";
 import { apiSlice } from "../api/apiSlice";
-import { SetAdminCreateError } from "./adminSlice";
+import { SetAdmin, SetAdminCreateError } from "./adminSlice";
 
 export const adminApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -18,8 +18,8 @@ export const adminApi = apiSlice.injectEndpoints({
         try {
           const res = await queryFulfilled;
           const data = res?.data?.data;
-         // dispatch(SetUser(data))
-        } catch (err:any) {
+          dispatch(SetAdmin(data))
+        } catch{
          ErrorToast("Server error is occured");
         }
       },

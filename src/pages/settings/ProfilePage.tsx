@@ -1,31 +1,10 @@
-"use client"
+"use client";
 
-import type React from "react"
-
-import { useState } from "react"
+import ProfileForm from "../../components/Profile/ProfileForm"
 
 const ProfilePage = () => {
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    companyName: "",
-    email: "",
-    contactNo: "",
-    address: "",
-  })
+  
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }))
-  }
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    console.log("Form submitted:", formData)
-  }
 
   return (
     <div className="min-h-full bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
@@ -53,114 +32,7 @@ const ProfilePage = () => {
             </div>
           </div>
 
-          {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* First Row - First Name & Last Name */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-2">
-                  First Name
-                </label>
-                <input
-                  type="text"
-                  id="firstName"
-                  name="firstName"
-                  value={formData.firstName}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-3 bg-gray-100 border-0 rounded-lg focus:bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
-                  placeholder="Enter first name"
-                />
-              </div>
-              <div>
-                <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-2">
-                  Last Name
-                </label>
-                <input
-                  type="text"
-                  id="lastName"
-                  name="lastName"
-                  value={formData.lastName}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-3 bg-gray-100 border-0 rounded-lg focus:bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
-                  placeholder="Enter last name"
-                />
-              </div>
-            </div>
-
-            {/* Second Row - Company Name & Email */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label htmlFor="companyName" className="block text-sm font-medium text-gray-700 mb-2">
-                  Company Name
-                </label>
-                <input
-                  type="text"
-                  id="companyName"
-                  name="companyName"
-                  value={formData.companyName}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-3 bg-gray-100 border-0 rounded-lg focus:bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
-                  placeholder="Enter company name"
-                />
-              </div>
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-3 bg-gray-100 border-0 rounded-lg focus:bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
-                  placeholder="Enter email address"
-                />
-              </div>
-            </div>
-
-            {/* Third Row - Contact No & Address */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label htmlFor="contactNo" className="block text-sm font-medium text-gray-700 mb-2">
-                  Contact No
-                </label>
-                <input
-                  type="tel"
-                  id="contactNo"
-                  name="contactNo"
-                  value={formData.contactNo}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-3 bg-gray-100 border-0 rounded-lg focus:bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
-                  placeholder="Enter contact number"
-                />
-              </div>
-              <div>
-                <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-2">
-                  Address
-                </label>
-                <textarea
-                  id="address"
-                  name="address"
-                  value={formData.address}
-                  onChange={handleInputChange}
-                  rows={1}
-                  className="w-full px-4 py-3 bg-gray-100 border-0 rounded-lg focus:bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all resize-none"
-                  placeholder="Enter address"
-                />
-              </div>
-            </div>
-
-            {/* Submit Button */}
-            <div className="flex justify-center pt-6">
-              <button
-                type="submit"
-                className="px-8 py-3 bg-slate-700 text-white font-medium rounded-lg hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 transition-colors"
-              >
-                Save & Change
-              </button>
-            </div>
-          </form>
+         <ProfileForm/>
         </div>
       </div>
     </div>

@@ -1,8 +1,11 @@
 import React from 'react';
-import { User } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useGetMeQuery } from '../../redux/features/admin/adminApi';
 import { useAppSelector } from '../../redux/hooks/hooks';
+import UserLoading from '../loader/UserLoading';
+import profile_placeholder from "../../assets/images/profile_placeholder.png";
+import { baseUrl } from '../../redux/features/api/apiSlice';
+
 
 interface HeaderProps {
   children?: React.ReactNode;
@@ -16,29 +19,31 @@ const Header: React.FC<HeaderProps> = ({ children }) => {
 
   return (
     <header className="bg-white text-white h-16 flex items-center justify-between px-4 z-10 border-b">
-      {/* Left side - Menu Button + Title on Mobile */}
       <div className="flex items-center">
         {children}
         <h1 className="md:hidden text-lg font-semibold text-white">Dashflow</h1>
       </div>
 
-      {/* Right side - Notifications & User Profile */}
       <div className="flex items-center space-x-3" onClick={() => navigate("/profile")}>   
-         {/* User Avatar */}
-        <button className="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center text-white hover:bg-slate-600 transition-colors">
-          <User size={16} />
-        </button>     
-        {/* User Menu */}
-        <div className="relative hidden md:block">
-          <button className="flex items-center space-x-2 p-2 rounded-md text-black transition-colors duration-200">
-            <div className="flex items-center space-x-2">
-              <span className="text-sm md:text-lg font-medium">John Doe</span>
-              {/* <ChevronDown size={16} /> */}
+        {isLoading ? (
+            <UserLoading />
+          ) : (
+            <div
+              onClick={() => navigate("/profile")}
+              className="flex items-center gap-2 cursor-pointer"
+            >
+              <img
+                src={admin?.profile_image ? baseUrl+admin?.profile_image : profile_placeholder }
+                alt="Profile"
+                onError={(e) => {
+                  e.currentTarget.onerror = null;
+                  e.currentTarget.src = profile_placeholder;
+                }}
+                className="w-9 h-9 rounded-full object-cover"
+              />
+              <span className="text-gray-800 font-medium">{admin?.name}</span>
             </div>
-          </button>
-        </div>
-        
-       
+          )}
       </div>
     </header>
   );
