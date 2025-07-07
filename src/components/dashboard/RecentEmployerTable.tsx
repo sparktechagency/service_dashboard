@@ -16,6 +16,7 @@ const RecentEmployerTable : React.FC<EmployerTableProps> = ({
   employers
 }) => {
 
+
   const dataSource: TEmployerDataSource[] = employers?.map((employer, index) => ({
     key: index,
     serial: Number(index + 1),
@@ -24,7 +25,8 @@ const RecentEmployerTable : React.FC<EmployerTableProps> = ({
     email: employer?.email,
     profile_image: employer?.profile_image,
     subscription_status: employer?.subscription_status,
-    companyName: employer?.company?.name || "" 
+    companyName: employer?.company?.name || "",
+    is_block: employer?.authId?.is_block
   }));
 
   const columns = [
@@ -74,26 +76,27 @@ const RecentEmployerTable : React.FC<EmployerTableProps> = ({
         <p className="truncate">{val}</p>
       )
     },
-    {
+     {
       title: "Status",
-      dataIndex: "isActive",
-      key: "isActive",
+      dataIndex: "is_block",
+      key: "is_block",
       width: "15%",
-      render: (val: boolean, record: { _id: string }) => {
+      render: (val: boolean, record: { email: string; }) => {
         const statusStyles = {
           blocked: "bg-red-100 text-red-700 border border-red-300",
           active: "bg-green-100 text-green-700 border border-green-300",
         };
-        const bgColor = val ? statusStyles.active : statusStyles.blocked;
+
+        const bgColor = val ? statusStyles.blocked : statusStyles.active;
 
         return (
           <div className="flex items-center gap-2">
             <button
               className={`${bgColor} w-20 cursor-default px-3 py-0.5 text-sm font-medium rounded-full`}
             >
-              {val ? "Active" : "Blocked"}
+              {val ?  "Blocked" : "Active"}
             </button>
-            <ChangeStatusModal userId={record._id} isActive={val} />
+            <ChangeStatusModal email={record.email} status={val} role="EMPLOYER"/>
           </div>
         );
       },
