@@ -2,11 +2,15 @@ import { Table, ConfigProvider, Pagination } from "antd";
 import { Edit, Eye } from "lucide-react";
 import DeleteBlogModal from "../modal/blog/DeleteBlogModal";
 import type { IMeta } from "../../types/global.type";
-import type { TBlog } from "../../types/blog.type";
+import type { TBlog, TBlogDataSource } from "../../types/blog.type";
 import { Link } from "react-router-dom";
 import getCategory from "../../utils/getCategory";
 import getCategoryColor from "../../utils/getCategoryColor";
 import getColorClassForDate from "../../utils/getColorClassForDate";
+import blog_placeholder from "../../assets/images/blog_placeholder.jpg";
+import { baseUrl } from "../../redux/features/api/apiSlice";
+import getBlogImgPath from "../../utils/getBlogImgPath";
+
 
 type TProps = {
   blogs: TBlog[];
@@ -17,22 +21,18 @@ type TProps = {
   setPageSize: React.Dispatch<React.SetStateAction<number>>;
 };
 
-type TDataSource = TBlog & {
-  key: number;
-  serial: number;
-}
 
 const BlogTable = ({ blogs, meta, currentPage, setCurrentPage, pageSize, setPageSize }: TProps) => {
 
 
-    const dataSource: TDataSource[] = blogs?.map((blog, index) => ({
+    const dataSource: TBlogDataSource[] = blogs?.map((blog, index) => ({
       key: index,
       serial: Number(index+1) + ((currentPage-1)*pageSize),
       _id: blog?._id,
       title: blog?.title,
       category: blog?.category,
       descriptions: blog?.descriptions,
-      image: blog?.image,
+      image: blog?.image?.length > 0 ? baseUrl+ getBlogImgPath(blog?.image[0]) : blog_placeholder,
       createdAt: blog?.createdAt,
     }));
 
@@ -63,7 +63,16 @@ const BlogTable = ({ blogs, meta, currentPage, setCurrentPage, pageSize, setPage
       width: "17.5%",
       render: (val: string) => (
         <>
-          <img src={val} alt="icon" className="w-12 h-12 rounded-md" />
+          {/* <img src={val} alt="icon" className="w-12 h-12 rounded-md" /> */}
+          <img
+            src={val}
+            alt="profile"
+            className="w-[45px] h-[45px] rounded-lg"
+            onError={(e) => {
+              e.currentTarget.onerror = null;
+              e.currentTarget.src = blog_placeholder;
+            }}
+            />
         </>
       ),
     },

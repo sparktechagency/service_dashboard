@@ -101,7 +101,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({preview, setPreview, setImage,
         onDragLeave={handleDragLeave}
         onDragOver={handleDragOver}
         onDrop={handleDrop}
-        className={`mt-1 relative border-2 border-dashed rounded-lg p-4 h-64 flex flex-col items-center justify-center cursor-pointer transition-all duration-200 ${
+        className={`mt-1 relative border-2 border-dashed rounded-lg p-4 h-48 flex flex-col items-center justify-center cursor-pointer transition-all duration-200 ${
           dragging
             ? 'border-blue-500 bg-blue-50'
             : preview
@@ -157,7 +157,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({preview, setPreview, setImage,
                   Drop image here or click to upload
                 </p>
                 <p className="text-xs text-gray-500 mt-1">
-                  PNG, JPG, GIF
+                  PNG, JPG, JPEG
                    {/* up to 5MB */}
                 </p>
               </div>

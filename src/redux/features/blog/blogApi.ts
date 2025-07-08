@@ -46,13 +46,18 @@ export const blogApi = apiSlice.injectEndpoints({
           SuccessToast("Blog is created successfully");
         } catch (err: any) {
           const message = err?.error?.data?.message;
-          ErrorToast(message);
+          if(message === "Invalid file type"){
+            ErrorToast("Please, Upload png, jpeg, jpg formate file")
+          }
+          else{
+            ErrorToast(message);
+          }
         }
       },
     }),
     getSingleBlog: builder.query({
       query: (id) => ({
-        url: `/dashboard/get_blog_details${id}`,
+        url: `/dashboard/get_blog_details/${id}`,
         method: "GET",
       }),
       keepUnusedDataFor: 600,
@@ -63,6 +68,7 @@ export const blogApi = apiSlice.injectEndpoints({
         try {
           await queryFulfilled;
         } catch (err: any) {
+          console.log(err)
           ErrorToast("Server error is occured");
         }
       },

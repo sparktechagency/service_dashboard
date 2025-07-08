@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom";
 type TFormValues = z.infer<typeof blogSchema>;
 
 
-const CreateBlogForm = () => {
+const UpdateBlogForm = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { BlogCreateError } = useAppSelector((state) => state.blog);
@@ -100,7 +100,7 @@ const CreateBlogForm = () => {
           label="Description"
           name="descriptions"
           control={control}
-          height={350}
+          height={320}
           placeholder="Write a blog..."
         />
 
@@ -122,4 +122,4 @@ const CreateBlogForm = () => {
   );
 };
 
-export default CreateBlogForm;
+export default UpdateBlogForm;
