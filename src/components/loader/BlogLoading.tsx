@@ -56,7 +56,7 @@ export default function BlogLoading() {
         </div>
 
         {/* Create Blog Button */}
-        <div className="h-12 w-full animate-pulse rounded-md bg-gray-300 md:h-14"></div>
+        <div className="h-8 w-full animate-pulse rounded-md bg-gray-300 md:h-10"></div>
       </div>
     </div>
   )

@@ -33,7 +33,7 @@ const EditBlogPage = () => {
                 </h1>
               </div>
               <div className="flex-1 overflow-hidden p-4">
-                <UpdateBlogForm />
+                <UpdateBlogForm blog={blog} />
               </div>
             </div>
           </div>

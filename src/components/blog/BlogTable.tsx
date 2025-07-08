@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import getCategory from "../../utils/getCategory";
 import getCategoryColor from "../../utils/getCategoryColor";
 import getColorClassForDate from "../../utils/getColorClassForDate";
-import blog_placeholder from "../../assets/images/blog_placeholder.jpg";
+import blog_placeholder from "../../assets/images/blog_placeholder.png";
 import { baseUrl } from "../../redux/features/api/apiSlice";
 import getBlogImgPath from "../../utils/getBlogImgPath";
 
@@ -117,7 +117,7 @@ const BlogTable = ({ blogs, meta, currentPage, setCurrentPage, pageSize, setPage
       render: (blogId: string) => (
         <div className="flex items-center gap-2">
           <Link
-            to={`/update-blog/${blogId}`}
+            to={`/blog-details/${blogId}`}
             className="bg-gray-600 hover:bg-gray-700 p-2 text-white rounded-full"
           >
             <Eye size={18} />

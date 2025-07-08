@@ -61,9 +61,6 @@ const EditCategoryModal = ({ category }: TProps) => {
     //if success
    useEffect(() => {
     if (!isLoading && isSuccess) {
-      // setValue("category", "");
-      // setPreview(null)
-      // setImage(null)
       setModalOpen(false);
     }
   }, [isLoading, isSuccess]);

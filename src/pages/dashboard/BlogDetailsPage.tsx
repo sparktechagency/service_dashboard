@@ -1,3 +1,4 @@
+import BlogDetails from "../../components/blog/BlogDetails"
 
 const BlogDetailsPage = () => {
   return (
@@ -10,9 +11,9 @@ const BlogDetailsPage = () => {
                 Blog Details
               </h1>
             </div>
-            {/* <div className="flex-1 overflow-hidden p-4">
-              <CreateBlogForm/>
-            </div> */}
+            <div className="flex-1 overflow-hidden p-4">
+              <BlogDetails/>
+            </div>
           </div>
         </div>
       </div>

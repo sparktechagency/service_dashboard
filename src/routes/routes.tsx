@@ -26,6 +26,7 @@ import ChangePasswordPage from "../pages/settings/ChangePasswordPage";
 import PrivateRoute from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
 import AdminsPage from "../pages/dashboard/AdminsPage";
+import BlogDetailsPage from "../pages/dashboard/BlogDetailsPage";
 
 const router = createBrowserRouter([
   {
@@ -83,6 +84,10 @@ const router = createBrowserRouter([
       {
         path: "update-blog/:id",
         element: <EditBlogPage />,
+      },
+      {
+        path: "blog-details/:id",
+        element: <BlogDetailsPage />,
       },
       {
         path: "profile",

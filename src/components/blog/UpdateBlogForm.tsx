@@ -1,5 +1,5 @@
 import { useForm, type SubmitHandler } from "react-hook-form";
-import { useCreateBlogMutation } from "../../redux/features/blog/blogApi";
+import { useUpdateBlogMutation } from "../../redux/features/blog/blogApi";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SetBlogCreateError } from "../../redux/features/blog/blogSlice";
@@ -14,21 +14,34 @@ import Error from "../validation/Error";
 import ImageUpload from "../form/ImageUpload";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import type { TBlog } from "../../types/blog.type";
+import { baseUrl } from "../../redux/features/api/apiSlice";
+import getBlogImgPath from "../../utils/getBlogImgPath";
+import blog_placeholder from "../../assets/images/blog_placeholder.png";
 
 type TFormValues = z.infer<typeof blogSchema>;
 
+type TProps = {
+  blog: TBlog
+}
 
-const UpdateBlogForm = () => {
+const UpdateBlogForm = ( {blog}: TProps) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { BlogCreateError } = useAppSelector((state) => state.blog);
-  const [createBlog, { isLoading, isSuccess }] = useCreateBlogMutation();
+  const [updateBlog, { isLoading, isSuccess }] = useUpdateBlogMutation();
   const { handleSubmit, control, setValue, clearErrors, setError, formState: { errors } } = useForm({
     resolver: zodResolver(blogSchema),
+    defaultValues: {
+      title: blog?.title || "",
+      category: blog?.category || "",
+      descriptions: blog?.descriptions,
+      icon: blog?.image?.length > 0 ? baseUrl+ getBlogImgPath(blog?.image[0]) : ""
+    }
   });
 
   const [image, setImage] = useState<File | null>(null);
-  const [preview, setPreview] = useState<string | null>(null);
+  const [preview, setPreview] = useState<string | null>(blog?.image?.length > 0 ? baseUrl+ getBlogImgPath(blog?.image[0]) : blog_placeholder);
     
   
     useEffect(() => {
@@ -38,7 +51,8 @@ const UpdateBlogForm = () => {
       }
     }, [image, setValue, setError, clearErrors]);
 
-    const setIconError = () => {
+
+  const setIconError = () => {
     setValue("icon", "");
     setError("icon", {
       type: "manual",
@@ -57,11 +71,16 @@ const UpdateBlogForm = () => {
   const onSubmit: SubmitHandler<TFormValues> = (data) => {
     dispatch(SetBlogCreateError(""));
     const formData = new FormData();
-    formData.append("image", image as File);
+    if(image){
+      formData.append("image", image as File);
+    }
     formData.append("title", data.title);
     formData.append("category", data.category);
     formData.append("descriptions", data.descriptions);
-    createBlog(formData);
+    updateBlog({
+      id: blog?._id,
+      data: formData
+    });
   };
 
   return (
@@ -114,7 +133,7 @@ const UpdateBlogForm = () => {
               Processing...
             </>
           ) : (
-            "Create Blog"
+            "Save Changes"
           )}
         </button>
       </form>
