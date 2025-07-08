@@ -18,11 +18,7 @@ const LoginForm = () => {
   const { LoginError } = useAppSelector((state) => state.auth);
   const [login, { isLoading }] = useLoginMutation();
   const { handleSubmit, control } = useForm({
-    resolver: zodResolver(loginSchema),
-    defaultValues: {
-      email: "admin@admin.com",
-      password: "12345678",
-    },
+    resolver: zodResolver(loginSchema)
   });
 
 
