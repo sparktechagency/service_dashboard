@@ -45,7 +45,12 @@ export const categoryApi = apiSlice.injectEndpoints({
           SuccessToast("Category is created successfully");
         } catch (err: any) {
           const message = err?.error?.data?.message || "Something went wrong";
-          ErrorToast(message);
+          if(message === "Invalid file type"){
+            ErrorToast("Please, Upload png, jpeg, jpg formate file")
+          }
+          else{
+            ErrorToast(message);
+          }
         }
       },
     }),
@@ -67,7 +72,12 @@ export const categoryApi = apiSlice.injectEndpoints({
           SuccessToast("Category is updated successfully");
         } catch (err: any) {
           const message = err?.error?.data?.message || "Something went wrong";
-          ErrorToast(message);
+          if(message === "Invalid file type"){
+            ErrorToast("Please, Upload png, jpeg, jpg formate file")
+          }
+          else{
+            ErrorToast(message);
+          }
         }
       },
     }),

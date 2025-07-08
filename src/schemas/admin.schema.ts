@@ -51,3 +51,31 @@ export const adminSchema = z
       });
     }
   });
+
+
+
+export const updateAdminSchema = z
+  .object({
+    name: z
+      .string({
+        invalid_type_error: "Name must be string",
+        required_error: "Name is required",
+      })
+      .min(1, "Name is required")
+      .trim()
+      .regex(fullNameRegex, {
+        message:
+          "Name can only contain letters, spaces, apostrophes, hyphens, and dots.",
+      }),
+    phone_number: z
+      .string({
+        invalid_type_error: "Phone Number must be string",
+        required_error: "Phone number is required",
+      })
+      .min(1, "Phone number is required")
+      .trim()
+      .regex(ukPhoneRegex, {
+        message:
+          "Enter a valid UK phone number",
+      })
+  })

@@ -1,19 +1,18 @@
 "use client";
 
+import ProfileLoading from "../../components/loader/ProfileLoading";
 import ProfileForm from "../../components/Profile/ProfileForm"
 
 const ProfilePage = () => {
-  
 
+  return <ProfileLoading/>
 
   return (
     <div className="min-h-full bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
         <div className="bg-white rounded-lg shadow-sm p-6 sm:p-8">
-          {/* Header */}
           <h1 className="text-2xl font-semibold text-gray-900 mb-8">Admin Profile</h1>
 
-          {/* Profile Image Section */}
           <div className="flex justify-center mb-8">
             <div className="relative">
               <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-gray-200 overflow-hidden">

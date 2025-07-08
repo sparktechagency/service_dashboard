@@ -91,7 +91,12 @@ export const blogApi = apiSlice.injectEndpoints({
           SuccessToast("Blog is updated successfully");
         } catch (err: any) {
           const message = err?.error?.data?.message;
-          ErrorToast(message);
+         if(message === "Invalid file type"){
+            ErrorToast("Please, Upload png, jpeg, jpg formate file")
+          }
+          else{
+            ErrorToast(message);
+          }
         }
       },
     }),
