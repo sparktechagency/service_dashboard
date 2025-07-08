@@ -27,6 +27,7 @@ import PrivateRoute from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
 import AdminsPage from "../pages/dashboard/AdminsPage";
 import BlogDetailsPage from "../pages/dashboard/BlogDetailsPage";
+import CreatePlanPackage from "../pages/dashboard/CreatePlanPackage";
 
 const router = createBrowserRouter([
   {
@@ -68,6 +69,10 @@ const router = createBrowserRouter([
       {
         path: "packages",
         element: <PackagesPage />,
+      },
+       {
+        path: "add-plan",
+        element: <CreatePlanPackage />,
       },
       {
         path: "contacts",

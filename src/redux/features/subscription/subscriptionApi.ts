@@ -57,7 +57,7 @@ export const subscriptionApi = apiSlice.injectEndpoints({
       async onQueryStarted(_arg, { queryFulfilled }) {
         try {
           await queryFulfilled;
-          SuccessToast("Category is created successfully");
+          SuccessToast("Plan is added successfully");
         } catch (err: any) {
           const message = err?.error?.data?.message;
           ErrorToast(message);
@@ -79,7 +79,7 @@ export const subscriptionApi = apiSlice.injectEndpoints({
       async onQueryStarted(_arg, { queryFulfilled }) {
         try {
           await queryFulfilled;
-          SuccessToast("Category is updated successfully");
+          SuccessToast("Plan is updated successfully");
         } catch (err: any) {
           const message = err?.error?.data?.message;
           ErrorToast(message);
