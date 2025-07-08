@@ -10,15 +10,24 @@ import Error from "../validation/Error";
 import CustomInput from "../form/CustomInput";
 import { CgSpinnerTwo } from "react-icons/cg";
 import { updateAdminSchema } from "../../schemas/admin.schema";
+import type { TAuthAdmin } from "../../types/admin.type";
 
 type TFormValues = z.infer<typeof updateAdminSchema>;
 
-const ProfileForm = () => {
+type TProps = {
+  admin: TAuthAdmin | null
+}
+
+const ProfileForm = ({ admin }: TProps) => {
   const dispatch = useAppDispatch();
   const { ChangePasswordError } = useAppSelector((state) => state.auth);
   const [changePassword, { isLoading }] = useChangePasswordMutation();
-  const { handleSubmit, control, watch } = useForm({
+  const { handleSubmit, control } = useForm({
     resolver: zodResolver(updateAdminSchema),
+    defaultValues: {
+      name: admin?.name || "",
+      phone_number: admin?.contact || "" 
+    }
   });
 
 
@@ -39,13 +48,25 @@ const ProfileForm = () => {
           control={control}
           placeholder="Enter full name"
         />
-        <CustomInput
-          label="Email"
-          name="email"
-          type="text"
-          control={control}
-          placeholder="Enter email address"
-        />
+        <div>
+          <label
+            htmlFor="Email"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Email
+          </label>
+          <input
+            type="email"
+            value={admin?.email}
+            disabled
+            placeholder="Enter Email Address"
+            className="w-full mt-1 border disabled:bg-gray-200 focus:outline-none rounded-md px-4 py-2 pr-10 
+                        border-gray-300 focus:border-blue-500
+                    "
+          />
+        </div>
+
+
         <CustomInput
           label="Phone Number(only UK)"
           name="phone_number"

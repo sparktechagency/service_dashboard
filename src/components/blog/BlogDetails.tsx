@@ -26,10 +26,6 @@ const BlogDetails = ( {blog}: TProps) =>{
               src={blogImg}
               alt={"blog_img"}
               className="w-full h-full object-cover"
-              onError={(e) => {
-              e.currentTarget.onerror = null;
-              e.currentTarget.src = blog_placeholder;
-            }}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
           </div>
