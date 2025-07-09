@@ -21,7 +21,8 @@ const TagTypes = {
     subscribers: "Subscribers",
     jobs: "Jobs",
     job: "Job",
-    admins: "Admins"
+    admins: "Admins",
+    transactions: "Transactions"
 }
 
 export default TagTypes;

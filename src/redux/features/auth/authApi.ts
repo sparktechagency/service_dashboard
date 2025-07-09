@@ -198,6 +198,28 @@ export const authApi = apiSlice.injectEndpoints({
         }
       },
     }),
+    updateAdminProfile: builder.mutation({
+      query: (data) => ({
+        url: `/auth/admin/edit-profile`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: (result) => {
+        if (result?.success) {
+          return [TagTypes.me];
+        }
+        return [];
+      },
+      async onQueryStarted(_arg, { queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          SuccessToast("Profile is updated successfully");
+        } catch (err: any) {
+          const message = err?.error?.data?.message || "Something went wrong";
+          ErrorToast(message);
+        }
+      },
+    }),
   }),
 });
 
@@ -208,5 +230,6 @@ export const {
   useForgotPasswordVerifyOtpMutation,
   useForgotPasswordResetMutation,
   useChangeStatusMutation,
-  useChangePasswordMutation
+  useChangePasswordMutation,
+  useUpdateAdminProfileMutation
 } = authApi;

@@ -2,19 +2,19 @@
 import React, { useState } from "react";
 import ServerErrorCard from "../card/ServerErrorCard";
 import ListLoading from "../loader/ListLoading";
-import { useGetContactListQuery } from "../../redux/features/contact/contactApi";
 import TransactionTable from "./TransactionTable";
+import { useGetTransactionsQuery } from "../../redux/features/transaction/transactionApi";
 
 const TransactionList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-  const { data, isLoading, isError } = useGetContactListQuery([
+  const { data, isLoading, isError } = useGetTransactionsQuery([
     { name: "page", value: currentPage },
     { name: "limit", value: pageSize },
   ]);
 
 
-  const contacts = data?.data?.result || [];
+  const transactions = data?.data?.result || [];
   const meta = data?.data?.meta || {};
 
   let content: React.ReactNode;
@@ -27,7 +27,7 @@ const TransactionList = () => {
     content = (
       <div className="flex-1 overflow-hidden">
         <TransactionTable
-          contacts={contacts}
+          transactions={transactions}
           meta={meta}
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}

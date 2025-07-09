@@ -1,16 +1,15 @@
 "use client";
 
-import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
-import { useChangePasswordMutation } from "../../redux/features/auth/authApi";
+import { useAppDispatch } from "../../redux/hooks/hooks";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SetChangePasswordError } from "../../redux/features/auth/authSlice";
 import type { z } from "zod";
-import Error from "../validation/Error";
 import CustomInput from "../form/CustomInput";
 import { CgSpinnerTwo } from "react-icons/cg";
 import { updateAdminSchema } from "../../schemas/admin.schema";
 import type { TAuthAdmin } from "../../types/admin.type";
+import { useUpdateAdminProfileMutation } from "../../redux/features/auth/authApi";
 
 type TFormValues = z.infer<typeof updateAdminSchema>;
 
@@ -20,8 +19,7 @@ type TProps = {
 
 const ProfileForm = ({ admin }: TProps) => {
   const dispatch = useAppDispatch();
-  const { ChangePasswordError } = useAppSelector((state) => state.auth);
-  const [changePassword, { isLoading }] = useChangePasswordMutation();
+  const [updateProfile, { isLoading }] = useUpdateAdminProfileMutation();
   const { handleSubmit, control } = useForm({
     resolver: zodResolver(updateAdminSchema),
     defaultValues: {
@@ -33,13 +31,12 @@ const ProfileForm = ({ admin }: TProps) => {
 
   const onSubmit: SubmitHandler<TFormValues> = (data) => {
     dispatch(SetChangePasswordError(""));
-    changePassword(data);
+    //changePassword(data);
   };
 
 
   return (
     <>
-      {ChangePasswordError && <Error message={ChangePasswordError} />}
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <CustomInput
           label="Name"

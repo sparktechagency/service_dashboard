@@ -1,15 +1,13 @@
 import React from "react";
 import { Table, ConfigProvider, Pagination } from "antd";
-import { Reply } from "lucide-react";
 import type { IMeta } from "../../types/global.type";
-import type { TContact } from "../../types/contact.type";
-import ReplyModal from "../modal/contact/ReplyModal";
-import ViewContactModal from "../modal/contact/ViewContactModal";
 import getColorClassForDate from "../../utils/getColorClassForDate";
+import type { TTransaction, TTransactionDataSource } from "../../types/transaction.type";
+import type { ColumnType } from "antd/es/table";
 
 
-interface CandidateTableProps {
-  contacts: TContact[];
+interface TransactionTableProps {
+  transactions: TTransaction[];
   meta: IMeta;
   currentPage: number;
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
@@ -17,13 +15,8 @@ interface CandidateTableProps {
   setPageSize: React.Dispatch<React.SetStateAction<number>>;
 }
 
-type TDataSource = TContact & {
-  key: number;
-  serial: number;
-}
-
-const TransactionTable : React.FC<CandidateTableProps> = ({
-  contacts,
+const TransactionTable : React.FC<TransactionTableProps> = ({
+  transactions,
   meta,
   currentPage,
   setCurrentPage,
@@ -31,19 +24,19 @@ const TransactionTable : React.FC<CandidateTableProps> = ({
   setPageSize,
 }) => {
 
-  const dataSource: TDataSource[] = contacts?.map((contact, index) => ({
+  const dataSource: TTransactionDataSource[] = transactions?.map((transaction, index) => ({
     key: index,
     serial: Number(index + 1) + (currentPage - 1) * pageSize,
-    _id: contact?._id,
-    name: contact?.name,
-    email: contact?.email,
-    message: contact?.message,
-    subject: contact?.subject,
-    reply: contact?.reply,
-    createdAt: contact?.createdAt,
+    _id: transaction?._id,
+    name: transaction?.userId?.name,
+    email: transaction?.userId?.email,
+    plan: transaction?.subscriptionId?.name,
+    amount: transaction?.amount,
+    paymentStatus: transaction?.paymentStatus,
+    createdAt: transaction?.createdAt,
   }));
 
-  const columns = [
+  const columns: ColumnType<TTransactionDataSource>[] = [
     {
       title: "Serial",
       dataIndex: "serial",
@@ -63,24 +56,27 @@ const TransactionTable : React.FC<CandidateTableProps> = ({
       width: "17%",
     },
     {
-      title: "Subject",
-      dataIndex: "subject",
-      key: "subject",
-      width: "17.5%",
-      render: (text: string) => (
-        <>
-          <p className="truncate">{text}</p>
-        </>
-      ),
+      title: "Subscription Plan",
+      dataIndex: "plan",
+      key: "plan",
+      width: "15%",
+      align: "center"
     },
     {
-      title: "Message",
-      dataIndex: "message",
-      key: "message",
+      title: "Amount($)",
+      dataIndex: "amount",
+      key: "amount",
+      width: "12.5%",
+      align:"center"
+    },
+    {
+      title: "Status",
+      dataIndex: "paymentStatus",
+      key: "paymentStatus",
       width: "20%",
       render: (text: string) => (
         <>
-          <p className="truncate">{text}</p>
+          <p>{text}</p>
         </>
       ),
     },
@@ -99,25 +95,6 @@ const TransactionTable : React.FC<CandidateTableProps> = ({
           </button>
         );
       },
-    },
-    {
-      title: "Action",
-      key: "_id",
-      dataIndex: "_id",
-      width: "10%",
-      align: "center" as const,
-      render: (contactId: string, contact: TContact) => (
-        <div className="flex justify-center gap-2">
-          <ViewContactModal contact={contact}/>
-          {contact?.reply ? (
-            <button className="bg-blue-300 hover:bg-blue-400 p-2 text-white rounded-full cursor-not-allowed">
-              <Reply size={18} />
-            </button>
-          ) : (
-            <ReplyModal contactId={contactId} />
-          )}
-        </div>
-      ),
     },
   ];
 

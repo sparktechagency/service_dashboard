@@ -66,28 +66,6 @@ export const adminApi = apiSlice.injectEndpoints({
         }
       },
     }),
-    updateAdminProfile: builder.mutation({
-      query: ({ id, data }) => ({
-        url: `/dashboard/edit-category/${id}`,
-        method: "PATCH",
-        body: data,
-      }),
-      invalidatesTags: (result) => {
-        if (result?.success) {
-          return [TagTypes.admins];
-        }
-        return [];
-      },
-      async onQueryStarted(_arg, { queryFulfilled }) {
-        try {
-          await queryFulfilled;
-          SuccessToast("Category is updated successfully");
-        } catch (err: any) {
-          const message = err?.error?.data?.message || "Something went wrong";
-          ErrorToast(message);
-        }
-      },
-    }),
     deleteAdmin: builder.mutation({
       query: (id) => ({
         url: `/auth/delete-auth-account?email=${id}`,
