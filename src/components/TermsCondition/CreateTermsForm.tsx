@@ -4,18 +4,16 @@ import { CgSpinnerTwo } from "react-icons/cg";
 import type { z } from "zod";
 import CustomQuilEditor from "../form/CustomQuilEditor";
 import { policySchema } from "../../schemas/policy.schema";
-import { useCreateUpdateAboutUsMutation } from "../../redux/features/policy/policyApi";
+import { useCreateUpdateTermsConditionsMutation } from "../../redux/features/policy/policyApi";
 
 type TFormValues = z.infer<typeof policySchema>;
 
 
-const CreateAboutForm = () => {
-  const [createAbout, { isLoading }] = useCreateUpdateAboutUsMutation();
+const CreateTermsForm = () => {
+  const [createAbout, { isLoading }] = useCreateUpdateTermsConditionsMutation();
   const { handleSubmit, control } = useForm({
     resolver: zodResolver(policySchema),
   });
-
-
 
 
   const onSubmit: SubmitHandler<TFormValues> = (data) => {
@@ -51,4 +49,4 @@ const CreateAboutForm = () => {
   );
 };
 
-export default CreateAboutForm;
+export default CreateTermsForm;

@@ -19,4 +19,13 @@ export interface IMeta {
   totalPage: number;
 }
 
+
+export interface IApiError {
+  error: {
+    status: number;
+    data: {
+      message: string;
+    }
+  }
+}
   

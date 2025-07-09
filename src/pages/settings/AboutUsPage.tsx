@@ -5,14 +5,8 @@ import CreateAboutForm from "../../components/AboutUs/CreateAboutForm"
 
 const AboutUsPage = () =>{
 
-
-
-  // const loadTemplate = () => {
-  //   setContent(privacyPolicyTemplate)
-  // }
-
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-full bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
       <div className="w-full mx-auto bg-white rounded-xl shadow-md overflow-hidden">
         {/* Header */}
         <div className="bg-gradient-to-r from-purple-600 to-indigo-600 px-6 py-4">
@@ -36,19 +30,6 @@ const AboutUsPage = () =>{
           <CreateAboutForm/>
         </div>
       </div>
-
-      {/* Preview Section */}
-      {/* {content && (
-        <div className="w-full mx-auto mt-8 bg-white rounded-xl shadow-md overflow-hidden">
-          <div className="bg-gray-100 px-6 py-4 border-b">
-            <h2 className="text-lg font-medium text-gray-900">Preview</h2>
-          </div>
-          <div className="p-6">
-            <h1 className="text-2xl font-bold mb-4">{title}</h1>
-            <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: content }}></div>
-          </div>
-        </div>
-      )} */}
     </div>
   )
 }

@@ -1,9 +1,6 @@
 "use client";
-
-import { useAppDispatch } from "../../redux/hooks/hooks";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { SetChangePasswordError } from "../../redux/features/auth/authSlice";
 import type { z } from "zod";
 import CustomInput from "../form/CustomInput";
 import { CgSpinnerTwo } from "react-icons/cg";
@@ -14,11 +11,11 @@ import { useUpdateAdminProfileMutation } from "../../redux/features/auth/authApi
 type TFormValues = z.infer<typeof updateAdminSchema>;
 
 type TProps = {
+  file: File | null;
   admin: TAuthAdmin | null
 }
 
-const ProfileForm = ({ admin }: TProps) => {
-  const dispatch = useAppDispatch();
+const ProfileForm = ({ admin, file }: TProps) => {
   const [updateProfile, { isLoading }] = useUpdateAdminProfileMutation();
   const { handleSubmit, control } = useForm({
     resolver: zodResolver(updateAdminSchema),
@@ -30,8 +27,15 @@ const ProfileForm = ({ admin }: TProps) => {
 
 
   const onSubmit: SubmitHandler<TFormValues> = (data) => {
-    dispatch(SetChangePasswordError(""));
     //changePassword(data);
+    const formData = new FormData();
+    formData.append("name", data.name);
+    formData.append("contact", data.phone_number);
+
+    if (file !== null) {
+      formData.append("profile_image", file);
+    }
+    updateProfile(formData)
   };
 
 
