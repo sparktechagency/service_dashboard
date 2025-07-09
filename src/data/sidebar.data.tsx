@@ -19,6 +19,7 @@ export const menuItems = [
     children: [
       { path: "/subscribers", label: "Subscribers" },
       { path: "/packages", label: "Packages" },
+      { path: "/transactions", label: "Transactions" },
     ],
   },
   { path: "/category", label: "Category", icon: MdCategory },

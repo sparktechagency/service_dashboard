@@ -28,6 +28,7 @@ import PublicRoute from "./PublicRoute";
 import AdminsPage from "../pages/dashboard/AdminsPage";
 import BlogDetailsPage from "../pages/dashboard/BlogDetailsPage";
 import CreatePlanPackage from "../pages/dashboard/CreatePlanPackage";
+import TransactionsPage from "../pages/dashboard/TransactionsPage";
 
 const router = createBrowserRouter([
   {
@@ -69,6 +70,10 @@ const router = createBrowserRouter([
       {
         path: "packages",
         element: <PackagesPage />,
+      },
+      {
+        path: "transactions",
+        element: <TransactionsPage />,
       },
        {
         path: "add-plan",
