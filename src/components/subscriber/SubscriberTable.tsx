@@ -1,6 +1,5 @@
 import React from "react";
 import { Table, ConfigProvider, Pagination } from "antd";
-import { Eye } from "lucide-react";
 import type { IMeta } from "../../types/global.type";
 import type { TSubscriber, TSubscriberDataSource } from "../../types/subscriber.type";
 import { baseUrl } from "../../redux/features/api/apiSlice";
@@ -119,18 +118,18 @@ const SubscriberTable : React.FC<CandidateTableProps> = ({
       width: "10%",
       render: (time: string) => <span>{getFormattedDate(time)}</span>,
     },
-    {
-      title: "Action",
-      key: "_id",
-      dataIndex: "_id",
-      width: "10%",
-      align: "center" as const,
-      render: () => (
-        <button className="bg-gray-600 hover:bg-gray-700 p-2 text-white rounded-full">
-          <Eye size={18} />
-        </button>
-      ),
-    },
+    // {
+    //   title: "Action",
+    //   key: "_id",
+    //   dataIndex: "_id",
+    //   width: "10%",
+    //   align: "center" as const,
+    //   render: () => (
+    //     <button className="bg-gray-600 hover:bg-gray-700 p-2 text-white rounded-full">
+    //       <Eye size={18} />
+    //     </button>
+    //   ),
+    // },
   ];
 
   const handlePagination = (page: number, PageSize: number) => {

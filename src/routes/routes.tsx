@@ -29,6 +29,7 @@ import AdminsPage from "../pages/dashboard/AdminsPage";
 import BlogDetailsPage from "../pages/dashboard/BlogDetailsPage";
 import CreatePlanPackage from "../pages/dashboard/CreatePlanPackage";
 import TransactionsPage from "../pages/dashboard/TransactionsPage";
+import CandidateDetailsPage from "../pages/dashboard/CandidateDetailsPage";
 
 const router = createBrowserRouter([
   {
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
       {
         path: "candidates",
         element: <CandidatesPage />,
+      },
+      {
+        path: "candidate-details/:id",
+        element: <CandidateDetailsPage />,
       },
       {
         path: "category",

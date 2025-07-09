@@ -1,6 +1,5 @@
 import React from "react";
 import { Table, ConfigProvider, Pagination } from "antd";
-import { Eye } from "lucide-react";
 import ChangeStatusModal from "../modal/auth/ChangeStatusModal";
 import type { TCandidataDataSource, TCandidate } from "../../types/candidate.type";
 import type { IMeta } from "../../types/global.type";
@@ -103,19 +102,18 @@ const CandidateTable: React.FC<CandidateTableProps> = ({
         );
       },
     },
-    {
-      title: "Action",
-      key: "action",
-      width: "5%",
-      //className: 'bg-amber-50',
-      render: () => (
-        <div className="flex justify-center">
-          <button className="text-gray-600 hover:text-gray-900">
-            <Eye size={20} />
-          </button>
-        </div>
-      ),
-    },
+    // {
+    //   title: "Action",
+    //   key: "_id",
+    //   width: "5%",
+    //   render: (candidateId: string) => (
+    //     <div className="flex justify-center">
+    //       <Link to={`/candidate-details/${candidateId}`} className="text-gray-600 hover:text-gray-900">
+    //         <Eye size={20} />
+    //       </Link>
+    //     </div>
+    //   ),
+    // },
   ];
 
   const handlePagination = (page: number, PageSize: number) => {
