@@ -2,10 +2,7 @@
 import { Table, ConfigProvider } from "antd";
 import type { IPackage } from "../../types/package.type";
 import DeleteSubscriptionModal from "../modal/subscription/DeleteSubscriptionModal";
-import { Link } from "react-router-dom";
-import { Edit } from "lucide-react";
-import EditSubscriptionModal from "../modal/subscription/EditSubscriptionModal";
-
+import EditPlanModal from "../modal/subscription/EditPlanModal";
 
 
 type TProps = {
@@ -112,7 +109,7 @@ const PackageTable = ( { subscriptions }: TProps) => {
       width: "15%",
       render: (_val: any, record: IPackage) => (
         <div className="flex items-center gap-2">
-           <EditSubscriptionModal/>
+          <EditPlanModal plan={record}/>
           <DeleteSubscriptionModal subscriptionId={record?._id} />
         </div>
       ),

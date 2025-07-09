@@ -1,35 +1,46 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-"use client";
-
+import { Modal } from "antd";
+import { useEffect, useState } from "react";
+import { Edit } from "lucide-react";
+import type { IPackage } from "../../../types/package.type";
+import { useNavigate } from "react-router-dom";
+import { useUpdateSubscriptionMutation } from "../../../redux/features/subscription/subscriptionApi";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { planSchema } from "../../../schemas/plan.schema";
 import type { z } from "zod";
-import CustomInput from "../form/CustomInput";
-import ConditionForm from "./ConditionForm";
-import { useEffect, useState } from "react";
-import { ErrorToast } from "../../helper/ValidationHelper";
-import { planSchema } from "../../schemas/plan.schema";
-import CustomSelect from "../form/CustomSelect";
-import CustomTextArea from "../form/CustomTextArea";
-import { useCreateSubscriptionMutation } from "../../redux/features/subscription/subscriptionApi";
+import { ErrorToast } from "../../../helper/ValidationHelper";
+import CustomInput from "../../form/CustomInput";
+import CustomSelect from "../../form/CustomSelect";
+import CustomTextArea from "../../form/CustomTextArea";
+import ConditionForm from "../../package/ConditionForm";
 import { CgSpinnerTwo } from "react-icons/cg";
-import { useNavigate } from "react-router-dom";
 
 type TFormValues = z.infer<typeof planSchema>;
 
+type TProps = {
+  plan: IPackage
+}
 
-const EditPlanForm = () => {
+const EditPlanModal = ({ plan } : TProps) => {
+  const [modalOpen, setModalOpen] = useState(false);
   const navigate = useNavigate();
-  const [conditions, setConditions] = useState<string[]>([])
-  const [createPlan, { isLoading, isSuccess }] = useCreateSubscriptionMutation();
-  const { handleSubmit, control } = useForm({
+  const [conditions, setConditions] = useState<string[]>([...plan.conditions])
+  const [updatePlan, { isLoading, isSuccess }] = useUpdateSubscriptionMutation();
+  const { handleSubmit, control, setValue } = useForm({
     resolver: zodResolver(planSchema),
+    defaultValues: {
+        name: plan?.name,
+        price: plan?.price.toString(),
+        validation: plan?.validation,
+        notice: plan?.notice
+    }
   });
 
 
   useEffect(() => {
     if (!isLoading && isSuccess) {
-      navigate("/packages")
+      setModalOpen(false)
     }
   }, [isLoading, isSuccess, navigate])
 
@@ -39,17 +50,43 @@ const EditPlanForm = () => {
       ErrorToast("Please, add minimum one feature")
     }
     else {
-      createPlan({
-        ...data,
-        conditions
-      })
+        updatePlan({
+            id: plan?._id,
+            data: {
+                ...data,
+                conditions
+            }
+        })
     }
   };
-
-
+ 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <button
+        onClick={() => setModalOpen(true)}
+        className="bg-green-600 hover:bg-green-700 p-2 text-white rounded-full"
+      >
+        <Edit size={18} />
+      </button>
+      <Modal
+        open={modalOpen}
+        onCancel={() => {
+          setModalOpen(false);
+          setValue("name", plan?.name);
+          setValue("price", plan?.price.toString());
+          setValue("validation", plan?.validation);
+          setValue("notice", plan?.notice);
+          setConditions(plan?.conditions)
+        }}
+        maskClosable={false}
+        footer={false}
+        width={600}
+      >
+        <div className="">
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-white rounded-lg">
+              <h1 className="text-2xl font-semibold text-gray-900 mb-8">Update Plan</h1>
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div className="grid grid-cols-2 gap-x-4">
           <CustomInput
             label="Name"
@@ -100,13 +137,17 @@ const EditPlanForm = () => {
                 Processing...
               </>
             ) : (
-              "Save"
+              "Save Changes"
             )}
           </button>
         </div>
       </form>
+            </div>
+          </div>
+        </div>
+      </Modal>
     </>
   );
 };
 
-export default EditPlanForm;
+export default EditPlanModal;

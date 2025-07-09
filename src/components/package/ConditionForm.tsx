@@ -73,6 +73,7 @@ export default function ConditionForm( { conditions, setConditions} : TProps) {
               >
                 <span className="text-gray-800 flex-1">{condition}</span>
                 <button
+                  type="button"
                   onClick={() => handleDeleteCondition(index)}
                   className="ml-2 p-1 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-full transition-colors"
                   aria-label={`Delete condition: ${condition}`}
