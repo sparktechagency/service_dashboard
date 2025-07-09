@@ -3,6 +3,7 @@ import { Table, ConfigProvider } from "antd";
 import type { IPackage } from "../../types/package.type";
 import DeleteSubscriptionModal from "../modal/subscription/DeleteSubscriptionModal";
 import EditPlanModal from "../modal/subscription/EditPlanModal";
+import ViewPlanModal from "../modal/subscription/ViewPlanModal";
 
 
 type TProps = {
@@ -40,13 +41,13 @@ const PackageTable = ( { subscriptions }: TProps) => {
       title: "Plan Details",
       dataIndex: "name",
       key: "name",
-      width: "22.5%",
+      width: "15.5%",
     },
     {
       title: "Duration & Type",
       dataIndex: "duration",
       key: "duration",
-      width: "22.5%",
+      width: "15.5%",
       render: (_val: any, subscription: IPackage) => (
         <>
           <div>
@@ -64,13 +65,13 @@ const PackageTable = ( { subscriptions }: TProps) => {
       title: "Price($)",
       dataIndex: "price",
       key: "price",
-      width: "22.5%",
+      width: "12.5%",
     },
     {
       title: "Features",
       dataIndex: "features",
       key: "features",
-      width: "22.5%",
+      width: "24.5%",
       render: (_val: any, subscription: IPackage) => (
         <>
           <div className="space-y-1">
@@ -101,7 +102,22 @@ const PackageTable = ( { subscriptions }: TProps) => {
       title: "Notice",
       dataIndex: "notice",
       key: "notice",
-      width: "22.5%",
+      width: "17.5%",
+      render: (text: string) => (
+        <>
+          <p className="truncate">{text}</p>
+        </>
+      ),
+    },
+     {
+      title: "View",
+      key: "view",
+      width: "10%",
+      render: (_: any, record: IPackage) => (
+        <div className="flex items-center gap-2">
+          <ViewPlanModal plan={record}/>
+        </div>
+      ),
     },
     {
       title: "Action",
