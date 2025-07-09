@@ -1,6 +1,5 @@
 import React from "react";
 import { Table, ConfigProvider } from "antd";
-import { Eye } from "lucide-react";
 import ChangeStatusModal from "../modal/auth/ChangeStatusModal";
 import profile_placeholder from "../../assets/images/profile_placeholder.png";
 import { baseUrl } from "../../redux/features/api/apiSlice";
@@ -128,19 +127,19 @@ const RecentEmployerTable : React.FC<EmployerTableProps> = ({
         );
       },
     },
-    {
-      title: "Action",
-      key: "action",
-      width: "5%",
-      //className: 'bg-amber-50',
-      render: () => (
-        <div className="flex justify-center">
-          <button className="text-gray-600 hover:text-gray-900">
-            <Eye size={20} />
-          </button>
-        </div>
-      ),
-    },
+    // {
+    //   title: "Action",
+    //   key: "action",
+    //   width: "5%",
+    //   //className: 'bg-amber-50',
+    //   render: () => (
+    //     <div className="flex justify-center">
+    //       <button className="text-gray-600 hover:text-gray-900">
+    //         <Eye size={20} />
+    //       </button>
+    //     </div>
+    //   ),
+    // },
   ];
 
 

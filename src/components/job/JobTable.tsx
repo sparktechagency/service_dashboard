@@ -1,6 +1,5 @@
 import React from "react";
 import { Table, ConfigProvider, Pagination } from "antd";
-import { Eye } from "lucide-react";
 import type { IMeta } from "../../types/global.type";
 import type { TJob, TJobDataSource } from "../../types/job.type";
 import getFormattedDate from "../../utils/getFormattedDate";
@@ -91,18 +90,18 @@ const JobTable: React.FC<JobTableProps> = ({
       width: "12%",
       render: (date: string) => <span>{getFormattedDate(date)}</span>,
     },
-    {
-      title: "Action",
-      key: "action",
-      width: "5%",
-      render: () => (
-        <div className="flex justify-center">
-          <button className="text-gray-600 hover:text-gray-900">
-            <Eye size={20} />
-          </button>
-        </div>
-      ),
-    },
+    // {
+    //   title: "Action",
+    //   key: "action",
+    //   width: "5%",
+    //   render: () => (
+    //     <div className="flex justify-center">
+    //       <button className="text-gray-600 hover:text-gray-900">
+    //         <Eye size={20} />
+    //       </button>
+    //     </div>
+    //   ),
+    // },
   ];
 
   const handlePagination = (page: number, PageSize: number) => {
