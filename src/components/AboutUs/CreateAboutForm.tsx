@@ -10,7 +10,7 @@ type TFormValues = z.infer<typeof policySchema>;
 
 
 const CreateAboutForm = () => {
-  const [createAbout, { isLoading }] = useCreateUpdateAboutUsMutation();
+  const [createUpdateAbout, { isLoading }] = useCreateUpdateAboutUsMutation();
   const { handleSubmit, control } = useForm({
     resolver: zodResolver(policySchema),
   });
@@ -19,7 +19,10 @@ const CreateAboutForm = () => {
 
 
   const onSubmit: SubmitHandler<TFormValues> = (data) => {
-    createAbout(data);
+    createUpdateAbout({
+      message: "added",
+      data: data
+    });
   };
 
   return (
@@ -30,7 +33,7 @@ const CreateAboutForm = () => {
           name="descriptions"
           control={control}
           height={500}
-          placeholder="Write a blog..."
+          placeholder="Write here..."
         />
 
         <button

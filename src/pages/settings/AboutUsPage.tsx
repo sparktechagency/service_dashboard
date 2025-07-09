@@ -2,8 +2,29 @@
 
 import { FileText } from "lucide-react"
 import CreateAboutForm from "../../components/AboutUs/CreateAboutForm"
+import { useGetAboutUsQuery } from "../../redux/features/policy/policyApi";
+import type { ReactNode } from "react";
+import PolicyLoading from "../../components/loader/PolicyLoading";
+import UpdateAboutForm from "../../components/AboutUs/UpdateAboutForm";
 
-const AboutUsPage = () =>{
+const AboutUsPage = () => {
+  const { data, isLoading, isSuccess, error } = useGetAboutUsQuery(undefined);
+  const about = data?.data;
+
+  let content: ReactNode;
+
+  if (isLoading) {
+    return <PolicyLoading />
+  }
+  if (!isLoading && error && !about?._id) {
+    content = <CreateAboutForm />
+  }
+
+  if (!isLoading && isSuccess && about?._id) {
+    content = <UpdateAboutForm description={about?.description} />
+  }
+
+
 
   return (
     <div className="min-h-full bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
@@ -15,19 +36,17 @@ const AboutUsPage = () =>{
               <FileText className="mr-2" size={24} />
               About Us
             </h1>
-            <div className="flex space-x-2">
+            {/* <div className="flex space-x-2">
               <button
-                // onClick={loadTemplate}
                 className="px-4 py-2 bg-white bg-opacity-20 rounded-md text-white text-sm font-medium hover:bg-opacity-30 transition-all flex items-center"
               >
                 <FileText className="mr-1" size={16} /> Load Template
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
-
         <div className="p-6">
-          <CreateAboutForm/>
+          {content}
         </div>
       </div>
     </div>

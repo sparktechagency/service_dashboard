@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import TagTypes from "../../../constant/tagType.constant";
 import { ErrorToast, SuccessToast } from "../../../helper/ValidationHelper";
 import { apiSlice } from "../api/apiSlice";
@@ -28,7 +29,7 @@ export const policyApi = apiSlice.injectEndpoints({
     getAboutUs: builder.query({
       query: () => {
         return {
-          url: `/dashboard/get_aboutus`,
+          url: `/dashboard/about_us`,
           method: "GET",
         };
       },
@@ -37,7 +38,7 @@ export const policyApi = apiSlice.injectEndpoints({
     }),
     createUpdateTermsConditions: builder.mutation({
       query: ({data}) => ({
-        url: `/dashboard/add-rules`,
+        url: `/dashboard/addupdate-termsConditions`,
         method: "POST",
         body: data,
       }),
@@ -81,13 +82,13 @@ export const policyApi = apiSlice.injectEndpoints({
     }),
     createUpdateAboutUs: builder.mutation({
       query: ({ data }) => ({
-        url: `/dashboard/addupdate-aboutus`,
+        url: `/dashboard/about_us`,
         method: "POST",
         body: data,
       }),
       invalidatesTags: (result) => {
         if (result?.success) {
-          return [TagTypes.privacyPolicy];
+          return [TagTypes.aboutUs];
         }
         return [];
       },

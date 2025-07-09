@@ -3,7 +3,7 @@ import { isEditorContentEmpty } from "./blog.schema";
 
 
 export const policySchema = z.object({
-  descriptions: z.preprocess(
+  description: z.preprocess(
     (val) => {
       if (typeof val === "string" && isEditorContentEmpty(val)) {
         return ""; // force fail if visually empty
