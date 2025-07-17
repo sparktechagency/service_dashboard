@@ -4,26 +4,19 @@ import { CgSpinnerTwo } from "react-icons/cg";
 import type { z } from "zod";
 import CustomQuilEditor from "../form/CustomQuilEditor";
 import { policySchema } from "../../schemas/policy.schema";
-import { useCreateUpdateAboutUsMutation } from "../../redux/features/policy/policyApi";
+import { useCreateCookieTextMutation } from "../../redux/features/policy/policyApi";
 
 type TFormValues = z.infer<typeof policySchema>;
 
-type TProps = {
-  description: string;
-};
-
-const UpdateAboutForm = ({ description }: TProps) => {
-  const [createUpdateAbout, { isLoading }] = useCreateUpdateAboutUsMutation();
+const CreateCookieForm = () => {
+  const [createUpdateCookie, { isLoading }] = useCreateCookieTextMutation();
   const { handleSubmit, control } = useForm({
     resolver: zodResolver(policySchema),
-    defaultValues: {
-      description,
-    },
   });
 
   const onSubmit: SubmitHandler<TFormValues> = (data) => {
-    createUpdateAbout({
-      message: "updated",
+    createUpdateCookie({
+      message: "added",
       data: data,
     });
   };
@@ -33,10 +26,10 @@ const UpdateAboutForm = ({ description }: TProps) => {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <CustomQuilEditor
           label="Description"
-          name="description"
+          name="descriptions"
           control={control}
-          height={400}
-          placeholder="Write a blog..."
+          height={500}
+          placeholder="Write here..."
         />
 
         <button
@@ -49,7 +42,7 @@ const UpdateAboutForm = ({ description }: TProps) => {
               Processing...
             </>
           ) : (
-            "Save Change"
+            "Save"
           )}
         </button>
       </form>
@@ -57,4 +50,4 @@ const UpdateAboutForm = ({ description }: TProps) => {
   );
 };
 
-export default UpdateAboutForm;
+export default CreateCookieForm;

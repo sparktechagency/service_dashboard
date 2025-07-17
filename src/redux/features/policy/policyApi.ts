@@ -26,6 +26,16 @@ export const policyApi = apiSlice.injectEndpoints({
       keepUnusedDataFor: 600,
       providesTags: [TagTypes.privacyPolicy],
     }),
+    getCookieText: builder.query({
+      query: () => {
+        return {
+          url: `/dashboard/cookie-text`,
+          method: "GET",
+        };
+      },
+      keepUnusedDataFor: 600,
+      providesTags: [TagTypes.cookieText],
+    }),
     getAboutUs: builder.query({
       query: () => {
         return {
@@ -37,7 +47,7 @@ export const policyApi = apiSlice.injectEndpoints({
       providesTags: [TagTypes.aboutUs],
     }),
     createUpdateTermsConditions: builder.mutation({
-      query: ({data}) => ({
+      query: ({ data }) => ({
         url: `/dashboard/addupdate-termsConditions`,
         method: "POST",
         body: data,
@@ -52,14 +62,14 @@ export const policyApi = apiSlice.injectEndpoints({
         try {
           await queryFulfilled;
           SuccessToast(`Terms-Conditions is ${message} successfully`);
-        } catch (err:any) {
+        } catch (err: any) {
           const message = err?.error?.data?.message;
           ErrorToast(message);
         }
       },
     }),
     createUpdatePrivacyPolicy: builder.mutation({
-      query: ({ data}) => ({
+      query: ({ data }) => ({
         url: `/dashboard/addupdate-privacy-policy`,
         method: "POST",
         body: data,
@@ -74,12 +84,13 @@ export const policyApi = apiSlice.injectEndpoints({
         try {
           await queryFulfilled;
           SuccessToast(`Privacy Policy is ${message} successfully`);
-        } catch (err:any) {
+        } catch (err: any) {
           const message = err?.error?.data?.message;
           ErrorToast(message);
         }
       },
     }),
+
     createUpdateAboutUs: builder.mutation({
       query: ({ data }) => ({
         url: `/dashboard/about_us`,
@@ -92,11 +103,33 @@ export const policyApi = apiSlice.injectEndpoints({
         }
         return [];
       },
-      async onQueryStarted( { message }, { queryFulfilled }) {
+      async onQueryStarted({ message }, { queryFulfilled }) {
         try {
           await queryFulfilled;
           SuccessToast(`About Us is ${message} successfully`);
-        } catch (err:any) {
+        } catch (err: any) {
+          const message = err?.error?.data?.message;
+          ErrorToast(message);
+        }
+      },
+    }),
+    createCookieText: builder.mutation({
+      query: ({ data }) => ({
+        url: `/dashboard/cookie-text`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: (result) => {
+        if (result?.success) {
+          return [TagTypes.cookieText];
+        }
+        return [];
+      },
+      async onQueryStarted({ message }, { queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          SuccessToast(`Cookie banner text is ${message} successfully`);
+        } catch (err: any) {
           const message = err?.error?.data?.message;
           ErrorToast(message);
         }
@@ -105,11 +138,17 @@ export const policyApi = apiSlice.injectEndpoints({
   }),
 });
 
+
 export const {
   useGetTermsConditionsQuery,
   useGetPrivacyPolicyQuery,
   useGetAboutUsQuery,
   useCreateUpdateTermsConditionsMutation,
   useCreateUpdatePrivacyPolicyMutation,
-  useCreateUpdateAboutUsMutation
+  useCreateUpdateAboutUsMutation,
+  useCreateCookieTextMutation,
+  useGetCookieTextQuery,
+
+
+
 } = policyApi;

@@ -30,6 +30,7 @@ import BlogDetailsPage from "../pages/dashboard/BlogDetailsPage";
 import CreatePlanPackage from "../pages/dashboard/CreatePlanPackage";
 import TransactionsPage from "../pages/dashboard/TransactionsPage";
 import CandidateDetailsPage from "../pages/dashboard/CandidateDetailsPage";
+import CookieText from "../pages/settings/CookieText";
 
 const router = createBrowserRouter([
   {
@@ -80,7 +81,7 @@ const router = createBrowserRouter([
         path: "transactions",
         element: <TransactionsPage />,
       },
-       {
+      {
         path: "add-plan",
         element: <CreatePlanPackage />,
       },
@@ -123,6 +124,10 @@ const router = createBrowserRouter([
       {
         path: "terms-condition",
         element: <TermsConditionPage />,
+      },
+      {
+        path: "cookie-text",
+        element: <CookieText />,
       },
       {
         path: "job-details",
