@@ -4,7 +4,7 @@ import type { IMeta } from "../../types/global.type";
 import type { TJob, TJobDataSource } from "../../types/job.type";
 import getFormattedDate from "../../utils/getFormattedDate";
 import type { ColumnsType } from "antd/es/table";
-
+import DeleteModal from "../modal/DeleteModal";
 
 interface JobTableProps {
   jobs: TJob[];
@@ -15,7 +15,6 @@ interface JobTableProps {
   setPageSize: React.Dispatch<React.SetStateAction<number>>;
 }
 
-
 const JobTable: React.FC<JobTableProps> = ({
   jobs,
   meta,
@@ -24,7 +23,6 @@ const JobTable: React.FC<JobTableProps> = ({
   pageSize,
   setPageSize,
 }) => {
-
   const dataSource: TJobDataSource[] = jobs?.map((job, index) => ({
     key: index,
     serial: Number(index + 1) + (currentPage - 1) * pageSize,
@@ -34,9 +32,8 @@ const JobTable: React.FC<JobTableProps> = ({
     vacancies: job?.vacancies,
     status: job?.status,
     createdAt: job?.createdAt,
-    application_dateline: job?.application_dateline
+    application_dateline: job?.application_dateline,
   }));
-
 
   const columns: ColumnsType<TJobDataSource> = [
     {
@@ -71,7 +68,13 @@ const JobTable: React.FC<JobTableProps> = ({
       width: "15%",
       align: "center",
       render: (status: string) => (
-        <button className={`w-20 py-1 ${status==="Active" ? "text-green-700 bg-green-100" : "text-red-700 bg-red-100"}  text-xs sm:text-sm rounded-lg `}>
+        <button
+          className={`w-20 py-1 ${
+            status === "Active"
+              ? "text-green-700 bg-green-100"
+              : "text-red-700 bg-red-100"
+          }  text-xs sm:text-sm rounded-lg `}
+        >
           {status}
         </button>
       ),
@@ -90,18 +93,17 @@ const JobTable: React.FC<JobTableProps> = ({
       width: "12%",
       render: (date: string) => <span>{getFormattedDate(date)}</span>,
     },
-    // {
-    //   title: "Action",
-    //   key: "action",
-    //   width: "5%",
-    //   render: () => (
-    //     <div className="flex justify-center">
-    //       <button className="text-gray-600 hover:text-gray-900">
-    //         <Eye size={20} />
-    //       </button>
-    //     </div>
-    //   ),
-    // },
+    {
+      title: "Action",
+      key: "action",
+      dataIndex: "_id",
+      width: "5%",
+      render: (data: string) => (
+        <div className="flex justify-center">
+          <DeleteModal jobId={data} />
+        </div>
+      ),
+    },
   ];
 
   const handlePagination = (page: number, PageSize: number) => {

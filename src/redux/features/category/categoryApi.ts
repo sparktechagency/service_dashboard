@@ -45,17 +45,17 @@ export const categoryApi = apiSlice.injectEndpoints({
           SuccessToast("Category is created successfully");
         } catch (err: any) {
           const message = err?.error?.data?.message || "Something went wrong";
-          if(message === "Invalid file type"){
+          if (message === "Invalid file type") {
             ErrorToast("Please, Upload png, jpeg, jpg formate file")
           }
-          else{
+          else {
             ErrorToast(message);
           }
         }
       },
     }),
     updateCategory: builder.mutation({
-      query: ({id, data }) => ({
+      query: ({ id, data }) => ({
         url: `/dashboard/edit-category/${id}`,
         method: "PATCH",
         body: data,
@@ -72,10 +72,10 @@ export const categoryApi = apiSlice.injectEndpoints({
           SuccessToast("Category is updated successfully");
         } catch (err: any) {
           const message = err?.error?.data?.message || "Something went wrong";
-          if(message === "Invalid file type"){
+          if (message === "Invalid file type") {
             ErrorToast("Please, Upload png, jpeg, jpg formate file")
           }
-          else{
+          else {
             ErrorToast(message);
           }
         }
@@ -102,7 +102,28 @@ export const categoryApi = apiSlice.injectEndpoints({
         }
       },
     }),
+    deleteJobs: builder.mutation({
+      query: (id) => ({
+        url: `/jobs/deletes/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: (result) => {
+        if (result?.success) {
+          return [TagTypes.jobs];
+        }
+        return [];
+      },
+      async onQueryStarted(_arg, { queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          SuccessToast("Jobs is deleted successfully");
+        } catch (err: any) {
+          const message = err?.error?.data?.message || "Something went wrong";
+          ErrorToast(message);
+        }
+      },
+    }),
   }),
 });
 
-export const { useGetCategoriesQuery, useCreateCategoryMutation, useDeleteCategoryMutation, useUpdateCategoryMutation } = categoryApi;
+export const { useGetCategoriesQuery, useCreateCategoryMutation, useDeleteCategoryMutation, useUpdateCategoryMutation, useDeleteJobsMutation } = categoryApi;
