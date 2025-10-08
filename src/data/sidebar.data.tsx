@@ -1,8 +1,11 @@
-import { LayoutDashboard, UserCheck} from "lucide-react";
+import { LayoutDashboard, UserCheck } from "lucide-react";
+import { SettingOutlined } from "@ant-design/icons";
 import {
-    SettingOutlined
-  } from '@ant-design/icons';
-import { MdCategory, MdContactPhone, MdOutlinePostAdd, MdSubscriptions } from "react-icons/md";
+  MdCategory,
+  MdContactPhone,
+  MdOutlinePostAdd,
+  MdSubscriptions,
+} from "react-icons/md";
 import { SiBlogger } from "react-icons/si";
 import { PiStudentBold } from "react-icons/pi";
 import { GrUserAdmin } from "react-icons/gr";
@@ -11,7 +14,7 @@ export const menuItems = [
   { path: "/admins", label: "Admins", icon: GrUserAdmin },
   { path: "/candidates", label: "Candidates", icon: PiStudentBold },
   { path: "/employers", label: "Employers", icon: UserCheck },
-  { 
+  {
     path: "",
     label: "Subscriptions",
     icon: MdSubscriptions,
@@ -34,9 +37,9 @@ export const menuItems = [
       { path: "/profile", label: "Profile" },
       { path: "/change-password", label: "Change Password" },
       { path: "/about-us", label: "About Us" },
+      { path: "/cookie-text", label: "Cookie Banner" },
       { path: "/terms-condition", label: "Terms & Conditions" },
       { path: "/privacy-policy", label: "Privacy Policy" },
     ],
   },
 ];
-

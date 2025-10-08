@@ -4,7 +4,7 @@ import { CgSpinnerTwo } from "react-icons/cg";
 import type { z } from "zod";
 import CustomQuilEditor from "../form/CustomQuilEditor";
 import { policySchema } from "../../schemas/policy.schema";
-import { useCreateUpdateAboutUsMutation } from "../../redux/features/policy/policyApi";
+import { useCreateCookieTextMutation } from "../../redux/features/policy/policyApi";
 
 type TFormValues = z.infer<typeof policySchema>;
 
@@ -12,8 +12,8 @@ type TProps = {
   description: string;
 };
 
-const UpdateAboutForm = ({ description }: TProps) => {
-  const [createUpdateAbout, { isLoading }] = useCreateUpdateAboutUsMutation();
+const UpdateCookieForm = ({ description }: TProps) => {
+  const [createUpdateAbout, { isLoading }] = useCreateCookieTextMutation();
   const { handleSubmit, control } = useForm({
     resolver: zodResolver(policySchema),
     defaultValues: {
@@ -57,4 +57,4 @@ const UpdateAboutForm = ({ description }: TProps) => {
   );
 };
 
-export default UpdateAboutForm;
+export default UpdateCookieForm;
