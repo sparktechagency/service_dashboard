@@ -63,7 +63,7 @@ const TransactionTable : React.FC<TransactionTableProps> = ({
       align: "center"
     },
     {
-      title: "Amount($)",
+      title: "Amount(£)",
       dataIndex: "amount",
       key: "amount",
       width: "12.5%",

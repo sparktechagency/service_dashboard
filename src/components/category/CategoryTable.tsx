@@ -8,7 +8,8 @@ import { baseUrl } from "../../redux/features/api/apiSlice";
 
 
 type TProps = {
-  categories: ICategory[]
+  categories: ICategory[];
+  loading: boolean;
 }
 
 type TDataSource = {
@@ -20,7 +21,7 @@ type TDataSource = {
 }
 
 
-const CategoryTable = ( { categories }: TProps) => {
+const CategoryTable = ( { categories, loading }: TProps) => {
 
   const dataSource: TDataSource[] = categories?.map((category, index)=> ({
         key: index,
@@ -100,6 +101,7 @@ const CategoryTable = ( { categories }: TProps) => {
           sticky
           scroll={{ y: "calc(100vh - 265px)" }}
           className="employer-table"
+          loading={loading}
         />
       </div>
     </ConfigProvider>

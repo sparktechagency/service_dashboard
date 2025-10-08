@@ -25,7 +25,7 @@ export const categoryApi = apiSlice.injectEndpoints({
         };
       },
       keepUnusedDataFor: 600,
-      providesTags: [TagTypes.users],
+      providesTags: [TagTypes.categories],
     }),
     createCategory: builder.mutation({
       query: (data) => ({

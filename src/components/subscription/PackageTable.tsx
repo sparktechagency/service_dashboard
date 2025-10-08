@@ -62,7 +62,7 @@ const PackageTable = ( { subscriptions }: TProps) => {
       ),
     },
     {
-      title: "Price($)",
+      title: "Price(£)",
       dataIndex: "price",
       key: "price",
       width: "12.5%",

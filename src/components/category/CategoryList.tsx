@@ -4,7 +4,7 @@ import ListLoading from "../loader/ListLoading";
 import CategoryTable from "./CategoryTable";
 
 const CategoryList = () => {
-  const { data, isLoading, isError } = useGetCategoriesQuery(undefined);
+  const { data, isLoading, isFetching, isError } = useGetCategoriesQuery(undefined);
   const categories = data?.data || [];
 
   if (isLoading) {
@@ -12,7 +12,7 @@ const CategoryList = () => {
   }
 
   if (!isLoading && !isError) {
-    return <CategoryTable categories={categories}/>;
+    return <CategoryTable categories={categories} loading={isFetching}/>;
   }
 
   if (!isLoading && isError) {
