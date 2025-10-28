@@ -47,7 +47,7 @@ export const bannerApi = apiSlice.injectEndpoints({
     }),
     updateBanner: builder.mutation({
       query: ({ id, data }) => ({
-        url: `/dashboards/update_banner/${id}`,
+        url: `/dashboard/edit-banner/${id}`,
         method: "PATCH",
         body: data,
       }),
@@ -75,7 +75,7 @@ export const bannerApi = apiSlice.injectEndpoints({
     }),
     deleteBanner: builder.mutation({
       query: (id) => ({
-        url: `/dashboards/delete_banner/${id}`,
+        url: `/dashboard/delete-banner/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: (result) => {

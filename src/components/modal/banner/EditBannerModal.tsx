@@ -1,6 +1,5 @@
 import { Modal } from "antd";
 import { useEffect, useState } from "react";
-import { FaPlus } from "react-icons/fa";
 import ImageUpload from "../../form/ImageUpload";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -9,23 +8,36 @@ import type { z } from "zod";
 import CustomInput from "../../form/CustomInput";
 import { CgSpinnerTwo } from "react-icons/cg";
 import Error from "../../validation/Error";
+import { Edit } from "lucide-react";
+import icon_placeholder from "../../../assets/images/icon_placeholder.jpg";
+import type { IBanner } from "../../../types/banner.type";
 import { bannerSchema } from "../../../schemas/banner.schema";
-import { SetBannerCreateError } from "../../../redux/features/banner/bannerSlice";
-import { useCreateBannerMutation } from "../../../redux/features/banner/bannerApi";
+import { useUpdateBannerMutation } from "../../../redux/features/banner/bannerApi";
+import { SetBannerUpdateError } from "../../../redux/features/banner/bannerSlice";
+
 
 type TFormValues = z.infer<typeof bannerSchema>;
 
-const CreateBannerModal = () => {
+type TProps = {
+  banner: IBanner
+}
+
+const EditBannerModal = ({ banner }: TProps) => {
   const dispatch = useAppDispatch();
   const [modalOpen, setModalOpen] = useState(false);
-  const { BannerCreateError } = useAppSelector((state) => state.banner);
-  const [createBanner, { isLoading, isSuccess, reset }] = useCreateBannerMutation();
+  const { BannerUpdateError } = useAppSelector((state) => state.banner);
+  const [ updateBanner, { isLoading, isSuccess }] = useUpdateBannerMutation();
   const { handleSubmit, control, setValue, clearErrors, setError, formState: { errors } } = useForm<TFormValues>({
     resolver: zodResolver(bannerSchema),
+    defaultValues: {
+      name: banner?.name,
+      icon: banner?.image
+    }
   });
 
   const [image, setImage] = useState<File | null>(null);
-  const [preview, setPreview] = useState<string | null>(null);
+  const [preview, setPreview] = useState<string | null>(banner?.image || icon_placeholder);
+
   
 
   useEffect(() => {
@@ -46,41 +58,42 @@ const CreateBannerModal = () => {
   };
 
 
-  //if success
+    //if success
    useEffect(() => {
     if (!isLoading && isSuccess) {
-      setValue("name", "");
-      setPreview(null)
-      setImage(null)
       setModalOpen(false);
     }
-  }, [isLoading, isSuccess, reset, setValue]);
+  }, [isLoading, isSuccess]);
 
 
   const onSubmit: SubmitHandler<TFormValues> = (data) => {
-    dispatch(SetBannerCreateError(""));
+    dispatch(SetBannerUpdateError(""));
     const formData = new FormData();
     formData.append("name", data.name);
-    formData.append("image", image as File);
-    createBanner(formData);
+    if(image){
+      formData.append("image", image as File);
+    }
+    updateBanner({
+      id: banner?._id,
+      data: formData
+    });
   };
 
   return (
     <>
-      <button
+       <button
         onClick={() => setModalOpen(true)}
-        className="flex items-center gap-2 bg-primary px-3 py-1.5 text-white cursor-pointer rounded-md hover:bg-[#2b4773] duration-200"
+        className="bg-green-600 hover:bg-green-700 p-2 text-white rounded-full"
       >
-        <FaPlus />
-        Add New
+        <Edit size={18} />
       </button>
+
       <Modal
         open={modalOpen}
         onCancel={() => {
-          setModalOpen(false);
-          setValue("name", "");
-          setImage(null)
-          setPreview(null)
+          setValue("name", banner?.name);
+          setPreview(banner?.image || icon_placeholder);
+          setModalOpen(false)
         }}
         maskClosable={false}
         footer={false}
@@ -89,9 +102,9 @@ const CreateBannerModal = () => {
           <div className="bg-white rounded-xl overflow-hidden transition-all duration-300">
             <div className="p-2">
               <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-                Add Banner
+                Update Banner
               </h2>
-               {BannerCreateError && <Error message={BannerCreateError} />}
+               {BannerUpdateError && <Error message={BannerUpdateError} />}
               <form onSubmit={handleSubmit(onSubmit)}>
                 <CustomInput
                   label="Banner Title"
@@ -101,7 +114,7 @@ const CreateBannerModal = () => {
                   placeholder="Enter title"
                 />
                 <div className="mb-6 mt-2">
-                  <ImageUpload preview={preview} setPreview={setPreview} image={image} setImage={setImage} title="Banner Image" setIconError={setIconError}/>
+                   <ImageUpload preview={preview} setPreview={setPreview} image={image} setImage={setImage} title="Banner Icon" setIconError={setIconError}/>
                   {
                     errors?.icon && (
                       <p className="mt-1 text-sm text-red-500">{errors?.icon?.message}</p>
@@ -126,7 +139,7 @@ const CreateBannerModal = () => {
                         Processing...
                       </>
                     ) : (
-                      "Add"
+                      "Save Changes"
                     )}
                   </button>
                 </div>
@@ -139,4 +152,4 @@ const CreateBannerModal = () => {
   );
 };
 
-export default CreateBannerModal;
+export default EditBannerModal;
