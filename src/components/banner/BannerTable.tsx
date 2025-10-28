@@ -1,8 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Table, ConfigProvider } from "antd";
 import icon_placeholder from "../../assets/images/icon_placeholder.jpg";
 import { baseUrl } from "../../redux/features/api/apiSlice";
 import type { IBanner, IBannerDataSource } from "../../types/banner.type";
+import DeleteBannerModal from "../modal/banner/DeleteBannerModal";
+import EditBannerModal from "../modal/banner/EditBannerModal";
 
 
 
@@ -58,12 +59,14 @@ const BannerTable = ( { banners, loading }: TProps) => {
     {
       title: "Action",
       key: "action",
+      dataIndex: "_id",
       width: "15%",
-      // render: (_val: any, record: IBanner) => (
-      //   <div className="flex items-center gap-2">
-      //     <EditCategoryModal category={record}/>
-      //   </div>
-      // ),
+      render: (bannerId: string, record: IBanner) => (
+        <div className="flex items-center gap-2">
+          <EditBannerModal banner={record}/>
+          <DeleteBannerModal bannerId={bannerId} />
+        </div>
+      ),
     },
   ];
 
