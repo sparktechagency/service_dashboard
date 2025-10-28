@@ -7,7 +7,7 @@ import {
   MdSubscriptions,
 } from "react-icons/md";
 import { SiBlogger } from "react-icons/si";
-import { PiStudentBold } from "react-icons/pi";
+import { PiFlagBannerFill, PiStudentBold } from "react-icons/pi";
 import { GrUserAdmin } from "react-icons/gr";
 export const menuItems = [
   { path: "/", label: "Dashboard", icon: LayoutDashboard },
@@ -25,6 +25,7 @@ export const menuItems = [
       { path: "/transactions", label: "Transactions" },
     ],
   },
+  { path: "/banner", label: "Banner", icon: PiFlagBannerFill },
   { path: "/category", label: "Category", icon: MdCategory },
   { path: "/job-posts", label: "Job Posts", icon: MdOutlinePostAdd },
   { path: "/contacts", label: "Contact", icon: MdContactPhone },

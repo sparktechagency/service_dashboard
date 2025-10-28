@@ -31,6 +31,7 @@ import CreatePlanPackage from "../pages/dashboard/CreatePlanPackage";
 import TransactionsPage from "../pages/dashboard/TransactionsPage";
 import CandidateDetailsPage from "../pages/dashboard/CandidateDetailsPage";
 import CookieText from "../pages/settings/CookieText";
+import BannerPage from "../pages/dashboard/BannerPage";
 
 const router = createBrowserRouter([
   {
@@ -64,6 +65,10 @@ const router = createBrowserRouter([
       {
         path: "category",
         element: <CategoryPage />,
+      },
+      {
+        path: "banner",
+        element: <BannerPage />,
       },
       {
         path: "subscribers",

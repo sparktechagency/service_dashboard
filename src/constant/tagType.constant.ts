@@ -23,7 +23,8 @@ const TagTypes = {
     job: "Job",
     admins: "Admins",
     transactions: "Transactions",
-    cookieText: "cookieText"
+    cookieText: "cookieText",
+    banners: "Banners"
 }
 
 export default TagTypes;
