@@ -4,6 +4,7 @@ export type IBanner = {
     _id: string;
     name: string;
     image: string;
+    url: string;
 }
 
 export type IBannerDataSource = {
@@ -12,4 +13,5 @@ export type IBannerDataSource = {
     _id: string;
     name: string;
     image: string;
+    url: string;
 }

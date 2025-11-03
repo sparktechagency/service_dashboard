@@ -19,8 +19,8 @@ const CreateBannerModal = () => {
   const dispatch = useAppDispatch();
   const [modalOpen, setModalOpen] = useState(false);
   const { BannerCreateError } = useAppSelector((state) => state.banner);
-  const [createBanner, { isLoading, isSuccess, reset }] = useCreateBannerMutation();
-  const { handleSubmit, control, setValue, clearErrors, setError, formState: { errors } } = useForm<TFormValues>({
+  const [createBanner, { isLoading, isSuccess }] = useCreateBannerMutation();
+  const { handleSubmit, control, setValue, clearErrors, setError, reset, formState: { errors } } = useForm<TFormValues>({
     resolver: zodResolver(bannerSchema),
   });
 
@@ -41,7 +41,7 @@ const CreateBannerModal = () => {
     setValue("icon", "");
     setError("icon", {
       type: "manual",
-      message: "Icon is required",
+      message: "Image is required",
     });
   };
 
@@ -61,6 +61,7 @@ const CreateBannerModal = () => {
     dispatch(SetBannerCreateError(""));
     const formData = new FormData();
     formData.append("name", data.name);
+    formData.append("url", data.url);
     formData.append("image", image as File);
     createBanner(formData);
   };
@@ -79,6 +80,7 @@ const CreateBannerModal = () => {
         onCancel={() => {
           setModalOpen(false);
           setValue("name", "");
+          setValue("url", "");
           setImage(null)
           setPreview(null)
         }}
@@ -99,6 +101,13 @@ const CreateBannerModal = () => {
                   type="text"
                   control={control}
                   placeholder="Enter title"
+                />
+                <CustomInput
+                  label="Banner URL"
+                  name="url"
+                  type="text"
+                  control={control}
+                  placeholder="Enter url"
                 />
                 <div className="mb-6 mt-2">
                   <ImageUpload preview={preview} setPreview={setPreview} image={image} setImage={setImage} title="Banner Image" setIconError={setIconError}/>

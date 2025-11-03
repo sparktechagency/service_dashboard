@@ -31,7 +31,8 @@ const EditBannerModal = ({ banner }: TProps) => {
     resolver: zodResolver(bannerSchema),
     defaultValues: {
       name: banner?.name,
-      icon: banner?.image
+      icon: banner?.image,
+      url: banner?.url
     }
   });
 
@@ -53,7 +54,7 @@ const EditBannerModal = ({ banner }: TProps) => {
     setValue("icon", "");
     setError("icon", {
       type: "manual",
-      message: "Icon is required",
+      message: "Image is required",
     });
   };
 
@@ -70,6 +71,7 @@ const EditBannerModal = ({ banner }: TProps) => {
     dispatch(SetBannerUpdateError(""));
     const formData = new FormData();
     formData.append("name", data.name);
+    formData.append("url", data.url);
     if(image){
       formData.append("image", image as File);
     }
@@ -112,6 +114,13 @@ const EditBannerModal = ({ banner }: TProps) => {
                   type="text"
                   control={control}
                   placeholder="Enter title"
+                />
+                  <CustomInput
+                  label="Banner URL"
+                  name="url"
+                  type="text"
+                  control={control}
+                  placeholder="Enter url"
                 />
                 <div className="mb-6 mt-2">
                    <ImageUpload preview={preview} setPreview={setPreview} image={image} setImage={setImage} title="Banner Icon" setIconError={setIconError}/>

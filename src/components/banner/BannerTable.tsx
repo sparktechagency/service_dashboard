@@ -20,7 +20,8 @@ const BannerTable = ( { banners, loading }: TProps) => {
         serial: Number(index+1),
         _id: banner?._id,
         name: banner?.name,
-        image: baseUrl+banner?.image
+        image: baseUrl+banner?.image,
+        url: banner?.url
   }))
 
   const columns = [
@@ -55,6 +56,23 @@ const BannerTable = ( { banners, loading }: TProps) => {
           />
         </>
       ),
+    },
+    {
+      title: "URL",
+      dataIndex: "url",
+      key: "url",
+      width: "22.5%",
+      render: (val: string) => (
+         <>
+          <a
+            href={val || "https://machmakers.co.uk"}
+            target="_blank"
+            className="font-medium text-blue-500 hover:underline"
+          >
+            Click Here
+          </a>
+         </>
+      )
     },
     {
       title: "Action",
