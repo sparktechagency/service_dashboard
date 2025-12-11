@@ -62,7 +62,6 @@ const BlogTable = ({ blogs, meta, currentPage, setCurrentPage, pageSize, setPage
       width: "17.5%",
       render: (val: string) => (
         <>
-          {/* <img src={val} alt="icon" className="w-12 h-12 rounded-md" /> */}
           <img
             src={val}
             alt="profile"

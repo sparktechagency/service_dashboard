@@ -1,6 +1,5 @@
 import { Table, ConfigProvider } from "antd";
 import icon_placeholder from "../../assets/images/icon_placeholder.jpg";
-import { baseUrl } from "../../redux/features/api/apiSlice";
 import type { IBanner, IBannerDataSource } from "../../types/banner.type";
 import DeleteBannerModal from "../modal/banner/DeleteBannerModal";
 import EditBannerModal from "../modal/banner/EditBannerModal";
@@ -20,7 +19,7 @@ const BannerTable = ( { banners, loading }: TProps) => {
         serial: Number(index+1),
         _id: banner?._id,
         name: banner?.name,
-        image: baseUrl+banner?.image,
+        image: banner?.image,
         url: banner?.url
   }))
 
@@ -44,7 +43,6 @@ const BannerTable = ( { banners, loading }: TProps) => {
       width: "17.5%",
       render: (val: string) => (
         <>
-          {/* <img src={val} alt="icon" className="w-12 h-12 rounded-md" /> */}
            <img
             src={val || icon_placeholder}
             alt="profile"
@@ -108,7 +106,6 @@ const BannerTable = ( { banners, loading }: TProps) => {
         <Table
           columns={columns}
           dataSource={dataSource}
-          pagination={false}
           rowKey="_id"
           sticky
           scroll={{ y: "calc(100vh - 265px)" }}

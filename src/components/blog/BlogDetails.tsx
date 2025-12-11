@@ -4,8 +4,6 @@ import type { TBlog } from "../../types/blog.type";
 import getFormattedDate from "../../utils/getFormattedDate";
 import getCategory from "../../utils/getCategory";
 import getCategoryColor from "../../utils/getCategoryColor";
-import { baseUrl } from "../../redux/features/api/apiSlice";
-import getBlogImgPath from "../../utils/getBlogImgPath";
 import blog_placeholder from "../../assets/images/blog_placeholder.png";
 
 
@@ -16,7 +14,7 @@ type TProps = {
 
 const BlogDetails = ( {blog}: TProps) =>{
 
-  const blogImg = blog?.image?.length > 0 ? baseUrl+ getBlogImgPath(blog?.image[0]) : blog_placeholder
+  const blogImg = blog?.image || blog_placeholder;
   return (
     <div className="bg-gradient-to-br from-slate-50 to-white">
       <main className="max-w-6xl mx-auto px-4 py-8">
