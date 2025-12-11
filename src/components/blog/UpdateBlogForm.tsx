@@ -15,8 +15,6 @@ import ImageUpload from "../form/ImageUpload";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import type { TBlog } from "../../types/blog.type";
-import { baseUrl } from "../../redux/features/api/apiSlice";
-import getBlogImgPath from "../../utils/getBlogImgPath";
 import blog_placeholder from "../../assets/images/blog_placeholder.png";
 
 type TFormValues = z.infer<typeof blogSchema>;
@@ -36,12 +34,12 @@ const UpdateBlogForm = ( {blog}: TProps) => {
       title: blog?.title || "",
       category: blog?.category || "",
       descriptions: blog?.descriptions,
-      icon: blog?.image?.length > 0 ? baseUrl+ getBlogImgPath(blog?.image[0]) : ""
+      icon: blog?.image || ""
     }
   });
 
   const [image, setImage] = useState<File | null>(null);
-  const [preview, setPreview] = useState<string | null>(blog?.image?.length > 0 ? baseUrl+ getBlogImgPath(blog?.image[0]) : blog_placeholder);
+  const [preview, setPreview] = useState<string | null>(blog?.image || blog_placeholder);
     
   
     useEffect(() => {

@@ -12,7 +12,7 @@ const BlogList = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-  const { data, isLoading, isError } = useGetBlogsQuery([
+  const { data, isLoading, isError, isFetching } = useGetBlogsQuery([
     { name: "page", value: currentPage },
     { name: "limit", value: pageSize },
     { name: "searchTerm", value: searchTerm },
@@ -45,6 +45,7 @@ const BlogList = () => {
         setCurrentPage={setCurrentPage}
         pageSize={pageSize}
         setPageSize={setPageSize}
+        loading={isFetching}
       />
     );
   }

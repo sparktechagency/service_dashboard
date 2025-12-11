@@ -8,8 +8,6 @@ import getCategory from "../../utils/getCategory";
 import getCategoryColor from "../../utils/getCategoryColor";
 import getColorClassForDate from "../../utils/getColorClassForDate";
 import blog_placeholder from "../../assets/images/blog_placeholder.png";
-import { baseUrl } from "../../redux/features/api/apiSlice";
-import getBlogImgPath from "../../utils/getBlogImgPath";
 
 
 type TProps = {
@@ -19,10 +17,11 @@ type TProps = {
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
   pageSize: number;
   setPageSize: React.Dispatch<React.SetStateAction<number>>;
+  loading: boolean;
 };
 
 
-const BlogTable = ({ blogs, meta, currentPage, setCurrentPage, pageSize, setPageSize }: TProps) => {
+const BlogTable = ({ blogs, meta, currentPage, setCurrentPage, pageSize, setPageSize, loading }: TProps) => {
 
 
     const dataSource: TBlogDataSource[] = blogs?.map((blog, index) => ({
@@ -32,7 +31,7 @@ const BlogTable = ({ blogs, meta, currentPage, setCurrentPage, pageSize, setPage
       title: blog?.title,
       category: blog?.category,
       descriptions: blog?.descriptions,
-      image: blog?.image?.length > 0 ? baseUrl+ getBlogImgPath(blog?.image[0]) : blog_placeholder,
+      image: blog?.image || blog_placeholder,
       createdAt: blog?.createdAt,
     }));
 
@@ -168,6 +167,7 @@ const BlogTable = ({ blogs, meta, currentPage, setCurrentPage, pageSize, setPage
     >
       <div className="w-full overflow-auto px-4">
         <Table
+          size="small"
           columns={columns}
           dataSource={dataSource}
           pagination={false}
@@ -175,6 +175,7 @@ const BlogTable = ({ blogs, meta, currentPage, setCurrentPage, pageSize, setPage
           sticky
           scroll={{ y: "calc(100vh - 324px)" }}
           className="employer-table"
+          loading={loading}
         />
       </div>
       {meta?.total > 0 && (
