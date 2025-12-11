@@ -3,7 +3,6 @@ import { Table, ConfigProvider } from "antd";
 import EditCategoryModal from "../modal/category/EditCategoryModal";
 import type { ICategory } from "../../types/category.type";
 import icon_placeholder from "../../assets/images/icon_placeholder.jpg";
-import { baseUrl } from "../../redux/features/api/apiSlice";
 
 
 
@@ -28,7 +27,7 @@ const CategoryTable = ( { categories, loading }: TProps) => {
         serial: Number(index+1),
         _id: category?._id,
         category: category?.category,
-        image: baseUrl+category?.image
+        image: category?.image
   }))
 
   const columns = [
@@ -96,7 +95,6 @@ const CategoryTable = ( { categories, loading }: TProps) => {
         <Table
           columns={columns}
           dataSource={dataSource}
-          pagination={false}
           rowKey="_id"
           sticky
           scroll={{ y: "calc(100vh - 265px)" }}
