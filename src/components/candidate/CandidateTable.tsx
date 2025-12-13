@@ -4,7 +4,6 @@ import ChangeStatusModal from "../modal/auth/ChangeStatusModal";
 import type { TCandidataDataSource, TCandidate } from "../../types/candidate.type";
 import type { IMeta } from "../../types/global.type";
 import profile_placeholder from "../../assets/images/profile_placeholder.png";
-import { baseUrl } from "../../redux/features/api/apiSlice";
 
 
 interface CandidateTableProps {
@@ -54,8 +53,7 @@ const CandidateTable: React.FC<CandidateTableProps> = ({
       title: "Image",
       dataIndex: "profile_image",
       key: "profile_image",
-      render: (val?:string) => {
-        const imgPath = val ? baseUrl+val : "/images/profile_placeholder.png";
+      render: (imgPath:string) => {
         return (
            <div className="flex items-center gap-2">
           <img

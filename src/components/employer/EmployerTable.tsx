@@ -3,7 +3,6 @@ import { Table, ConfigProvider, Pagination } from "antd";
 import ChangeStatusModal from "../modal/auth/ChangeStatusModal";
 import type { IMeta } from "../../types/global.type";
 import profile_placeholder from "../../assets/images/profile_placeholder.png";
-import { baseUrl } from "../../redux/features/api/apiSlice";
 import type { TEmployer, TEmployerDataSource } from "../../types/employer.type";
 
 
@@ -55,8 +54,7 @@ const EmployerTable : React.FC<EmployerTableProps> = ({
       title: "Image",
       dataIndex: "profile_image",
       key: "profile_image",
-      render: (val?: string) => {
-        const imgPath = val ? baseUrl + val : "/images/profile_placeholder.png";
+      render: (imgPath?: string) => {
         return (
           <div className="flex items-center gap-2">
             <img

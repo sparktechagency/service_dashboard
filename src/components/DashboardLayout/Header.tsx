@@ -4,7 +4,6 @@ import { useGetMeQuery } from '../../redux/features/admin/adminApi';
 import { useAppSelector } from '../../redux/hooks/hooks';
 import UserLoading from '../loader/UserLoading';
 import profile_placeholder from "../../assets/images/profile_placeholder.png";
-import { baseUrl } from '../../redux/features/api/apiSlice';
 
 
 interface HeaderProps {
@@ -15,6 +14,7 @@ const Header: React.FC<HeaderProps> = ({ children }) => {
   const navigate = useNavigate();
   const { isLoading } = useGetMeQuery(undefined);
   const { admin } = useAppSelector((state) => state.admin);
+  const profileImg = admin?.profile_image || profile_placeholder;
 
 
   return (
@@ -33,7 +33,7 @@ const Header: React.FC<HeaderProps> = ({ children }) => {
               className="flex items-center gap-2 cursor-pointer"
             >
               <img
-                src={admin?.profile_image ? baseUrl+admin?.profile_image : profile_placeholder }
+                src={profileImg}
                 alt="Profile"
                 onError={(e) => {
                   e.currentTarget.onerror = null;
